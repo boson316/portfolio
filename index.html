@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boson 作品集｜前端 · AI · GPU/CUDA 專案</title>
+  <meta name="description" content="Boson 的作品集：GPU/CUDA 加速 ML、RAG 知識庫、新聞蒐集、年化報酬率計算機，以及 AI 助手與響應式設計展示。">
+  <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="tailwind.css">
+  <!-- 暗黑模式：localStorage + prefers-color-scheme，避免首屏閃爍 -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('portfolio-theme');
+      var dark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark', dark);
+    })();
+  </script>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav container tw-px-responsive" role="navigation" aria-label="主選單">
+      <a href="#" class="logo">Boson的作品集</a>
+      <ul class="nav-links">
+        <li><a href="#hero">首頁</a></li>
+        <li><a href="#skills">技能</a></li>
+        <li><a href="#projects">專案</a></li>
+        <li><a href="#ml-showcase">ML 專區</a></li>
+        <li><a href="#gpu-showcase">GPU 專區</a></li>
+        <li><a href="#contact">聯絡</a></li>
+        <li>
+          <button type="button" class="theme-toggle" id="themeToggle" aria-label="切換暗黑模式">
+            <span class="icon-sun">☀</span>
+            <span class="icon-moon">🌙</span>
+          </button>
+        </li>
+      </ul>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="開啟選單">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="hero-bg" id="heroCanvas" aria-hidden="true"></div>
+      <div class="container tw-px-responsive hero-content">
+        <h1>你好，我是<span class="accent">開發者</span></h1>
+        <p class="hero-desc">專注於前端與 AI 應用，打造流暢的使用體驗。</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">看專案</a>
+          <button type="button" class="btn btn-secondary" id="heroChatBtn">和 AI 聊聊</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills">
+      <div class="container tw-px-responsive">
+        <h2 class="section-title">3D 技能雲</h2>
+        <p class="skills-hint">點擊下方技能可看介紹</p>
+        <div class="skills-wrap tw-grid-skills">
+          <div class="skills-canvas-wrap">
+            <canvas id="skillsCanvas" title="Three.js 技能球體"></canvas>
+          </div>
+          <ul class="skills-list" id="skillsList" role="list">
+            <li data-skill="ai" tabindex="0">AI / RAG / LLM</li>
+            <li data-skill="web" tabindex="0">前端 / RWD</li>
+            <li data-skill="python" tabindex="0">Python / Flask</li>
+            <li data-skill="data" tabindex="0">資料處理 / 爬蟲</li>
+            <li data-skill="tools" tabindex="0">工具開發</li>
+          </ul>
+        </div>
+      </div>
+      <!-- 技能介紹浮層：點擊技能後顯示 -->
+      <div class="skill-modal" id="skillModal" aria-hidden="true" role="dialog" aria-labelledby="skillModalTitle">
+        <div class="skill-modal-backdrop" id="skillModalBackdrop"></div>
+        <div class="skill-modal-content">
+          <button type="button" class="skill-modal-close" id="skillModalClose" aria-label="關閉">×</button>
+          <h3 class="skill-modal-title" id="skillModalTitle"></h3>
+          <div class="skill-modal-image-wrap">
+            <img id="skillModalImage" src="" alt="" loading="lazy" width="320" height="180">
+          </div>
+          <p class="skill-modal-desc" id="skillModalDesc"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="container tw-px-responsive">
+        <h2 class="section-title">專案精選</h2>
+        <div class="cards tw-grid-cards" id="projectCards">
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #6366f1;">
+              <img src="https://placehold.co/600x240/6366f1/fff?text=RAG" alt="RAG 專案預覽" loading="lazy" width="600" height="240" fetchpriority="low">
+            </div>
+            <div class="card-body">
+              <h3>RAG 知識庫聊天（開發中）</h3>
+              <p>使用 Gemini + Chroma 的檢索增強生成，可針對自訂知識庫問答。</p>
+              <div class="card-tags">
+                <span>Python</span><span>Gemini</span><span>RAG</span>
+              </div>
+            </div>
+          </article>
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #0ea5e9;"></div>
+            <div class="card-body">
+              <h3>新聞蒐集系統</h3>
+              <p>自動蒐集近期新聞，支援依主題與來源瀏覽。</p>
+              <div class="card-tags">
+                <span>Flask</span><span>爬蟲</span>
+              </div>
+              <a href="https://news-8zud.onrender.com/" class="card-link card-demo" target="_blank" rel="noopener">Live 開啟網站 →</a>
+            </div>
+          </article>
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #10b981;"></div>
+            <div class="card-body">
+              <h3>年化報酬率計算機</h3>
+              <p>輸入投資期間與報酬，快速計算年化報酬率（支援多階段與複利）。</p>
+              <div class="card-tags">
+                <span>HTML</span><span>JavaScript</span>
+              </div>
+              <a href="https://boson316.github.io/niu/annual_return_calculator_v3.html" class="card-link card-demo" target="_blank" rel="noopener">Live 開啟計算機 →</a>
+            </div>
+          </article>
+          <article class="card card-chart" data-tilt>
+            <div class="card-image card-chart-wrap" style="--accent: #ee4c2c;">
+              <canvas id="pytorchChart" width="600" height="220" aria-label="PyTorch 訓練 Loss 曲線"></canvas>
+            </div>
+            <div class="card-body">
+              <h3>PyTorch / ML Demo</h3>
+              <p>訓練 Loss 曲線示意，展示 ML 技能與 Chart.js 視覺化。</p>
+              <div class="card-tags">
+                <span>PyTorch</span><span>Chart.js</span><span>ML</span>
+              </div>
+              <a href="#ml-showcase" class="card-link card-demo">看更多 → 混淆矩陣、Feature Importance、PCA</a>
+            </div>
+          </article>
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #76b900;">
+              <img src="https://placehold.co/600x240/1a1a1a/76b900?text=CUDA+%2F+PyTorch+GPU" alt="RTX 3050 GPU 專案預覽" loading="lazy" width="600" height="240" fetchpriority="low">
+            </div>
+            <div class="card-body">
+              <h3>RTX 3050 GPU Programming</h3>
+              <p>Pure CUDA（vector add、matrix 521×、reduction）+ PyTorch MNIST 99% + CUDA Extension 與 Triton kernel。</p>
+              <div class="card-tags">
+                <span>CUDA 12.4</span><span>PyTorch</span><span>Triton</span>
+              </div>
+              <a href="#gpu-showcase" class="card-link card-demo">看更多 → GPU 專區</a>
+              <a href="https://github.com/boson316/RTX3050-GPU-Mastery" class="card-link card-demo" target="_blank" rel="noopener">GitHub →</a>
+            </div>
+          </article>
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #8b5cf6;"></div>
+            <div class="card-body">
+              <h3>Stable Diffusion 試用</h3>
+              <p>生成式 AI 圖像試玩，可連到免費線上 demo 體驗。</p>
+              <div class="card-tags">
+                <span>SD</span><span>生成式 AI</span>
+              </div>
+                  <a href="https://huggingface.co/spaces?search=stable+diffusion" class="card-link card-demo" target="_blank" rel="noopener">試用 SD（HF Spaces）→</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ML 專區：課程報告圖表互動版（KNN 乳腺癌、Loss/Acc、Feature Importance、PCA）-->
+    <section id="ml-showcase" class="ml-showcase" aria-labelledby="ml-showcase-title">
+      <div class="container tw-px-responsive">
+        <h2 id="ml-showcase-title" class="section-title ml-showcase-title">
+          <span class="ml-showcase-badge">大二課程專案</span>
+          人工智慧 × 資料科學 — 互動圖表
+        </h2>
+        <p class="ml-showcase-desc">
+          威斯康辛乳腺癌診斷資料集 · KNN 分類 · 從混淆矩陣、訓練曲線到特徵重要性與 PCA，一頁看懂。
+        </p>
+
+        <!-- 解說氣泡：捲動到對應區塊時更新 -->
+        <div class="ml-narrative" id="mlNarrative" aria-live="polite">
+          <span class="ml-narrative-avatar">🤖</span>
+          <p class="ml-narrative-text" id="mlNarrativeText">滑到下方圖表，我會簡短解說每個結果。</p>
+        </div>
+
+        <div class="ml-charts">
+          <!-- 1. 混淆矩陣 -->
+          <div class="ml-chart-block ml-animate" data-narrative="K=9 的混淆矩陣：TN=68、TP=40，僅 6 筆誤判，準確率約 94.7%。">
+            <h3 class="ml-chart-title">Confusion Matrix（KNN, K=9）</h3>
+            <div class="ml-chart-wrap ml-chart-confusion">
+              <canvas id="mlConfusionChart" width="320" height="240" aria-label="混淆矩陣"></canvas>
+            </div>
+            <p class="ml-chart-caption">真陰性 68 · 偽陽性 3 · 偽陰性 3 · 真陽性 40</p>
+          </div>
+
+          <!-- 2. Loss / Accuracy 曲線 -->
+          <div class="ml-chart-block ml-animate" data-narrative="訓練過程：Loss 隨 epoch 下降，準確率上升，模型收斂良好。">
+            <h3 class="ml-chart-title">Training Loss & Accuracy</h3>
+            <div class="ml-chart-wrap ml-chart-curves">
+              <canvas id="mlLossAccChart" width="400" height="220" aria-label="Loss 與 Accuracy 曲線"></canvas>
+            </div>
+            <p class="ml-chart-caption">Loss 下降、Accuracy 上升，典型收斂曲線</p>
+          </div>
+
+          <!-- 3. Feature Importance -->
+          <div class="ml-chart-block ml-animate full-width" data-narrative="特徵重要性：半徑、周長、面積等幾何特徵對良惡性分類最關鍵。">
+            <h3 class="ml-chart-title">Feature Importance（Top 10）</h3>
+            <div class="ml-chart-wrap ml-chart-feature">
+              <canvas id="mlFeatureChart" width="500" height="280" aria-label="特徵重要性"></canvas>
+            </div>
+            <p class="ml-chart-caption">基於威斯康辛乳腺癌 30 維特徵之重要性排序</p>
+          </div>
+
+          <!-- 4. 相關熱圖（精簡版）-->
+          <div class="ml-chart-block ml-animate" data-narrative="相關係數熱圖：半徑、周長、面積高度正相關，可考慮降維。">
+            <h3 class="ml-chart-title">Correlation Heatmap（精選特徵）</h3>
+            <div class="ml-chart-wrap ml-chart-heatmap">
+              <canvas id="mlHeatmapChart" width="320" height="280" aria-label="相關係數熱圖"></canvas>
+            </div>
+            <p class="ml-chart-caption">紅正相關 · 藍負相關</p>
+          </div>
+
+          <!-- 5. PCA 散點 -->
+          <div class="ml-chart-block ml-animate" data-narrative="PCA 二維投影：良性與惡性在 PC1–PC2 平面上已有明顯區隔。">
+            <h3 class="ml-chart-title">PCA 2D 散點圖</h3>
+            <div class="ml-chart-wrap ml-chart-pca">
+              <canvas id="mlPcaChart" width="360" height="280" aria-label="PCA 散點圖"></canvas>
+            </div>
+            <p class="ml-chart-caption">良性 vs 惡性 · 前兩主成分</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GPU 專區：CUDA 學習 + RTX 3050 作品集 -->
+    <section id="gpu-showcase" class="gpu-showcase" aria-labelledby="gpu-showcase-title">
+      <div class="container tw-px-responsive">
+        <h2 id="gpu-showcase-title" class="section-title gpu-showcase-title">
+          <span class="gpu-showcase-badge">自學作品集</span>
+          GPU / CUDA 加速 — RTX 3050 實作
+        </h2>
+        <p class="gpu-showcase-desc">
+          大二資工 · 約 7 小時完成 8 週計劃：從 vector add、matrix multiply、reduction，到 PyTorch MNIST CNN、CUDA Extension 與 Triton kernel，全在筆電 RTX 3050 6GB 上驗證。
+        </p>
+
+        <div class="gpu-stack">
+          <span class="gpu-stack-item">CUDA 12.4</span>
+          <span class="gpu-stack-item">PyTorch 2.4 + cuDNN</span>
+          <span class="gpu-stack-item">C++ / CUDA Extension</span>
+          <span class="gpu-stack-item">Triton Kernel</span>
+        </div>
+
+        <div class="gpu-table-wrap">
+          <table class="gpu-table" aria-label="GPU Benchmark 成果">
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Implementation</th>
+                <th>Performance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Matrix Multiplication</td>
+                <td>Pure CUDA (shared memory tiled)</td>
+                <td><strong>521×</strong> CPU speedup (N=1024)</td>
+              </tr>
+              <tr>
+                <td>Reduction</td>
+                <td>Pure CUDA shared memory</td>
+                <td><strong>0.763ms</strong> (1M elements)</td>
+              </tr>
+              <tr>
+                <td>MNIST CNN</td>
+                <td>PyTorch GPU (SmallCNN + AMP)</td>
+                <td><strong>99%</strong> test accuracy</td>
+              </tr>
+              <tr>
+                <td>3×3 Conv FP16</td>
+                <td>CUDA Extension</td>
+                <td><strong>1.50×</strong> PyTorch (B=1024)</td>
+              </tr>
+              <tr>
+                <td>3×3 Conv FP16</td>
+                <td>Triton Python kernel</td>
+                <td><strong>1.27×</strong> PyTorch (B=128)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86)</p>
+        </div>
+
+        <div class="gpu-actions">
+          <a href="https://github.com/boson316/RTX3050-GPU-Mastery" class="btn btn-primary" target="_blank" rel="noopener">看完整程式碼（GitHub）</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container tw-px-responsive">
+        <h2 class="section-title">聯絡我</h2>
+        <p class="contact-desc">
+          歡迎透過下方 AI 助手提問，或寄信到 poboson316@gmail.com 與我聯繫。
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 浮動 AI 聊天按鈕 -->
+  <button type="button" class="chat-fab" id="chatFab" aria-label="開啟 AI 聊天">
+    <span class="chat-fab-icon">💬</span>
+  </button>
+
+  <!-- AI 聊天框 -->
+  <aside class="chat-panel" id="chatPanel" aria-hidden="true">
+    <div class="chat-header">
+      <h3>AI 助手</h3>
+      <button type="button" class="chat-close" id="chatClose" aria-label="關閉">×</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg msg-bot">
+        <span class="msg-avatar">AI</span>
+        <p>你好！我是你的 AI 助手，有什麼想問的嗎？</p>
+      </div>
+    </div>
+    <form class="chat-form" id="chatForm">
+      <input type="text" class="chat-input" id="chatInput" placeholder="例如：你的 AI / CUDA 專案？ (Enter 送出)" autocomplete="off">
+      <button type="submit" class="chat-send" aria-label="送出">送出</button>
+    </form>
+  </aside>
+
+  <div class="chat-overlay" id="chatOverlay" aria-hidden="true"></div>
+
+  <footer class="footer">
+    <div class="container tw-px-responsive">
+      <p>© 2025 作品集. 年化報酬率計算機 · AI 助手 · 暗黑模式</p>
+    </div>
+  </footer>
+
+  <!-- Groq 聊天：由後端 portfolio-api 呼叫 Groq，API Key 放在 .env，不暴露於前端 -->
+  <script>window.PORTFOLIO_API_URL = 'http://127.0.0.1:5000';</script>
+  <script src="script.js" defer></script>
+  <script src="hero-animation.js" defer></script>
+  <!-- Chart.js + PyTorch 曲線、Three.js + skills-3d 均延遲載入 -->
+</body>
+</html>

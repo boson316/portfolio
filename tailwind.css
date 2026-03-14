@@ -1,0 +1,36 @@
+/* Tailwind-style 響應式 utilities（sm:640px md:768px lg:1024px）*/
+/* 有 npm 時可改為 build 產出：npm run build:css */
+
+.cards.tw-grid-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .cards.tw-grid-cards { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+}
+@media (min-width: 1024px) {
+  .cards.tw-grid-cards { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+}
+
+.skills-wrap.tw-grid-skills {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .skills-wrap.tw-grid-skills { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+
+/* 容器響應式內距 */
+.container.tw-px-responsive {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 640px) {
+  .container.tw-px-responsive { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .container.tw-px-responsive { padding-left: 2rem; padding-right: 2rem; }
+}
