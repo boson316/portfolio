@@ -69,6 +69,7 @@
           </div>
           <ul class="skills-list" id="skillsList" role="list">
             <li data-skill="ai" tabindex="0">AI / RAG / LLM</li>
+            <li data-skill="gpu" tabindex="0">GPU / CUDA / Triton</li>
             <li data-skill="web" tabindex="0">前端 / RWD</li>
             <li data-skill="python" tabindex="0">Python / Flask</li>
             <li data-skill="data" tabindex="0">資料處理 / 爬蟲</li>
@@ -100,10 +101,10 @@
               <img src="https://placehold.co/600x240/1a1a1a/76b900?text=CUDA+%2F+PyTorch+GPU" alt="RTX 3050 GPU 專案預覽" loading="lazy" width="600" height="240" fetchpriority="low">
             </div>
             <div class="card-body">
-              <h3>RTX 3050 GPU Programming</h3>
-              <p>Pure CUDA（vector add、matrix 521×、reduction）+ PyTorch MNIST 99% + CUDA Extension 與 Triton kernel。</p>
+              <h3>RTX 3050 GPU Optimization Lab</h3>
+              <p>Pure CUDA（521× matmul、reduction 0.76ms）+ MNIST 99% + CUDA Extension／Triton。專案已擴充為 <strong>GPU Optimization Lab</strong>：含 FlashAttention、Transformer kernels、效能儀表板與逐步教學。</p>
               <div class="card-tags">
-                <span>CUDA 12.4</span><span>PyTorch</span><span>Triton</span>
+                <span>CUDA 12.4</span><span>PyTorch</span><span>Triton</span><span>FlashAttention</span>
               </div>
               <a href="#gpu-showcase" class="card-link card-demo">看更多 → GPU 專區</a>
               <a href="https://github.com/boson316/RTX3050-GPU-Mastery" class="card-link card-demo" target="_blank" rel="noopener">GitHub →</a>
@@ -243,10 +244,10 @@
       <div class="container tw-px-responsive">
         <h2 id="gpu-showcase-title" class="section-title gpu-showcase-title">
           <span class="gpu-showcase-badge">自學作品集</span>
-          GPU / CUDA 加速 — RTX 3050 實作
+          GPU Optimization Lab — RTX 3050 實作
         </h2>
         <p class="gpu-showcase-desc">
-          大二資工 · 約 7 小時完成 8 週計劃：從 vector add、matrix multiply、reduction，到 PyTorch MNIST CNN、CUDA Extension 與 Triton kernel，全在筆電 RTX 3050 6GB 上驗證。
+          大二資工 · 約 7 小時完成 8 週計劃：從 vector add、matrix multiply、reduction，到 PyTorch MNIST CNN、CUDA Extension 與 Triton kernel，全在筆電 RTX 3050 6GB 上驗證。專案後續擴充為完整 <strong>GPU 優化實驗室</strong>，含 FlashAttention、Transformer kernels、效能儀表板與教學文件，皆可在 GitHub 一鍵重現。
         </p>
 
         <div class="gpu-stack">
@@ -254,6 +255,7 @@
           <span class="gpu-stack-item">PyTorch 2.4 + cuDNN</span>
           <span class="gpu-stack-item">C++ / CUDA Extension</span>
           <span class="gpu-stack-item">Triton Kernel</span>
+          <span class="gpu-stack-item">FlashAttention</span>
         </div>
 
         <div class="gpu-table-wrap">
@@ -295,6 +297,8 @@
           </table>
           <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86)</p>
         </div>
+
+        <p class="gpu-reproduce-hint">一鍵重現：<code>python tools/performance_dashboard.py</code> 跑完所有 benchmarks 並產出效能報告。</p>
 
         <div class="gpu-actions">
           <a href="https://github.com/boson316/RTX3050-GPU-Mastery" class="btn btn-primary" target="_blank" rel="noopener">看完整程式碼（GitHub）</a>

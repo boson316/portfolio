@@ -49,6 +49,11 @@
       desc: '使用大型語言模型與檢索增強生成（RAG）打造知識庫問答；熟悉 Gemini、Groq 等 API，以及 Chroma 向量庫。',
       image: 'https://placehold.co/320x180/6366f1/fff?text=AI%2FRAG%2FLLM'
     },
+    gpu: {
+      title: 'GPU / CUDA / Triton',
+      desc: 'RTX 3050 GPU 優化實驗室：Pure CUDA（521× matmul、reduction）、PyTorch Extension、Triton kernels、FlashAttention、Transformer kernels；含 Nsight 與 Roofline 分析、逐步教學與一鍵重現。',
+      image: 'https://placehold.co/320x180/76b900/fff?text=GPU%2FCUDA%2FTriton'
+    },
     web: {
       title: '前端 / RWD',
       desc: '響應式網頁設計、Tailwind 風格 utility、Lighthouse 優化；具備互動式 UI、暗黑模式與無障礙實作經驗。',
