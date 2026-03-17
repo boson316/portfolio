@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boson 作品集｜前端 · AI · GPU/CUDA 專案</title>
   <meta name="description" content="Boson 的作品集：GPU/CUDA 加速 ML、RAG 知識庫、新聞蒐集、年化報酬率計算機，以及 AI 助手與響應式設計展示。">
+  <meta name="keywords" content="makeup transfer, GAN, StyleGAN2, ViT, TensorRT, Gradio, RTX3050, Taiwan, AI student, PMT-SM, makeup transfer GAN Taiwan AI student">
   <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,6 +109,65 @@
               </div>
               <a href="#gpu-showcase" class="card-link card-demo">看更多 → GPU 專區</a>
               <a href="https://github.com/boson316/RTX3050-GPU-Mastery" class="card-link card-demo" target="_blank" rel="noopener">GitHub →</a>
+            </div>
+          </article>
+          <!-- 2. PMT-SM：ViT-GAN 妝容轉移，排在 RTX 3050 之後 -->
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #ec4899;">
+              <img src="https://placehold.co/600x240/111827/ec4899?text=PMT-SM+%7C+ViT-FPN+%2B+StyleGAN2" alt="PMT-SM 妝容轉移專案預覽" loading="lazy" width="600" height="240" fetchpriority="low">
+            </div>
+            <div class="card-body">
+              <h3>PMT-SM: ViT-GAN Makeup Transfer (夏智賢老師論文實作)</h3>
+              <p>
+                端到端妝容轉移原型，結合 ViT + FPN + 多尺度臉部特徵 (MFL) + StyleGAN2-ADA，
+                在頭姿與表情變化下進行妝容遷移。Encoder 以 MSE / ArcFace / SSIM 優化，
+                並設計 PMGen 風格生成思路；以 TensorRT FP16 在 RTX 3050 上約 45ms 完成單張臉部推論。
+              </p>
+              <div class="card-tags">
+                <span>PyTorch</span><span>ViT</span><span>StyleGAN2</span><span>TensorRT</span><span>Gradio</span><span>RTX3050</span>
+              </div>
+              <div class="card-metrics">
+                <p><strong>Metrics（vs. 既有方法）</strong></p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Model</th>
+                      <th>ArcFace↑</th>
+                      <th>SSIM↑</th>
+                      <th>FID↓</th>
+                      <th>BSR↑</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>PMT-SM</strong></td>
+                      <td>0.94</td>
+                      <td>0.95</td>
+                      <td>7.93</td>
+                      <td>25%</td>
+                    </tr>
+                    <tr>
+                      <td>BeautyGAN</td>
+                      <td>0.89</td>
+                      <td>0.91</td>
+                      <td>12.5</td>
+                      <td>18%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p style="margin-top: 0.5rem;">
+                特色：3 小時 Cursor Pro 完成原型 → 具備生產部署路線，
+                採用 ML 最佳實踐目錄（<code>src/</code>、<code>docs/</code>、<code>tests/</code>），
+                提供本地 Gradio Demo，並規劃 NVIDIA Jetson / NIM 部署與 text-guided makeup transfer（CLIP）。
+              </p>
+              <p class="card-links">
+                <a href="https://github.com/boson316/pmt-sm" class="card-link card-demo" target="_blank" rel="noopener">GitHub Repo →</a>
+                <a href="http://gradio.pmt-sm.boson" class="card-link card-demo" target="_blank" rel="noopener">Live Demo（Gradio，placeholder）→</a>
+              </p>
+              <p class="card-note" style="font-size: 0.8rem; color: var(--muted-text, #6b7280);">
+                Citation: Inspired by NTU MIT Lab（makeup transfer research方向）。
+              </p>
             </div>
           </article>
           <article class="card" data-tilt>
