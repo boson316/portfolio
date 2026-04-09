@@ -1,5 +1,11 @@
 # Boson 作品集
 
+線上頁面：<https://boson316.github.io/portfolio/>
+
+## 專案摘要
+
+- **Multimedia Edge Labs**：[multimedia-edge-labs](https://github.com/boson316/multimedia-edge-labs)（MediaPipe、Edge–Cloud 非同步管線、HF [image-edge-demo](https://huggingface.co/spaces/boson316/image-edge-demo)）— 詳見首頁「專案精選」卡片。
+
 ## Lighthouse 效能
 
 - **Bundle size**：Three.js 與 `skills-3d.js` 改為**延遲載入**，僅在捲動到「技能」區時才載入，降低首次載入體積。

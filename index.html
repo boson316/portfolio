@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boson 作品集｜前端 · AI · GPU/CUDA 專案</title>
-  <meta name="description" content="Boson 的作品集：GPU/CUDA 加速 ML、RAG 知識庫、新聞蒐集、年化報酬率計算機，以及 AI 助手與響應式設計展示。">
-  <meta name="keywords" content="makeup transfer, GAN, StyleGAN2, ViT, TensorRT, Gradio, RTX3050, Taiwan, AI student, PMT-SM, makeup transfer GAN Taiwan AI student">
+  <meta name="description" content="Boson 的作品集：Multimedia Edge Labs（MediaPipe、Edge–Cloud 管線）、GPU/CUDA、PMT-SM 妝容轉移、RAG、新聞蒐集與年化報酬率計算機。">
+  <meta name="keywords" content="multimedia-edge-labs, MediaPipe, edge computing, OpenCV, Gradio, makeup transfer, GAN, StyleGAN2, ViT, TensorRT, RTX3050, PMT-SM, Taiwan, AI student">
   <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -143,6 +143,27 @@
               </p>
               <p class="card-note" style="font-size: 0.8rem; color: var(--muted-text, #6b7280);">
                 Citation: Inspired by NIU MIT Lab（makeup transfer research方向）。
+              </p>
+            </div>
+          </article>
+          <!-- Multimedia Edge Labs：邊緣運算 × 人臉感知 monorepo -->
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #f97316;">
+              <img src="https://raw.githubusercontent.com/boson316/multimedia-edge-labs/main/assets/face-pipeline-demo.png" alt="Multimedia Edge Labs：即時人臉框、dense mesh 與 Edge–Cloud 狀態列" loading="lazy" width="600" height="240" fetchpriority="low">
+            </div>
+            <div class="card-body">
+              <h3>Multimedia Edge Labs</h3>
+              <p>
+                研究導向 <strong>monorepo</strong>：邊緣運算、<strong>MediaPipe</strong> 即時人臉感知與 <strong>Edge–Cloud 非同步管線</strong>；
+                主線 <code>team-5day-sprint</code> 示範鏡頭人臉框＋ dense mesh、約 30 FPS 邊緣節流、雲端延遲／佇列與 OSD；
+                並含嵌入／cosine、FGSM 等度量與穩健性小實驗。<code>image-edge-demo</code> 可獨立部署為 Gradio Space。
+              </p>
+              <div class="card-tags">
+                <span>Python</span><span>MediaPipe</span><span>OpenCV</span><span>Edge–Cloud</span><span>Gradio</span>
+              </div>
+              <p class="card-links">
+                <a href="https://github.com/boson316/multimedia-edge-labs" class="card-link card-demo" target="_blank" rel="noopener">GitHub monorepo →</a>
+                <a href="https://huggingface.co/spaces/boson316/image-edge-demo" class="card-link card-demo" target="_blank" rel="noopener">HF Space（影像邊緣分析）→</a>
               </p>
             </div>
           </article>
@@ -379,7 +400,7 @@
 
   <footer class="footer">
     <div class="container tw-px-responsive">
-      <p>© 2025 作品集. 年化報酬率計算機 · AI 助手 · 暗黑模式</p>
+      <p>© 2026 作品集. Multimedia Edge Labs · 年化報酬率計算機 · AI 助手 · 暗黑模式</p>
     </div>
   </footer>
 

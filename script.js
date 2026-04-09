@@ -46,7 +46,7 @@
   var skillData = {
     ai: {
       title: 'AI / RAG / LLM',
-      desc: '使用大型語言模型與檢索增強生成（RAG）打造知識庫問答；熟悉 Gemini、Groq 等 API，以及 Chroma 向量庫。',
+      desc: '使用大型語言模型與檢索增強生成（RAG）打造知識庫問答；熟悉 Gemini、Groq 等 API，以及 Chroma 向量庫。亦實作 Multimedia Edge Labs：MediaPipe 人臉感知、Edge–Cloud 非同步管線與度量／對抗穩健小實驗。',
       image: 'https://placehold.co/320x180/6366f1/fff?text=AI%2FRAG%2FLLM'
     },
     gpu: {
@@ -206,7 +206,7 @@
     }
 
     if (lower.includes('專案') || lower.includes('作品') || lower.includes('portfolio')) {
-      return '目前作品包含：RAG 知識庫聊天、新聞蒐集系統，以及年化報酬率計算機。你可以往上捲到「專案精選」區塊查看細節。';
+      return '目前作品包含：Multimedia Edge Labs（MediaPipe、Edge–Cloud 管線、HF Space）、GPU Optimization Lab、PMT-SM 妝容轉移、RAG（開發中）、新聞蒐集與年化報酬率計算機。請捲到「專案精選」查看卡片與連結。';
     }
 
     if (
@@ -233,8 +233,15 @@
       return '右上角的 ☀/🌙 按鈕可以切換亮色與暗黑模式，偏好會自動記住。';
     }
 
+    if (
+      lower.includes('multimedia') || lower.includes('mediapipe') || lower.includes('邊緣') ||
+      lower.includes('edge-cloud') || lower.includes('edge–cloud') || lower.includes('人臉管線')
+    ) {
+      return 'Multimedia Edge Labs：GitHub https://github.com/boson316/multimedia-edge-labs · 線上 Gradio https://huggingface.co/spaces/boson316/image-edge-demo · 主線為 team-5day-sprint（即時人臉 mesh + Edge–Cloud 非同步 OSD）。';
+    }
+
     if (lower.includes('cuda') || lower.includes('gpu') || lower.includes('pytorch')) {
-      return '有接觸 PyTorch、CUDA 與 GPU 加速的 ML；作品集裡有「PyTorch / ML Demo」訓練曲線與「3D 技能雲」，歡迎捲到專案區看看。';
+      return '有接觸 PyTorch、CUDA 與 GPU 加速的 ML；作品集含「GPU Optimization Lab」專區、PyTorch 訓練曲線卡片，以及 Multimedia Edge Labs（多為 CPU／邊緣即時感知）。歡迎捲到專案區查看。';
     }
 
     if (
