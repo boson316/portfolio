@@ -132,6 +132,7 @@
   const chatForm = document.getElementById('chatForm');
   const chatInput = document.getElementById('chatInput');
   const chatMessages = document.getElementById('chatMessages');
+  const chatChips = document.querySelectorAll('.chat-chip');
 
   function openChat() {
     if (!chatPanel || !chatOverlay) return;
@@ -280,6 +281,9 @@
       submitBtn.disabled = sending;
       submitBtn.textContent = sending ? '傳送中…' : '送出';
     }
+    if (chatChips && chatChips.length) {
+      chatChips.forEach(function (chip) { chip.disabled = sending; });
+    }
   }
 
   function getApiUrl() {
@@ -353,6 +357,18 @@
         e.preventDefault();
         submitChat();
       }
+    });
+  }
+
+  if (chatChips && chatChips.length) {
+    chatChips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        if (isSending || !chatInput) return;
+        var prompt = chip.getAttribute('data-chat-prompt');
+        if (!prompt) return;
+        chatInput.value = prompt;
+        submitChat();
+      });
     });
   }
 

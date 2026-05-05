@@ -118,33 +118,18 @@
               <img src="https://placehold.co/600x240/111827/ec4899?text=PMT-SM+%7C+ViT-FPN+%2B+StyleGAN2" alt="PMT-SM 妝容轉移專案預覽" loading="lazy" width="600" height="240" fetchpriority="low">
             </div>
             <div class="card-body">
-              <h3>PMT-SM: ViT-GAN Makeup Transfer (夏智賢老師論文實作)</h3>
-              <p>
-                端到端妝容轉移原型，結合 ViT + FPN + 多尺度臉部特徵 (MFL) + StyleGAN2-ADA，
-                在頭姿與表情變化下進行妝容遷移。Encoder 以 MSE / ArcFace / SSIM 優化，
-                並設計 PMGen 風格生成思路；以 TensorRT FP16 在 RTX 3050 上約 45ms 完成單張臉部推論。
-              </p>
+              <h3>PMT-SM: ViT-GAN Makeup Transfer</h3>
+              <p>ViT + FPN + MFL + StyleGAN2-ADA 的妝容轉移原型；TensorRT FP16 在 RTX 3050 單張推論約 45ms。</p>
               <div class="card-tags">
                 <span>PyTorch</span><span>ViT</span><span>StyleGAN2</span><span>TensorRT</span><span>Gradio</span><span>RTX3050</span>
               </div>
-              <div class="card-metrics">
-                <p><strong>Metrics</strong></p>
-                <ul>
-                  <li><strong>PMT-SM</strong>：ArcFace 0.94 · SSIM 0.95 · FID 7.93 · BSR 25%</li>
-                  <li>BeautyGAN：ArcFace 0.89 · SSIM 0.91 · FID 12.5 · BSR 18%</li>
-                </ul>
-              </div>
-              <p style="margin-top: 0.5rem;">
-                特色：3 小時 Cursor Pro 完成原型 → 具備生產部署路線，
-                採用 ML 最佳實踐目錄（<code>src/</code>、<code>docs/</code>、<code>tests/</code>），
-                提供本地 Gradio Demo，並規劃 NVIDIA Jetson / NIM 部署與 text-guided makeup transfer（CLIP）。
-              </p>
+              <p><strong>Metrics</strong>：PMT-SM（ArcFace 0.94 / SSIM 0.95 / FID 7.93 / BSR 25%）；
+                BeautyGAN（ArcFace 0.89 / SSIM 0.91 / FID 12.5 / BSR 18%）。</p>
+              <p style="margin-top: 0.5rem;">3 小時完成原型，採 <code>src/docs/tests</code> 工程結構，含本地 Gradio Demo 與 Jetson/NIM 部署規劃。</p>
               <p class="card-links">
                 <a href="https://github.com/boson316/pmt-sm" class="card-link card-demo" target="_blank" rel="noopener">GitHub Repo →</a>
               </p>
-              <p class="card-note" style="font-size: 0.8rem; color: var(--muted-text, #6b7280);">
-                Citation: Inspired by NIU MIT Lab（makeup transfer research方向）。
-              </p>
+              <p class="card-note" style="font-size: 0.8rem; color: var(--muted-text, #6b7280);">Inspired by NIU MIT Lab makeup-transfer research.</p>
             </div>
           </article>
           <!-- 3. Multimedia Edge Labs -->
@@ -272,7 +257,7 @@
                 <span>SLO</span><span>CI Gates</span><span>Chaos</span><span>Rollback</span>
               </div>
               <a href="https://github.com/boson316/reliability-lab" class="card-link card-demo" target="_blank" rel="noopener">reliability-lab →</a>
-              <a href="https://github.com/boson316/realtime_multimodal_edge_cloud_pipeline" class="card-link card-demo" target="_blank" rel="noopener">realtime_multimodal_edge_cloud_pipeline →</a>
+              <a href="https://github.com/boson316/realtime_multimodal_edge_cloud_pipeline" class="card-link card-demo" target="_blank" rel="noopener">realtime_multimodal_<br>edge_cloud_pipeline →</a>
               <a href="https://github.com/boson316/gpu_inference_control_plane" class="card-link card-demo" target="_blank" rel="noopener">gpu_inference_control_plane →</a>
               <a href="https://github.com/boson316/pmt-sm" class="card-link card-demo" target="_blank" rel="noopener">pmt-sm →</a>
             </div>
@@ -440,6 +425,11 @@
         <span class="msg-avatar">AI</span>
         <p>你好！我是你的 AI 助手，有什麼想問的嗎？</p>
       </div>
+    </div>
+    <div class="chat-chips" aria-label="快捷提問">
+      <button type="button" class="chat-chip" data-chat-prompt="介紹治理藍圖">介紹治理藍圖</button>
+      <button type="button" class="chat-chip" data-chat-prompt="四個核心專案是什麼？">四個核心專案</button>
+      <button type="button" class="chat-chip" data-chat-prompt="你的 CUDA 專案有哪些亮點？">CUDA 專案</button>
     </div>
     <form class="chat-form" id="chatForm">
       <input type="text" class="chat-input" id="chatInput" placeholder="例如：你的 AI / CUDA 專案？ (Enter 送出)" autocomplete="off">
