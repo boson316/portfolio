@@ -31,6 +31,7 @@
         <li><a href="#hero">首頁</a></li>
         <li><a href="#skills">技能</a></li>
         <li><a href="#projects">專案</a></li>
+        <li><a href="#governance-blueprint">治理藍圖</a></li>
         <li><a href="#ml-showcase">ML 專區</a></li>
         <li><a href="#gpu-showcase">GPU 專區</a></li>
         <li><a href="#contact">聯絡</a></li>
@@ -222,6 +223,58 @@
               <div class="card-tags">
                 <span>Python</span><span>Gemini</span><span>RAG</span>
               </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="governance-blueprint" class="projects">
+      <div class="container tw-px-responsive">
+        <h2 class="section-title">治理架構藍圖（Senior Case Study）</h2>
+        <p class="contact-desc" style="margin-bottom: 1rem;">
+          這是我把四個專案串成同一條工程治理閉環的案例：<strong>PRD/TDD → SLO/Error Budget → CI Gate → Rollback → Chaos Drill</strong>。
+          內容包含可量化指標、風險缺口與 90 天升級路線，可直接作為面試討論主軸。
+        </p>
+
+        <div class="cards tw-grid-cards">
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #f59e0b;"></div>
+            <div class="card-body">
+              <h3>L5 Promotion Packet（一頁版）</h3>
+              <p>Impact / Scope / Ownership / Evidence / Risk / Next Bet 六大欄位，含量化指標與證據索引。</p>
+              <div class="card-tags">
+                <span>L5</span><span>Promotion Packet</span><span>Evidence-Driven</span>
+              </div>
+              <a href="/portfolio/assets/docs/L5_PROMOTION_PACKET_TEMPLATE.html" class="card-link card-demo" target="_blank" rel="noopener">開啟 L5 Packet（HTML）→</a>
+            </div>
+          </article>
+
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #ef4444;"></div>
+            <div class="card-body">
+              <h3>技術成長心路歷程與戰略藍圖</h3>
+              <p>從 AI-Native 高速交付到 production readiness 的落地策略，含能力分層與面試敘事。</p>
+              <div class="card-tags">
+                <span>Strategy</span><span>Career</span><span>Interview</span>
+              </div>
+              <a href="/portfolio/assets/docs/Boson_L5_技術成長戰略藍圖.html" class="card-link card-demo" target="_blank" rel="noopener">開啟 L5 戰略藍圖（HTML）→</a>
+              <a href="/portfolio/assets/docs/Boson_L5_技術成長戰略藍圖.html#%E4%BA%94%E3%80%8190-%E5%A4%A9%E5%8D%87%E7%B4%9A%E6%88%B0%E7%95%A5l5-%E7%A9%A9%E5%AE%9A%E5%8C%96" class="card-link card-demo" target="_blank" rel="noopener">直達 90 天升級戰略 →</a>
+            </div>
+          </article>
+
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #10b981;"></div>
+            <div class="card-body">
+              <h3>治理閉環的四個核心專案</h3>
+              <p>以同一套驗收語言串接可靠性、邊雲、推論控制與模型服務，形成可重放、可回滾、可審核架構。</p>
+              <div class="card-tags">
+                <span>SLO</span><span>CI Gates</span><span>Chaos</span><span>Rollback</span>
+              </div>
+              <a href="https://github.com/boson316/reliability-lab" class="card-link card-demo" target="_blank" rel="noopener">reliability-lab →</a>
+              <a href="https://github.com/boson316/realtime_multimodal_edge_cloud_pipeline" class="card-link card-demo" target="_blank" rel="noopener">realtime_multimodal_edge_cloud_pipeline →</a>
+              <a href="https://github.com/boson316/gpu_inference_control_plane" class="card-link card-demo" target="_blank" rel="noopener">gpu_inference_control_plane →</a>
+              <a href="https://github.com/boson316/pmt-sm" class="card-link card-demo" target="_blank" rel="noopener">pmt-sm →</a>
             </div>
           </article>
         </div>

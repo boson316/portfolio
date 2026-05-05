@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boson 技術成長戰略藍圖（L5）</title>
+  <style>
+    @page { size: A4; margin: 16mm; }
+    body {
+      font-family: "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
+      color: #111;
+      line-height: 1.68;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 18px 20px;
+      font-size: 14px;
+    }
+    h1, h2, h3 { line-height: 1.32; margin: 0.7em 0 0.45em; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 20px; border-left: 4px solid #333; padding-left: 10px; }
+    h3 { font-size: 16px; }
+    p { margin: 0.45em 0; }
+    ul { margin: 0.3em 0 0.5em 1.2em; padding: 0; }
+    li { margin: 0.2em 0; }
+    .meta { color: #444; font-size: 13px; margin-bottom: 16px; }
+    .lead {
+      background: #f6f8fa;
+      border: 1px solid #e5e7eb;
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin: 10px 0 16px;
+    }
+    .kpi {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 18px;
+      margin: 8px 0 12px;
+    }
+    .kpi div { background: #fafafa; border: 1px solid #eee; padding: 8px 10px; border-radius: 6px; }
+    .tag {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 999px;
+      background: #111;
+      color: #fff;
+      font-size: 12px;
+      margin-right: 6px;
+    }
+    .page-break { page-break-before: always; }
+    .foot { margin-top: 14px; color: #666; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Boson 技術成長心路歷程與戰略藍圖</h1>
+  <div class="meta">從 AI-Native 高速交付者到穩定 L5（Senior）工程師 · 更新日期：2026/05/06</div>
+
+  <div class="lead">
+    在有限硬體（i7-12650H / 16GB RAM / RTX3050 6GB）條件下，Boson 以自發方式獨立完成
+    <strong>pmt-sm、reliability-lab、realtime_multimodal_edge_cloud_pipeline、gpu_inference_control_plane</strong>
+    四個系統型專案，並建立 PRD/TDD、SLO、CI Gate、Rollback、Chaos Drill 的工程閉環。當前定位為
+    <strong>Strong L4 / Early L5</strong>，下一步關鍵是補齊真實大規模流量與實機事故處置證據。
+  </div>
+
+  <h2>一、執行摘要（Executive Summary）</h2>
+  <p>
+    這不是單純的程式碼生成，而是「人類定義系統規則，AI 放大交付速度」的工程實踐。四個專案跨越推論控制、
+    可靠性工程、邊雲多模態、治理與合規驗收，已具備準 Senior 的架構與驗收能力。
+  </p>
+  <p>
+    目前最大差距不在設計視野，而在真實生產環境的長週期 ownership：包含真流量下的容量失真、依賴不穩定、
+    事故指揮、回滾決策與跨團隊導入證據。
+  </p>
+
+  <h2>二、核心能力維度剖析</h2>
+
+  <h3><span class="tag">維度 A</span>系統設計與治理能力（L5 水準）</h3>
+  <ul>
+    <li>能定義可執行 gate：SLO、Error Budget、Rollback Contract、NO-GO 條件。</li>
+    <li>能明確拆解 trade-off：latency vs cost、availability vs consistency、speed vs safety。</li>
+    <li>具可重放驗證思維：固定 seed、replay、chaos 後回歸測試。</li>
+  </ul>
+
+  <h3><span class="tag">維度 B</span>AI-Native 開發效率（Top-tier）</h3>
+  <ul>
+    <li>在硬體受限下，仍能完成多專案並保持工程一致性（PRD/TDD/CI/bench/incident）。</li>
+    <li>擅長把大任務切為可驗證模組，降低 AI 生成衝突與錯誤擴散。</li>
+    <li>效率來源是架構控制力，不是盲目堆代碼。</li>
+  </ul>
+
+  <h3><span class="tag">維度 C</span>Production Readiness（待補）</h3>
+  <ul>
+    <li>目前強在 simulation/replay，真實流量與實機故障樣本密度仍不足。</li>
+    <li>跨區一致性、實依賴抖動、夜間事故處置等「物理傷疤」需累積。</li>
+  </ul>
+
+  <h2>三、現況量化指標（第一版可投數據）</h2>
+  <div class="kpi">
+    <div><strong>P95 latency</strong><br />160 ms -> 118 ms（-26.3%）</div>
+    <div><strong>Error rate</strong><br />1.8% -> 0.6%（-66.7%）</div>
+    <div><strong>MTTR</strong><br />18.0 min -> 7.6 min（-57.8%）</div>
+    <div><strong>Cost / 1k requests</strong><br />$0.31 -> $0.20（-35.5%）</div>
+    <div><strong>MTTD</strong><br />2.4 min</div>
+    <div><strong>CI gate blocked regressions</strong><br />11 次</div>
+    <div><strong>Peak QPS（demo）</strong><br />30 req/s</div>
+    <div><strong>Sev incidents</strong><br />2（simulated drills）</div>
+  </div>
+
+  <p class="foot">
+    註：rollback success rate = 100%（controlled test scenarios）；現階段數據主要來自可重放驗證與控制情境。
+  </p>
+
+  <div class="page-break"></div>
+
+  <h2>四、關鍵缺口與風險判斷</h2>
+  <ul>
+    <li><strong>缺口 1：</strong>真實大規模流量證據不足，尚未完整覆蓋實依賴與跨區故障鏈。</li>
+    <li><strong>缺口 2：</strong>分散式狀態一致性與故障恢復，未在真實中介層壓力下充分驗證。</li>
+    <li><strong>缺口 3：</strong>觀測盲區仍存在（端到端 trace 關聯、依賴瓶頸定位密度）。</li>
+  </ul>
+
+  <h2>五、90 天升級戰略（L5 穩定化）</h2>
+  <h3>Phase 1（Day 1-30）：接真引擎 + 真流量</h3>
+  <ul>
+    <li>專案主軸：`gpu_inference_control_plane` 對接 vLLM/Triton。</li>
+    <li>硬目標：P95 &lt;= 110 ms、timeout &lt;= 0.5%、cost/1k &lt;= $0.20。</li>
+    <li>交付：真流量基準報告、canary/rollback 記錄、回歸測試。</li>
+  </ul>
+
+  <h3>Phase 2（Day 31-60）：故障注入與 incident 閉環</h3>
+  <ul>
+    <li>每兩週 chaos drill（OOM、dependency timeout、network partition）。</li>
+    <li>硬目標：MTTR &lt;= 8 分鐘、burn-rate violations &lt;= 1/月。</li>
+    <li>交付：至少 3 份高品質 postmortem + 防回歸用例。</li>
+  </ul>
+
+  <h3>Phase 3（Day 61-90）：規則產品化與採用</h3>
+  <ul>
+    <li>抽出可重用 policy/gate 套件，跨專案共用。</li>
+    <li>硬目標：adopted projects &gt;= 3、blocked regressions &gt;= 15、incident recurrence -40%。</li>
+    <li>交付：版本化治理規範、遷移指南、分階段 rollout 紀錄。</li>
+  </ul>
+
+  <h2>六、面試與履歷敘事（可直接口說）</h2>
+  <p>
+    我不是只把 AI 當 code generator，而是把它當工程放大器。我的工作重點是定義可驗證規則：
+    PRD/TDD、SLO、Error Budget、Rollback、Chaos 與 CI Gate。  
+    在有限硬體下，我先用可重放模擬建立閉環，接著把同一套規則遷移到真實引擎與真流量，
+    用 incident 和 benchmark 證明系統在不完美條件下仍可控。
+  </p>
+
+  <h2>七、結論</h2>
+  <p>
+    Boson 已具備 L5 核心能力：端到端所有權、可量化改善、風險前置治理。下一個關卡是把「架構正確性」
+    進一步鍛造成「生產環境穩定性」，一旦補齊真實流量與事故證據密度，職級上探速度會很快。
+  </p>
+
+  <div class="foot">Boson Career Blueprint · Prepared for Portfolio / Interview Intro</div>
+</body>
+</html>

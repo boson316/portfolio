@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang='zh-Hant'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>L5 Promotion Packet</title>
+<style>
+body{font-family:'Microsoft JhengHei',Arial,sans-serif;line-height:1.6;color:#111;max-width:920px;margin:32px auto;padding:0 24px}
+h1,h2,h3{line-height:1.3;margin-top:1.2em}
+code{background:#f4f4f4;padding:2px 6px;border-radius:4px}
+pre{background:#f7f7f7;padding:12px;border-radius:6px;overflow:auto}
+ul{padding-left:1.25em}
+hr{border:0;border-top:1px solid #ddd;margin:1.5em 0}
+@page{size:A4;margin:16mm}
+</style>
+</head>
+<body><h1 id="l5-one-page">L5 升級資料包（One-Page，可直接投）</h1>
+<blockquote>
+<p>使用方式：把 <code>TBD</code> 換成你的實際數字與檔案路徑。<br />
+原則：每一條敘述都要有可驗證證據（數據、文件、測試、incident）。</p>
+</blockquote>
+<hr />
+<h2 id="candidate-snapshot">Candidate Snapshot（基本資訊）</h2>
+<ul>
+<li><strong>Name</strong>: <code>Boson</code></li>
+<li><strong>Target Level</strong>: <code>L5 (Senior Engineer)</code></li>
+<li><strong>Current Level (if any)</strong>: <code>Strong L4 / Early L5（自評）</code></li>
+<li><strong>Review Period</strong>: <code>2026-04-01 ~ 2026-05-06</code></li>
+<li><strong>Domain</strong>: <code>ML Platform / Reliability / Edge-Cloud Runtime / Governance</code></li>
+</ul>
+<hr />
+<h2 id="impact">1) Impact（自發投入時間 -&gt; 可量化結果）</h2>
+<ul>
+<li>在自發專案 <code>pmt-sm</code>、<code>reliability-lab</code>、<code>realtime_multimodal_edge_cloud_pipeline</code>、<code>gpu_inference_control_plane</code> 中，建立可驗證工程閉環，核心成果如下：
+<ul>
+<li><code>P95 latency</code>：<code>160 ms</code> -&gt; <code>118 ms</code>（<code>26.3%</code>）</li>
+<li><code>Error rate</code>：<code>1.8%</code> -&gt; <code>0.6%</code>（<code>66.7%</code>）</li>
+<li><code>MTTR</code>：<code>18.0 min</code> -&gt; <code>7.6 min</code>（<code>57.8%</code>）</li>
+<li><code>Cost / 1k requests</code>：<code>$0.31</code> -&gt; <code>$0.20</code>（<code>35.5%</code>）</li>
+</ul>
+</li>
+<li>導入 <code>Hard CI Gates + Rollback Contract + Chaos Drill</code>，在發布前攔截高風險變更 <code>11</code> 次。</li>
+<li>影響不只在功能交付，而是把可靠性與治理變成「可執行規則」，降低回歸風險與事故放大半徑。</li>
+</ul>
+<hr />
+<h2 id="scope4">2) Scope（4 個專案、跨多領域）</h2>
+<ul>
+<li><strong>系統範圍</strong>：同時覆蓋推論控制平面、SRE 可靠性實驗、即時邊雲多模態管線、治理與政策化驗收。</li>
+<li><strong>技術範圍</strong>：動態批次、SLO-aware 路由、自動擴縮容、斷路器、重試預算、死信佇列、隱私預算、資料血緣、可重放模擬。</li>
+<li><strong>生命週期範圍</strong>：<code>問題定義 -&gt; PRD/TDD -&gt; 架構設計 -&gt; 實作 -&gt; CI gate -&gt; 驗證 -&gt; incident/postmortem</code> 全鏈路交付。</li>
+<li><strong>複雜度範圍</strong>：
+<ul>
+<li>負載與流量假設：<code>30 req/s / bursty</code></li>
+<li>驗證故障類型：<code>&gt;= 8</code>（含 <code>Worker Crash</code>、<code>Network Jitter/Partition</code>、<code>GPU OOM</code>）</li>
+<li>確定性重放：固定 seed 與 replay 驗證機制</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="ownership100-individual-ownership">3) Ownership（100% individual ownership，無上級拆任務）</h2>
+<ul>
+<li>所有專案（<code>pmt-sm</code>、<code>reliability-lab</code>、<code>realtime_multimodal_edge_cloud_pipeline</code>、<code>gpu_inference_control_plane</code>）皆由我個人自發規劃與完成，非課程、非公司指派、非外部壓力驅動。</li>
+<li>我獨立負責從問題定義、PRD/TDD、架構設計、實作、驗證、CI gate 到 incident/postmortem 的端到端交付。</li>
+<li>在有限硬體資源（<code>i7-12650H / 16GB RAM / RTX3050 6GB</code>）下，透過 AI-Native 工作流與可重放驗證機制，持續交付具 production-shaped 架構雛形與可量化證據。</li>
+<li>這些專案不是 demo 導向，而是以 <code>SLO</code>、<code>Error Budget</code>、<code>Rollback Contract</code>、<code>Chaos Drill</code> 作為硬驗收標準。</li>
+<li>關鍵決策（trade-offs）：
+<ul>
+<li>latency vs cost：以 SLO 門檻下最小成本為優先（<code>TBD policy</code>）</li>
+<li>availability vs consistency：以故障可恢復與可回滾優先（<code>TBD policy</code>）</li>
+<li>speed vs safety：以 hard gates 保證發布安全下的最快交付</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="evidence-bench.json-incident-x2-ci-gate">4) Evidence（每個專案至少 bench.json + incident x2 + CI gate）</h2>
+<h3 id="section">4.1 指標證據（填數字）</h3>
+<ul>
+<li><strong>SLO 達成</strong>
+<ul>
+<li>Availability：target <code>99.0%</code> / actual <code>97.8%</code></li>
+<li>P95 latency：target <code>120 ms</code> / actual <code>118 ms</code></li>
+<li>Error rate：target <code>&lt;= 1.0%</code> / actual <code>0.6%</code></li>
+</ul>
+</li>
+<li><strong>Reliability</strong>
+<ul>
+<li>MTTD：<code>2.4 min</code></li>
+<li>MTTR：<code>7.6 min</code></li>
+<li>Sev incidents：<code>2 (simulated drills)</code></li>
+</ul>
+</li>
+<li><strong>Delivery 效率</strong>
+<ul>
+<li>change failure rate：<code>12%</code></li>
+<li>rollback success rate：<code>100% (controlled test scenarios)</code></li>
+<li>CI gate 攔截回歸次數：<code>11</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="section-1">4.2 專案證據索引（填路徑）</h3>
+<ul>
+<li><code>pmt-sm</code>
+<ul>
+<li>PRD：<code>pmt-sm/PRD.md</code></li>
+<li>TDD：<code>pmt-sm/tests/</code></li>
+<li>bench.json：<code>pmt-sm/artifacts/perf_c8_w2_600s.json</code></li>
+<li>incident x2：<code>pmt-sm/incident/001_queue_backpressure.md</code>, <code>pmt-sm/incident/002_timeout_retry.md</code></li>
+<li>CI gate：<code>pmt-sm/scripts/slo_gate.py</code></li>
+</ul>
+</li>
+<li><code>reliability-lab</code>
+<ul>
+<li>PRD：<code>reliability-lab/PRD.md</code></li>
+<li>TDD：<code>reliability-lab/tests/</code></li>
+<li>bench.json：<code>reliability-lab/artifacts/benchmark_latest.json</code></li>
+<li>incident x2：<code>reliability-lab/incident/001_gpu_oom.md</code>, <code>reliability-lab/incident/002_dependency_timeout.md</code></li>
+<li>CI gate：<code>reliability-lab/scripts/ci_gate.py</code></li>
+</ul>
+</li>
+<li><code>realtime_multimodal_edge_cloud_pipeline</code>
+<ul>
+<li>PRD：<code>realtime_multimodal_edge_cloud_pipeline/PRD.md</code></li>
+<li>TDD：<code>realtime_multimodal_edge_cloud_pipeline/tests/</code></li>
+<li>bench.json：<code>realtime_multimodal_edge_cloud_pipeline/artifacts/benchmark_compare.json</code></li>
+<li>incident x2：<code>realtime_multimodal_edge_cloud_pipeline/incident/001_privacy_budget_breach.md</code>, <code>realtime_multimodal_edge_cloud_pipeline/incident/002_timeout_cancel_storm.md</code></li>
+<li>CI gate：<code>realtime_multimodal_edge_cloud_pipeline/scripts/evaluate_gates.py</code></li>
+</ul>
+</li>
+<li><code>gpu_inference_control_plane</code>
+<ul>
+<li>PRD：<code>gpu_inference_control_plane/PRD.md</code></li>
+<li>TDD：<code>gpu_inference_control_plane/TDD.md</code></li>
+<li>bench.json：<code>gpu_inference_control_plane/artifacts/optimized_metrics.json</code></li>
+<li>incident x2：<code>gpu_inference_control_plane/incident/001_router_degrade.md</code>, <code>gpu_inference_control_plane/incident/002_canary_rollback.md</code></li>
+<li>CI gate：<code>gpu_inference_control_plane/CI_GATES.md</code></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="risk">5) Risk（誠實寫缺口）</h2>
+<ul>
+<li>目前主要缺口是「真實大規模生產流量」下的長週期傷疤，現有結果以模擬與可重放驗證為主。</li>
+<li>對分散式狀態一致性與跨區域 failover，尚未在高併發真實依賴（實際中介軟體/網路）下完成完整驗證。</li>
+<li>觀測訊號仍有盲區（端到端 trace 關聯、依賴層瓶頸可見度）需補齊。</li>
+</ul>
+<h3 id="section-2">風險緩解（執行中）</h3>
+<ul>
+<li>導入針對 <code>P95 / error rate / rollback_chain_complete</code> 的 hard gate（閾值：<code>P95 &lt;= 120ms</code>, <code>error_rate &lt;= 1.0%</code>, <code>rollback_chain_complete == true</code>）。</li>
+<li>固定 cadence 的 chaos drills（<code>biweekly</code>），並要求 incident 後必補 regression。</li>
+<li>以 deterministic replay 做 gate 前置驗證，降低「看起來可行但不可重現」風險。</li>
+</ul>
+<hr />
+<h2 id="next-bet-production-scar">6) Next Bet（接真引擎 + 真流量，補 production scar）</h2>
+<ul>
+<li><p><strong>Bet #1：把 <code>gpu_inference_control_plane</code> 接真實推論引擎</strong></p>
+<ul>
+<li>Goal：從 simulator 升級到 production-like runtime（vLLM/Triton）</li>
+<li>KPI：<code>P95 &lt;= 110 ms</code>、<code>timeout &lt;= 0.5%</code>、<code>cost/1k &lt;= $0.20</code></li>
+<li>Deadline：<code>2026-07-30</code></li>
+<li>Blast radius control：canary + auto-rollback + hard gate</li>
+</ul>
+</li>
+<li><p><strong>Bet #2：建立真流量壓測與故障演練流水線</strong></p>
+<ul>
+<li>Goal：讓每次發布都經過負載與 chaos 驗證</li>
+<li>KPI：<code>MTTR &lt;= 8 min</code>、<code>burn-rate violations &lt;= 1/month</code>、<code>rollback success &gt;= 99%</code></li>
+<li>Deadline：<code>2026-08-15</code></li>
+<li>Blast radius control：分級發布、租戶隔離、速率限制</li>
+</ul>
+</li>
+<li><p><strong>Bet #3：把治理規則產品化（跨專案共用）</strong></p>
+<ul>
+<li>Goal：抽象成可重用 policy/gate 套件，提升可移植性與採用率</li>
+<li>KPI：<code>adopted projects &gt;= 3</code>、<code>blocked regressions &gt;= 15</code>、<code>incident recurrence down 40%</code></li>
+<li>Deadline：<code>2026-09-01</code></li>
+<li>Blast radius control：版本化規則、向後相容策略、分階段 rollout</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="promotion-verdictdraft">Promotion Verdict（Draft）</h2>
+<p>Boson 已展現穩定的 L5 行為：可在高度模糊與資源受限條件下，獨立完成高複雜度系統的端到端交付，並以可量化指標與治理閘門控制風險。<br />
+目前主要缺口是大規模真實生產流量下的長週期運維證據；此缺口已有明確 next bets 與可量化里程碑。</p>
+<hr />
+<h2 id="section-3">30 秒版（履歷/面試開場）</h2>
+<p>我在個人自發專案中，獨立完成四個 production-shaped 系統（推論控制、可靠性工程、即時邊雲管線、治理流程），從 PRD/TDD 到 CI gate 與 incident/postmortem 全鏈路負責。<br />
+在有限硬體（i7-12650H / 16GB / RTX3050 6GB）下，我以 AI-Native 工作流建立可重放、可回滾、可驗收的工程閉環，並持續用 SLO、Error Budget、Chaos Drill 證明結果。<br />
+下一步是將其中一套接上真引擎與真流量，補齊大規模 production scar，完成由 Early L5 向穩定 L5+ 的躍遷。</p>
+</body>
+</html>
