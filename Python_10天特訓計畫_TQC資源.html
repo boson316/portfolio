@@ -146,6 +146,90 @@
       color: var(--muted);
       font-size: 13px;
     }
+
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .table-scroll table {
+      min-width: 760px;
+    }
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 900px) {
+      body { padding: 20px; }
+      .page {
+        padding: 26px 22px;
+        border-radius: 12px;
+      }
+      h1 {
+        font-size: 42px;
+        line-height: 1.2;
+      }
+      .subtitle { font-size: 21px; }
+      h2 {
+        font-size: 30px;
+        margin: 28px 0 12px;
+      }
+      h3 { font-size: 24px; }
+      li { font-size: 20px; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .card { padding: 14px; }
+      .chip { font-size: 15px; padding: 6px 12px; }
+      th, td { font-size: 18px; padding: 12px; }
+      .callout { font-size: 20px; }
+      .foot { font-size: 16px; }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 12px; }
+      .page {
+        padding: 18px 14px;
+        border-radius: 10px;
+      }
+      h1 {
+        font-size: 28px;
+        line-height: 1.25;
+      }
+      .subtitle { font-size: 16px; }
+      h2 { font-size: 20px; }
+      h3 { font-size: 18px; }
+      ul { padding-left: 18px; }
+      li {
+        font-size: 15px;
+        margin: 8px 0;
+      }
+      .toc { padding: 12px; }
+      .hero,
+      .card,
+      .callout {
+        padding: 12px;
+      }
+      .chips { gap: 8px; }
+      .chip {
+        font-size: 12px;
+        padding: 4px 10px;
+      }
+      th, td {
+        font-size: 14px;
+        padding: 10px;
+      }
+      .callout { font-size: 15px; }
+      .foot { font-size: 12px; }
+      .table-scroll table {
+        min-width: 680px;
+      }
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
     @media print {
       @page { size: A4; margin: 0; }
       html, body { width: 100%; min-height: 100%; background: #ffffff; }
@@ -247,6 +331,7 @@
     <div class="callout">
       不管今天只剩 2 小時還是 5 小時，最低都要做到：<strong>限時 1 題 + 交付 1 份模板 + 3 條錯誤紀錄</strong>。
     </div>
+    <div class="table-scroll">
     <table>
       <thead>
         <tr>
@@ -292,6 +377,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
     <h2 id="templates">共用「必備模板清單」（10 天內一定要背到能盲打）</h2>
     <ul>
@@ -304,6 +390,7 @@
     </ul>
 
     <h2 id="plan">10 天特訓課表（每天都產出「模板＋一題限時解」）</h2>
+    <div class="table-scroll">
     <table>
       <thead>
         <tr>
@@ -427,6 +514,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
     <h2 id="rotation">題型輪替建議（確保 4 類都練到）</h2>
     <ul>
@@ -447,6 +535,7 @@
     </div>
 
     <h3>免費資源清單（已挑選）</h3>
+    <div class="table-scroll">
     <table>
       <thead>
         <tr>
@@ -507,8 +596,10 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
     <h3>Day1～Day10 每日對照（可勾選版）</h3>
+    <div class="table-scroll">
     <table>
       <thead>
         <tr>
@@ -592,6 +683,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
     <h3>刷題配比（免費版）</h3>
     <ul>
