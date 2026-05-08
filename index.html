@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boson 作品集｜前端 · AI · GPU/CUDA 專案</title>
-  <meta name="description" content="Boson 的作品集：Multimedia Edge Labs（MediaPipe、Edge–Cloud 管線）、GPU/CUDA、PMT-SM 妝容轉移、RAG、新聞蒐集與年化報酬率計算機。">
-  <meta name="keywords" content="multimedia-edge-labs, MediaPipe, edge computing, OpenCV, Gradio, makeup transfer, GAN, StyleGAN2, ViT, TensorRT, RTX3050, PMT-SM, Taiwan, AI student">
+  <meta name="description" content="Boson 的作品集：GPU/CUDA、RAG、新聞蒐集與年化報酬率計算機。">
+  <meta name="keywords" content="GPU, CUDA, RAG, news crawler, annual return calculator, RTX3050, Taiwan, AI student">
   <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,45 +112,6 @@
               <a href="https://github.com/boson316/RTX3050-GPU-Mastery" class="card-link card-demo" target="_blank" rel="noopener">GitHub →</a>
             </div>
           </article>
-          <!-- 2. PMT-SM：ViT-GAN 妝容轉移，排在 RTX 3050 之後 -->
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #ec4899;">
-              <img src="https://placehold.co/600x240/111827/ec4899?text=PMT-SM+%7C+ViT-FPN+%2B+StyleGAN2" alt="PMT-SM 妝容轉移專案預覽" loading="lazy" width="600" height="240" fetchpriority="low">
-            </div>
-            <div class="card-body">
-              <h3>PMT-SM: ViT-GAN Makeup Transfer</h3>
-              <p>ViT + FPN + MFL + StyleGAN2-ADA 的妝容轉移原型；TensorRT FP16 在 RTX 3050 單張推論約 45ms。</p>
-              <div class="card-tags">
-                <span>PyTorch</span><span>ViT</span><span>StyleGAN2</span><span>TensorRT</span><span>Gradio</span><span>RTX3050</span>
-              </div>
-              <p><strong>Metrics</strong>：PMT-SM（ArcFace 0.94 / SSIM 0.95 / FID 7.93 / BSR 25%）；
-                BeautyGAN（ArcFace 0.89 / SSIM 0.91 / FID 12.5 / BSR 18%）。</p>
-              <p style="margin-top: 0.5rem;">3 小時完成原型，採 <code>src/docs/tests</code> 工程結構，含本地 Gradio Demo 與 Jetson/NIM 部署規劃。</p>
-              <p class="card-links">
-                <a href="https://github.com/boson316/pmt-sm" class="card-link card-demo" target="_blank" rel="noopener">GitHub Repo →</a>
-              </p>
-              <p class="card-note" style="font-size: 0.8rem; color: var(--muted-text, #6b7280);">Inspired by NIU MIT Lab makeup-transfer research.</p>
-            </div>
-          </article>
-          <!-- 3. Multimedia Edge Labs -->
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #f97316;">
-              <img src="https://placehold.co/600x240/1a1a1a/f97316?text=MediaPipe+%7C+Edge-Cloud+%7C+OpenCV" alt="Multimedia Edge Labs 專案預覽" loading="lazy" width="600" height="240" fetchpriority="low">
-            </div>
-            <div class="card-body">
-              <h3>Multimedia Edge Labs</h3>
-              <p>
-                研究導向 <strong>monorepo</strong>：邊緣運算、<strong>MediaPipe</strong> 即時人臉感知與 <strong>Edge–Cloud 非同步管線</strong>；
-                主線 <code>team-5day-sprint</code> 示範鏡頭人臉框＋ dense mesh、約 30 FPS 邊緣節流、雲端延遲／佇列與 OSD；
-                並含嵌入／cosine、FGSM 等度量與穩健性小實驗。<code>image-edge-demo</code> 可獨立部署為 Gradio Space。
-              </p>
-              <div class="card-tags">
-                <span>Python</span><span>MediaPipe</span><span>OpenCV</span><span>Edge–Cloud</span><span>Gradio</span>
-              </div>
-              <a href="https://github.com/boson316/multimedia-edge-labs" class="card-link card-demo" target="_blank" rel="noopener">GitHub monorepo →</a>
-              <a href="https://huggingface.co/spaces/boson316/image-edge-demo" class="card-link card-demo" target="_blank" rel="noopener">HF Space（影像邊緣分析）→</a>
-            </div>
-          </article>
           <article class="card" data-tilt>
             <div class="card-image" style="--accent: #10b981;"></div>
             <div class="card-body">
@@ -208,58 +169,6 @@
               <div class="card-tags">
                 <span>Python</span><span>Gemini</span><span>RAG</span>
               </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="governance-blueprint" class="projects">
-      <div class="container tw-px-responsive">
-        <h2 class="section-title">治理架構藍圖（Senior Case Study）</h2>
-        <p class="contact-desc" style="margin-bottom: 1rem;">
-          這是我把四個專案串成同一條工程治理閉環的案例：<strong>PRD/TDD → SLO/Error Budget → CI Gate → Rollback → Chaos Drill</strong>。
-          內容包含可量化指標、風險缺口與 90 天升級路線，可直接作為面試討論主軸。
-        </p>
-
-        <div class="cards tw-grid-cards">
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #f59e0b;"></div>
-            <div class="card-body">
-              <h3>L5 Promotion Packet（一頁版）</h3>
-              <p>Impact / Scope / Ownership / Evidence / Risk / Next Bet 六大欄位，含量化指標與證據索引。</p>
-              <div class="card-tags">
-                <span>L5</span><span>Promotion Packet</span><span>Evidence-Driven</span>
-              </div>
-              <a href="/portfolio/assets/docs/L5_PROMOTION_PACKET_TEMPLATE.html" class="card-link card-demo" target="_blank" rel="noopener">開啟 L5 Packet（HTML）→</a>
-            </div>
-          </article>
-
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #ef4444;"></div>
-            <div class="card-body">
-              <h3>技術成長心路歷程與戰略藍圖</h3>
-              <p>從 AI-Native 高速交付到 production readiness 的落地策略，含能力分層與面試敘事。</p>
-              <div class="card-tags">
-                <span>Strategy</span><span>Career</span><span>Interview</span>
-              </div>
-              <a href="/portfolio/assets/docs/Boson_L5_技術成長戰略藍圖.html" class="card-link card-demo" target="_blank" rel="noopener">開啟 L5 戰略藍圖（HTML）→</a>
-              <a href="/portfolio/assets/docs/Boson_L5_技術成長戰略藍圖.html#%E4%BA%94%E3%80%8190-%E5%A4%A9%E5%8D%87%E7%B4%9A%E6%88%B0%E7%95%A5l5-%E7%A9%A9%E5%AE%9A%E5%8C%96" class="card-link card-demo" target="_blank" rel="noopener">直達 90 天升級戰略 →</a>
-            </div>
-          </article>
-
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #10b981;"></div>
-            <div class="card-body">
-              <h3>治理閉環的四個核心專案</h3>
-              <p>以同一套驗收語言串接可靠性、邊雲、推論控制與模型服務，形成可重放、可回滾、可審核架構。</p>
-              <div class="card-tags">
-                <span>SLO</span><span>CI Gates</span><span>Chaos</span><span>Rollback</span>
-              </div>
-              <a href="https://github.com/boson316/reliability-lab" class="card-link card-demo" target="_blank" rel="noopener">reliability-lab →</a>
-              <a href="https://github.com/boson316/realtime_multimodal_edge_cloud_pipeline" class="card-link card-demo" target="_blank" rel="noopener">realtime_multimodal_<br>edge_cloud_pipeline →</a>
-              <a href="https://github.com/boson316/gpu_inference_control_plane" class="card-link card-demo" target="_blank" rel="noopener">gpu_inference_control_plane →</a>
-              <a href="https://github.com/boson316/pmt-sm" class="card-link card-demo" target="_blank" rel="noopener">pmt-sm →</a>
             </div>
           </article>
         </div>
@@ -441,7 +350,7 @@
 
   <footer class="footer">
     <div class="container tw-px-responsive">
-      <p>© 2026 作品集. Multimedia Edge Labs · 年化報酬率計算機 · AI 助手 · 暗黑模式</p>
+      <p>© 2026 作品集. GPU 專案 · 年化報酬率計算機 · AI 助手 · 暗黑模式</p>
     </div>
   </footer>
 
