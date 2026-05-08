@@ -255,20 +255,6 @@
       return '大二修過人工智慧導論與資料科學，做過威斯康辛乳腺癌 KNN 分類（準確率約 94.7%）。請捲到「ML 專區」看互動圖表：混淆矩陣、Loss/Acc 曲線、Feature Importance、相關熱圖與 PCA 散點，都有 Chart.js 互動版喔！';
     }
 
-    if (
-      lower.includes('治理') || lower.includes('藍圖') || lower.includes('l5') ||
-      lower.includes('promotion') || lower.includes('staff') || lower.includes('senior')
-    ) {
-      return '你可以看「治理藍圖」區塊：有 L5 Promotion Packet 與 L5 戰略藍圖，內容包含 SLO / Error Budget / CI Gate / Rollback / Chaos 的完整閉環。';
-    }
-
-    if (
-      lower.includes('reliability') || lower.includes('edge_cloud') || lower.includes('control_plane') ||
-      lower.includes('pmt-sm') || lower.includes('四個專案')
-    ) {
-      return '四個核心專案是 reliability-lab、realtime_multimodal_edge_cloud_pipeline、gpu_inference_control_plane、pmt-sm；都已串成同一套治理驗收語言。';
-    }
-
     return '收到你的訊息了！若後端已接上 Groq，會由 AI 回覆；也可試問「你的 CUDA 專案？」或「介紹專案」、「ML 專區」。';
   }
 

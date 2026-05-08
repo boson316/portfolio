@@ -31,7 +31,6 @@
         <li><a href="#hero">首頁</a></li>
         <li><a href="#skills">技能</a></li>
         <li><a href="#projects">專案</a></li>
-        <li><a href="#governance-blueprint">治理藍圖</a></li>
         <li><a href="#ml-showcase">ML 專區</a></li>
         <li><a href="#gpu-showcase">GPU 專區</a></li>
         <li><a href="#contact">聯絡</a></li>
@@ -336,8 +335,8 @@
       </div>
     </div>
     <div class="chat-chips" aria-label="快捷提問">
-      <button type="button" class="chat-chip" data-chat-prompt="介紹治理藍圖">介紹治理藍圖</button>
-      <button type="button" class="chat-chip" data-chat-prompt="四個核心專案是什麼？">四個核心專案</button>
+      <button type="button" class="chat-chip" data-chat-prompt="介紹專案">介紹專案</button>
+      <button type="button" class="chat-chip" data-chat-prompt="你的 ML 專區有哪些內容？">ML 專區</button>
       <button type="button" class="chat-chip" data-chat-prompt="你的 CUDA 專案有哪些亮點？">CUDA 專案</button>
     </div>
     <form class="chat-form" id="chatForm">
@@ -355,7 +354,7 @@
   </footer>
 
   <!-- Groq 聊天：由後端 portfolio-api 呼叫 Groq，API Key 放在 .env，不暴露於前端 -->
-  <script>window.PORTFOLIO_API_URL = 'http://127.0.0.1:5000';</script>
+  <script>window.PORTFOLIO_API_URL = window.PORTFOLIO_API_URL || '';</script>
   <script src="script.js" defer></script>
   <script src="hero-animation.js" defer></script>
   <!-- Chart.js + PyTorch 曲線、Three.js + skills-3d 均延遲載入 -->
