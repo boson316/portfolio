@@ -3,6 +3,12 @@
 
   var isEn = (document.documentElement.getAttribute('lang') || '').toLowerCase().indexOf('en') === 0;
   var CALC_URL = 'https://boson316.github.io/niu/annual_return_calculator_v4.html';
+  var assetBase =
+    typeof window.PORTFOLIO_ASSET_BASE === 'string'
+      ? window.PORTFOLIO_ASSET_BASE
+      : /\/en(\/|$)/i.test((window.location.pathname || '').replace(/\\/g, '/'))
+        ? '../'
+        : '';
 
   // ========== 暗黑模式 ==========
   const themeKey = 'portfolio-theme';
@@ -437,7 +443,7 @@
     if (window.__skills3dLoaded) return;
     window.__skills3dLoaded = true;
     loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js')
-      .then(function () { return loadScript('skills-3d.js'); })
+      .then(function () { return loadScript(assetBase + 'skills-3d.js'); })
       .catch(function () {});
   }
 
@@ -459,7 +465,7 @@
     if (window.__pytorchChartLoaded) return;
     window.__pytorchChartLoaded = true;
     loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js')
-      .then(function () { return loadScript('pytorch-chart.js'); })
+      .then(function () { return loadScript(assetBase + 'pytorch-chart.js'); })
       .catch(function () {});
   }
 
@@ -484,7 +490,7 @@
     window.__mlChartsLoaded = true;
     loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js')
       .then(function () { return loadScript('https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.1/dist/chartjs-chart-matrix.min.js'); })
-      .then(function () { return loadScript('ml-charts.js'); })
+      .then(function () { return loadScript(assetBase + 'ml-charts.js'); })
       .catch(function () {});
   }
 
