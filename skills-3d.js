@@ -2,14 +2,21 @@
   'use strict';
   var canvas = document.getElementById('skillsCanvas');
   if (!canvas || typeof THREE === 'undefined') return;
+  if (canvas.dataset.skills3dReady === '1') return;
 
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
-  var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+  var renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+  } catch (e) {
+    return;
+  }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   var skills = [
     { name: 'AI', color: 0x6366f1 },
+    { name: 'GPU', color: 0x76b900 },
     { name: 'Web', color: 0x0ea5e9 },
     { name: 'Python', color: 0x10b981 },
     { name: 'Data', color: 0xf59e0b },
@@ -57,5 +64,6 @@
 
   resize();
   window.addEventListener('resize', resize);
+  canvas.dataset.skills3dReady = '1';
   animate();
 })();

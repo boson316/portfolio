@@ -123,7 +123,7 @@
                 <div><dt>Problem</dt><dd>CAGR / IRR across multi-stage cash flows is tedious to compute by hand.</dd></div>
                 <div><dt>Built</dt><dd>Multi-stage compound &amp; cash-flow model with recurring contributions.</dd></div>
                 <div><dt>Stack</dt><dd>HTML · JavaScript (client-side)</dd></div>
-                <div><dt>Link</dt><dd><a href="https://boson316.github.io/niu/annual_return_calculator_v4.html" target="_blank" rel="noopener">Live demo</a></dd></div>
+                <div><dt>Link</dt><dd><a href="https://boson316.github.io/niu/annual_return_calculator_en_v1.html" target="_blank" rel="noopener">Live demo (EN)</a> · <a href="https://boson316.github.io/niu/annual_return_calculator_v4.html" target="_blank" rel="noopener">中文 v4</a></dd></div>
               </dl>
             </div>
           </article>
@@ -343,7 +343,11 @@
   </footer>
 
   <script>window.PORTFOLIO_API_URL = window.PORTFOLIO_API_URL || '';</script>
+  <script>window.PORTFOLIO_ASSET_BASE = '../';</script>
   <script src="../script.js" defer></script>
   <script src="../hero-animation.js" defer></script>
+  <!-- EN：直接載入技能球（避免 /en/ 延遲載入路徑錯誤） -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="../skills-3d.js"></script>
 </body>
 </html>

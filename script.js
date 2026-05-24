@@ -2,13 +2,30 @@
   'use strict';
 
   var isEn = (document.documentElement.getAttribute('lang') || '').toLowerCase().indexOf('en') === 0;
-  var CALC_URL = 'https://boson316.github.io/niu/annual_return_calculator_v4.html';
-  var assetBase =
-    typeof window.PORTFOLIO_ASSET_BASE === 'string'
-      ? window.PORTFOLIO_ASSET_BASE
-      : /\/en(\/|$)/i.test((window.location.pathname || '').replace(/\\/g, '/'))
-        ? '../'
-        : '';
+  var CALC_URL = isEn
+    ? 'https://boson316.github.io/niu/annual_return_calculator_en_v1.html'
+    : 'https://boson316.github.io/niu/annual_return_calculator_v4.html';
+  var assetBase = (function () {
+    if (typeof window.PORTFOLIO_ASSET_BASE === 'string') {
+      var b = window.PORTFOLIO_ASSET_BASE;
+      return b.endsWith('/') ? b : b + '/';
+    }
+    var scripts = document.querySelectorAll('script[src]');
+    for (var i = scripts.length - 1; i >= 0; i--) {
+      var src = scripts[i].getAttribute('src');
+      if (src && /(^|\/)script\.js(\?|$)/.test(src)) {
+        try {
+          var url = new URL(src, window.location.href);
+          return url.href.substring(0, url.href.lastIndexOf('/') + 1);
+        } catch (e) { /* ignore */ }
+      }
+    }
+    return /\/en(\/|$)/i.test((window.location.pathname || '').replace(/\\/g, '/')) ? '../' : '';
+  })();
+
+  function assetUrl(file) {
+    return assetBase.indexOf('://') !== -1 ? assetBase + file : assetBase + file;
+  }
 
   // ========== 暗黑模式 ==========
   const themeKey = 'portfolio-theme';
@@ -441,17 +458,40 @@
 
   function loadSkills3d() {
     if (window.__skills3dLoaded) return;
+    var skillsCanvas = document.getElementById('skillsCanvas');
+    if (skillsCanvas && skillsCanvas.dataset.skills3dReady === '1') {
+      window.__skills3dLoaded = true;
+      return;
+    }
     window.__skills3dLoaded = true;
+    function runSkills3d() {
+      if (typeof THREE === 'undefined') return Promise.reject(new Error('THREE not loaded'));
+      return loadScript(assetUrl('skills-3d.js'));
+    }
+    if (typeof THREE !== 'undefined') {
+      runSkills3d().catch(function () {});
+      return;
+    }
     loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js')
-      .then(function () { return loadScript(assetBase + 'skills-3d.js'); })
+      .then(runSkills3d)
       .catch(function () {});
+  }
+
+  function tryLoadSkills3dIfVisible() {
+    var sec = document.getElementById('skills');
+    if (!sec || !document.getElementById('skillsCanvas')) return;
+    var r = sec.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < window.innerHeight + 200) loadSkills3d();
   }
 
   var skillsSection = document.getElementById('skills');
   if (skillsSection && typeof IntersectionObserver !== 'undefined') {
     var io = new IntersectionObserver(
       function (entries) {
-        if (entries[0].isIntersecting) loadSkills3d();
+        if (entries[0].isIntersecting) {
+          loadSkills3d();
+          io.disconnect();
+        }
       },
       { rootMargin: '100px', threshold: 0 }
     );
@@ -459,13 +499,15 @@
   } else if (document.getElementById('skillsCanvas')) {
     loadSkills3d();
   }
+  document.addEventListener('DOMContentLoaded', tryLoadSkills3dIfVisible);
+  window.addEventListener('load', tryLoadSkills3dIfVisible);
 
   // ========== Chart.js：PyTorch 訓練曲線（延遲載入）==========
   function loadPytorchChart() {
     if (window.__pytorchChartLoaded) return;
     window.__pytorchChartLoaded = true;
     loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js')
-      .then(function () { return loadScript(assetBase + 'pytorch-chart.js'); })
+      .then(function () { return loadScript(assetUrl('pytorch-chart.js')); })
       .catch(function () {});
   }
 
@@ -490,7 +532,7 @@
     window.__mlChartsLoaded = true;
     loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js')
       .then(function () { return loadScript('https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.1/dist/chartjs-chart-matrix.min.js'); })
-      .then(function () { return loadScript(assetBase + 'ml-charts.js'); })
+      .then(function () { return loadScript(assetUrl('ml-charts.js')); })
       .catch(function () {});
   }
 
