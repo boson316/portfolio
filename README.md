@@ -12,7 +12,7 @@ CS sophomore portfolio — frontend, AI applications, and GPU/CUDA optimization 
 | Project | Link |
 |---------|------|
 | GPU Optimization Lab | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU section](https://boson316.github.io/portfolio/en/#gpu-showcase) |
-| Annual Return Calculator (CAGR / IRR) | [Live demo](https://boson316.github.io/niu/annual_return_calculator_v4.html) |
+| Annual Return Calculator (CAGR / IRR) | [Live demo](https://boson316.github.io/portfolio/en/) |
 | News Aggregator | [Live demo](https://news-8zud.onrender.com/) |
 | ML interactive charts (Wisconsin breast cancer, KNN) | [ML section](https://boson316.github.io/portfolio/en/#ml-showcase) |
 | RAG knowledge chat | In progress |
