@@ -9,6 +9,7 @@
   --border: rgba(0, 0, 0, 0.08);
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   --font-sans: "Noto Sans TC", sans-serif;
+  --font-sans-en: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
   --radius: 12px;
   --radius-sm: 8px;
@@ -30,6 +31,10 @@
 /* ========== Base ========== */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+html[lang="en"] body {
+  font-family: var(--font-sans-en);
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -91,6 +96,28 @@ a:hover { text-decoration: underline; }
   font-weight: 500;
 }
 .nav-links a:hover { color: var(--accent); }
+
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.lang-switch a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.lang-switch a:hover,
+.lang-switch a.is-active {
+  color: var(--accent);
+  text-decoration: none;
+}
+.lang-switch .sep {
+  color: var(--text-muted);
+  opacity: 0.45;
+  user-select: none;
+}
 
 .theme-toggle {
   position: relative;
@@ -474,6 +501,34 @@ a:hover { text-decoration: underline; }
   font-size: 0.95rem;
   margin: 0 0 1rem;
   flex: 1;
+}
+
+.project-brief {
+  margin: 0 0 1rem;
+  flex: 1;
+}
+.project-brief > div {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 0.15rem 0.5rem;
+  margin-bottom: 0.4rem;
+}
+html[lang="en"] .project-brief > div {
+  grid-template-columns: 4.75rem 1fr;
+}
+.project-brief dt {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.project-brief dd {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
 }
 
 .card-tags {

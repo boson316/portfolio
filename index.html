@@ -34,6 +34,11 @@
         <li><a href="#ml-showcase">ML 專區</a></li>
         <li><a href="#gpu-showcase">GPU 專區</a></li>
         <li><a href="#contact">聯絡</a></li>
+        <li class="lang-switch" aria-label="語言">
+          <a href="en/" hreflang="en">EN</a>
+          <span class="sep">|</span>
+          <a href="#" class="is-active" aria-current="page">中文</a>
+        </li>
         <li>
           <button type="button" class="theme-toggle" id="themeToggle" aria-label="切換暗黑模式">
             <span class="icon-sun">☀</span>
@@ -103,34 +108,36 @@
             </div>
             <div class="card-body">
               <h3>RTX 3050 GPU Optimization Lab</h3>
-              <p>Pure CUDA（521× matmul、reduction 0.76ms）+ MNIST 99% + CUDA Extension／Triton。</p>
-              <div class="card-tags">
-                <span>CUDA 12.4</span><span>PyTorch</span><span>Triton</span><span>FlashAttention</span>
-              </div>
-              <a href="#gpu-showcase" class="card-link card-demo">看更多 → GPU 專區</a>
-              <a href="https://github.com/boson316/RTX3050-GPU-Mastery" class="card-link card-demo" target="_blank" rel="noopener">GitHub →</a>
+              <dl class="project-brief">
+                <div><dt>問題</dt><dd>筆電 GPU 效能與 kernel 實作難以系統化驗證與重現。</dd></div>
+                <div><dt>實作</dt><dd>8 週自學路線：matmul 521×、reduction 0.76ms、MNIST 99%、CUDA Extension／Triton、FlashAttention。</dd></div>
+                <div><dt>技術</dt><dd>CUDA 12.4 · PyTorch · Triton · C++ Extension</dd></div>
+                <div><dt>連結</dt><dd><a href="#gpu-showcase">GPU 專區</a> · <a href="https://github.com/boson316/RTX3050-GPU-Mastery" target="_blank" rel="noopener">GitHub</a></dd></div>
+              </dl>
             </div>
           </article>
           <article class="card" data-tilt>
             <div class="card-image" style="--accent: #10b981;"></div>
             <div class="card-body">
               <h3>年化報酬率計算機</h3>
-              <p>輸入投資期間與報酬，快速計算年化報酬率（支援多階段與複利）。</p>
-              <div class="card-tags">
-                <span>HTML</span><span>JavaScript</span>
-              </div>
-              <a href="https://boson316.github.io/niu/annual_return_calculator_v4.html" class="card-link card-demo" target="_blank" rel="noopener">Live 開啟計算機 →</a>
+              <dl class="project-brief">
+                <div><dt>問題</dt><dd>多階段投入／提領下，難快速估算 CAGR 與 IRR。</dd></div>
+                <div><dt>實作</dt><dd>多階段複利與現金流模型，支援定額與階段串接。</dd></div>
+                <div><dt>技術</dt><dd>HTML · JavaScript（純前端）</dd></div>
+                <div><dt>連結</dt><dd><a href="https://boson316.github.io/niu/annual_return_calculator_v4.html" target="_blank" rel="noopener">Live 計算機</a>（含英文說明）</dd></div>
+              </dl>
             </div>
           </article>
           <article class="card" data-tilt>
             <div class="card-image" style="--accent: #0ea5e9;"></div>
             <div class="card-body">
               <h3>新聞蒐集系統</h3>
-              <p>自動蒐集近期新聞，支援依主題與來源瀏覽。首次開啟有時需等待一陣子（免費主機冷啟動）。</p>
-              <div class="card-tags">
-                <span>Flask</span><span>爬蟲</span>
-              </div>
-              <a href="https://news-8zud.onrender.com/" class="card-link card-demo" target="_blank" rel="noopener">Live 開啟網站 →</a>
+              <dl class="project-brief">
+                <div><dt>問題</dt><dd>分散來源的新聞難以依主題集中瀏覽。</dd></div>
+                <div><dt>實作</dt><dd>自動爬取與篩選，Web 介面依主題／來源呈現。</dd></div>
+                <div><dt>技術</dt><dd>Python · Flask · 爬蟲</dd></div>
+                <div><dt>連結</dt><dd><a href="https://news-8zud.onrender.com/" target="_blank" rel="noopener">Live demo</a>（冷啟動可能較慢）</dd></div>
+              </dl>
             </div>
           </article>
           <article class="card card-chart" data-tilt>
@@ -139,22 +146,24 @@
             </div>
             <div class="card-body">
               <h3>PyTorch / ML Demo</h3>
-              <p>訓練 Loss 曲線示意，展示 ML 技能與 Chart.js 視覺化。</p>
-              <div class="card-tags">
-                <span>PyTorch</span><span>Chart.js</span><span>ML</span>
-              </div>
-              <a href="#ml-showcase" class="card-link card-demo">看更多 → 混淆矩陣、Feature Importance、PCA</a>
+              <dl class="project-brief">
+                <div><dt>問題</dt><dd>課程模型結果分散在報告，不利互動理解。</dd></div>
+                <div><dt>實作</dt><dd>KNN 乳腺癌分類：混淆矩陣、Loss/Acc、特徵重要性、PCA 一頁呈現。</dd></div>
+                <div><dt>技術</dt><dd>PyTorch · Chart.js · scikit-learn 流程</dd></div>
+                <div><dt>連結</dt><dd><a href="#ml-showcase">ML 專區</a></dd></div>
+              </dl>
             </div>
           </article>
           <article class="card" data-tilt>
             <div class="card-image" style="--accent: #8b5cf6;"></div>
             <div class="card-body">
               <h3>Stable Diffusion 試用</h3>
-              <p>生成式 AI 圖像試玩，可連到免費線上 demo 體驗。</p>
-              <div class="card-tags">
-                <span>SD</span><span>生成式 AI</span>
-              </div>
-              <a href="https://huggingface.co/spaces?search=stable+diffusion" class="card-link card-demo" target="_blank" rel="noopener">試用 SD（HF Spaces）→</a>
+              <dl class="project-brief">
+                <div><dt>問題</dt><dd>需快速體驗文字轉圖像生成流程。</dd></div>
+                <div><dt>實作</dt><dd>串接 Hugging Face Spaces 公開 demo 試用。</dd></div>
+                <div><dt>技術</dt><dd>Stable Diffusion · HF Spaces</dd></div>
+                <div><dt>連結</dt><dd><a href="https://huggingface.co/spaces?search=stable+diffusion" target="_blank" rel="noopener">HF Spaces</a></dd></div>
+              </dl>
             </div>
           </article>
           <!-- RAG 放最後一個 -->
@@ -164,10 +173,12 @@
             </div>
             <div class="card-body">
               <h3>RAG 知識庫聊天（開發中）</h3>
-              <p>使用 Gemini + Chroma 的檢索增強生成，可針對自訂知識庫問答。</p>
-              <div class="card-tags">
-                <span>Python</span><span>Gemini</span><span>RAG</span>
-              </div>
+              <dl class="project-brief">
+                <div><dt>問題</dt><dd>通用 LLM 無法穩定引用私有文件作答。</dd></div>
+                <div><dt>實作</dt><dd>Gemini + Chroma 向量檢索，自訂知識庫問答（進行中）。</dd></div>
+                <div><dt>技術</dt><dd>Python · Gemini API · Chroma · RAG</dd></div>
+                <div><dt>連結</dt><dd>開發中 — 見作品集更新</dd></div>
+              </dl>
             </div>
           </article>
         </div>

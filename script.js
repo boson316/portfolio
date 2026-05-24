@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  var isEn = (document.documentElement.getAttribute('lang') || '').toLowerCase().indexOf('en') === 0;
+  var CALC_URL = 'https://boson316.github.io/niu/annual_return_calculator_v4.html';
+
   // ========== 暗黑模式 ==========
   const themeKey = 'portfolio-theme';
   const themeToggle = document.getElementById('themeToggle');
@@ -43,7 +46,38 @@
   }
 
   // ========== 3D 技能雲：點擊顯示介紹（名稱 + 圖片 + 說明）==========
-  var skillData = {
+  var skillData = isEn ? {
+    ai: {
+      title: 'AI / RAG / LLM',
+      desc: 'RAG knowledge-base Q&A with Gemini, Groq APIs, and Chroma. Experience with vision pipelines and edge deployment.',
+      image: 'https://placehold.co/320x180/6366f1/fff?text=AI%2FRAG%2FLLM'
+    },
+    gpu: {
+      title: 'GPU / CUDA / Triton',
+      desc: 'RTX 3050 GPU lab: pure CUDA (521× matmul, reduction), PyTorch Extension, Triton, FlashAttention, Transformer kernels; Nsight/Roofline and one-command reproduction.',
+      image: 'https://placehold.co/320x180/76b900/fff?text=GPU%2FCUDA%2FTriton'
+    },
+    web: {
+      title: 'Frontend / RWD',
+      desc: 'Responsive UI, utility-first CSS, Lighthouse tuning; interactive UI, dark mode, and accessibility.',
+      image: 'https://placehold.co/320x180/0ea5e9/fff?text=Frontend%2FRWD'
+    },
+    python: {
+      title: 'Python / Flask',
+      desc: 'Backend APIs, Flask deployment, Groq integration, scraping, .env and CORS setup.',
+      image: 'https://placehold.co/320x180/10b981/fff?text=Python%2FFlask'
+    },
+    data: {
+      title: 'Data / Scraping',
+      desc: 'RSS and web crawlers, news aggregation and filtering; cleaning and structuring data for APIs.',
+      image: 'https://placehold.co/320x180/f59e0b/fff?text=Data%20%2F%20Scraping'
+    },
+    tools: {
+      title: 'Tooling',
+      desc: 'Annual return calculator, Chart.js visualizations, Three.js demos, and portfolio tooling.',
+      image: 'https://placehold.co/320x180/c45c26/fff?text=Tools'
+    }
+  } : {
     ai: {
       title: 'AI / RAG / LLM',
       desc: '使用大型語言模型與檢索增強生成（RAG）打造知識庫問答；熟悉 Gemini、Groq 等 API，以及 Chroma 向量庫。另有即時視覺與邊緣管線實作經驗。',
@@ -91,7 +125,7 @@
     if (skillModalDesc) skillModalDesc.textContent = data.desc;
     if (skillModalImage) {
       skillModalImage.src = data.image;
-      skillModalImage.alt = data.title + ' 介紹圖';
+      skillModalImage.alt = data.title + (isEn ? ' overview' : ' 介紹圖');
     }
     skillModal.classList.add('is-open');
     skillModal.setAttribute('aria-hidden', 'false');
@@ -181,7 +215,7 @@
     wrap.className = 'msg msg-' + role + (options && options.typing ? ' msg-typing' : '');
     var avatar = document.createElement('span');
     avatar.className = 'msg-avatar';
-    avatar.textContent = role === 'user' ? '你' : 'AI';
+    avatar.textContent = role === 'user' ? (isEn ? 'You' : '你') : 'AI';
     var p = document.createElement('p');
     p.textContent = text;
     wrap.appendChild(avatar);
@@ -195,7 +229,37 @@
     if (el && el.parentNode) el.parentNode.removeChild(el);
   }
 
+  function replyToUserEn(inputText) {
+    var text = inputText.trim();
+    var lower = text.toLowerCase();
+    if (!text) return 'Ask about projects, the return calculator, or contact info.';
+    if (lower.includes('hi') || lower.includes('hello')) {
+      return 'Hi! I can walk you through GPU projects, ML charts, the calculator, or how to reach Boson.';
+    }
+    if (lower.includes('project') || lower.includes('portfolio')) {
+      return 'Featured: GPU Optimization Lab, annual return calculator, news aggregator, ML charts, and RAG (WIP). Scroll to Selected projects.';
+    }
+    if (lower.includes('contact') || lower.includes('email')) {
+      return 'Email: poboson316@gmail.com';
+    }
+    if (lower.includes('calculator') || lower.includes('cagr') || lower.includes('irr') || lower.includes('return')) {
+      return 'Annual return calculator: ' + CALC_URL;
+    }
+    if (lower.includes('dark') || lower.includes('theme')) {
+      return 'Use the ☀/🌙 button in the nav to toggle light/dark mode.';
+    }
+    if (lower.includes('cuda') || lower.includes('gpu') || lower.includes('pytorch')) {
+      return 'See the GPU Optimization Lab section — CUDA matmul 521× speedup, MNIST 99%, Triton, FlashAttention.';
+    }
+    if (lower.includes('ml') || lower.includes('knn') || lower.includes('confusion') || lower.includes('pca')) {
+      return 'ML section: Wisconsin breast cancer KNN (~94.7% acc), confusion matrix, loss/acc curves, feature importance, PCA.';
+    }
+    return 'Got it. Try “CUDA project highlights” or “Introduce your projects”. With Groq API configured, AI replies replace this fallback.';
+  }
+
   function replyToUser(inputText) {
+    if (isEn) return replyToUserEn(inputText);
+
     var text = inputText.trim();
     var lower = text.toLowerCase();
 
@@ -227,8 +291,7 @@
       lower.includes('irr') ||
       lower.includes('複利')
     ) {
-      return '年化報酬率計算機在作品集第三張卡片，你也可以直接開啟：' +
-        'https://boson316.github.io/niu/annual_return_calculator_v3.html';
+      return '年化報酬率計算機在作品集第二張卡片，你也可以直接開啟：' + CALC_URL;
     }
 
     if (lower.includes('暗黑') || lower.includes('dark') || lower.includes('主題')) {
@@ -265,7 +328,7 @@
     chatInput.disabled = sending;
     if (submitBtn) {
       submitBtn.disabled = sending;
-      submitBtn.textContent = sending ? '傳送中…' : '送出';
+      submitBtn.textContent = sending ? (isEn ? 'Sending…' : '傳送中…') : (isEn ? 'Send' : '送出');
     }
     if (chatChips && chatChips.length) {
       chatChips.forEach(function (chip) { chip.disabled = sending; });
@@ -287,7 +350,7 @@
     setChatSendingState(true);
 
     var apiBase = getApiUrl();
-    var typingEl = appendMessage('bot', '思考中…', { typing: true });
+    var typingEl = appendMessage('bot', isEn ? 'Thinking…' : '思考中…', { typing: true });
 
     function showReply(reply) {
       removeMessage(typingEl);

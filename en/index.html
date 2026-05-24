@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boson Portfolio | Frontend · AI · GPU/CUDA</title>
+  <meta name="description" content="Boson's portfolio: GPU/CUDA optimization, ML visualizations, news crawler, and annual return calculator.">
+  <meta name="keywords" content="GPU, CUDA, RAG, news crawler, annual return calculator, RTX3050, AI student, portfolio">
+  <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <link rel="alternate" hreflang="zh-TW" href="../index.html">
+  <link rel="alternate" hreflang="en" href="index.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../tailwind.css">
+  <script>
+    (function() {
+      var theme = localStorage.getItem('portfolio-theme');
+      var dark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark', dark);
+    })();
+  </script>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav container tw-px-responsive" role="navigation" aria-label="Main menu">
+      <a href="#" class="logo">Boson · Portfolio</a>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#ml-showcase">ML</a></li>
+        <li><a href="#gpu-showcase">GPU</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="lang-switch" aria-label="Language">
+          <a href="index.html" class="is-active" hreflang="en" aria-current="page">EN</a>
+          <span class="sep">|</span>
+          <a href="../index.html" hreflang="zh-TW">中文</a>
+        </li>
+        <li>
+          <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+            <span class="icon-sun">☀</span>
+            <span class="icon-moon">🌙</span>
+          </button>
+        </li>
+      </ul>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="hero-bg" id="heroCanvas" aria-hidden="true"></div>
+      <div class="container tw-px-responsive hero-content">
+        <h1>Hi, I'm <span class="accent">Boson</span></h1>
+        <p class="hero-desc">CS sophomore building frontend, AI apps, and GPU-accelerated tools.</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">View projects</a>
+          <button type="button" class="btn btn-secondary" id="heroChatBtn">Chat with AI</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills">
+      <div class="container tw-px-responsive">
+        <h2 class="section-title">Skills</h2>
+        <p class="skills-hint">Click a skill for details</p>
+        <div class="skills-wrap tw-grid-skills">
+          <div class="skills-canvas-wrap">
+            <canvas id="skillsCanvas" title="Three.js skills sphere"></canvas>
+          </div>
+          <ul class="skills-list" id="skillsList" role="list">
+            <li data-skill="ai" tabindex="0">AI / RAG / LLM</li>
+            <li data-skill="gpu" tabindex="0">GPU / CUDA / Triton</li>
+            <li data-skill="web" tabindex="0">Frontend / RWD</li>
+            <li data-skill="python" tabindex="0">Python / Flask</li>
+            <li data-skill="data" tabindex="0">Data / Scraping</li>
+            <li data-skill="tools" tabindex="0">Tooling</li>
+          </ul>
+        </div>
+      </div>
+      <div class="skill-modal" id="skillModal" aria-hidden="true" role="dialog" aria-labelledby="skillModalTitle">
+        <div class="skill-modal-backdrop" id="skillModalBackdrop"></div>
+        <div class="skill-modal-content">
+          <button type="button" class="skill-modal-close" id="skillModalClose" aria-label="Close">×</button>
+          <h3 class="skill-modal-title" id="skillModalTitle"></h3>
+          <div class="skill-modal-image-wrap">
+            <img id="skillModalImage" src="" alt="" loading="lazy" width="320" height="180">
+          </div>
+          <p class="skill-modal-desc" id="skillModalDesc"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="container tw-px-responsive">
+        <h2 class="section-title">Selected projects</h2>
+        <div class="cards tw-grid-cards" id="projectCards">
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #76b900;">
+              <img src="https://placehold.co/600x240/1a1a1a/76b900?text=CUDA+%2F+PyTorch+GPU" alt="RTX 3050 GPU project preview" loading="lazy" width="600" height="240">
+            </div>
+            <div class="card-body">
+              <h3>RTX 3050 GPU Optimization Lab</h3>
+              <dl class="project-brief">
+                <div><dt>Problem</dt><dd>Hard to benchmark and reproduce GPU kernels on a laptop GPU.</dd></div>
+                <div><dt>Built</dt><dd>Self-study lab: 521× matmul, 0.76ms reduction, 99% MNIST, CUDA Extension, Triton, FlashAttention.</dd></div>
+                <div><dt>Stack</dt><dd>CUDA 12.4 · PyTorch · Triton · C++ Extension</dd></div>
+                <div><dt>Link</dt><dd><a href="#gpu-showcase">GPU section</a> · <a href="https://github.com/boson316/RTX3050-GPU-Mastery" target="_blank" rel="noopener">GitHub</a></dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #10b981;"></div>
+            <div class="card-body">
+              <h3>Annual Return Calculator</h3>
+              <dl class="project-brief">
+                <div><dt>Problem</dt><dd>CAGR / IRR across multi-stage cash flows is tedious to compute by hand.</dd></div>
+                <div><dt>Built</dt><dd>Multi-stage compound &amp; cash-flow model with recurring contributions.</dd></div>
+                <div><dt>Stack</dt><dd>HTML · JavaScript (client-side)</dd></div>
+                <div><dt>Link</dt><dd><a href="https://boson316.github.io/niu/annual_return_calculator_v4.html" target="_blank" rel="noopener">Live demo</a></dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #0ea5e9;"></div>
+            <div class="card-body">
+              <h3>News Aggregator</h3>
+              <dl class="project-brief">
+                <div><dt>Problem</dt><dd>News from many sources is hard to browse by topic.</dd></div>
+                <div><dt>Built</dt><dd>Automated crawl + filter with a web UI by topic and source.</dd></div>
+                <div><dt>Stack</dt><dd>Python · Flask · Web scraping</dd></div>
+                <div><dt>Link</dt><dd><a href="https://news-8zud.onrender.com/" target="_blank" rel="noopener">Live demo</a> (free tier cold start)</dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="card card-chart" data-tilt>
+            <div class="card-image card-chart-wrap" style="--accent: #ee4c2c;">
+              <canvas id="pytorchChart" width="600" height="220" aria-label="PyTorch training loss curve"></canvas>
+            </div>
+            <div class="card-body">
+              <h3>PyTorch / ML Demo</h3>
+              <dl class="project-brief">
+                <div><dt>Problem</dt><dd>Course ML results were static in reports, not interactive.</dd></div>
+                <div><dt>Built</dt><dd>Wisconsin breast cancer KNN: confusion matrix, loss/acc, feature importance, PCA in one page.</dd></div>
+                <div><dt>Stack</dt><dd>PyTorch · Chart.js · scikit-learn workflow</dd></div>
+                <div><dt>Link</dt><dd><a href="#ml-showcase">ML section</a></dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #8b5cf6;"></div>
+            <div class="card-body">
+              <h3>Stable Diffusion Playground</h3>
+              <dl class="project-brief">
+                <div><dt>Problem</dt><dd>Need a quick way to try text-to-image generation.</dd></div>
+                <div><dt>Built</dt><dd>Linked to public Hugging Face Spaces demos.</dd></div>
+                <div><dt>Stack</dt><dd>Stable Diffusion · HF Spaces</dd></div>
+                <div><dt>Link</dt><dd><a href="https://huggingface.co/spaces?search=stable+diffusion" target="_blank" rel="noopener">HF Spaces</a></dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="card" data-tilt>
+            <div class="card-image" style="--accent: #6366f1;">
+              <img src="https://placehold.co/600x240/6366f1/fff?text=RAG" alt="RAG project preview" loading="lazy" width="600" height="240">
+            </div>
+            <div class="card-body">
+              <h3>RAG Knowledge Chat (WIP)</h3>
+              <dl class="project-brief">
+                <div><dt>Problem</dt><dd>Generic LLMs cannot reliably cite private documents.</dd></div>
+                <div><dt>Built</dt><dd>Gemini + Chroma retrieval for custom knowledge-base Q&amp;A (in progress).</dd></div>
+                <div><dt>Stack</dt><dd>Python · Gemini API · Chroma · RAG</dd></div>
+                <div><dt>Link</dt><dd>In progress — see portfolio updates</dd></div>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="ml-showcase" class="ml-showcase" aria-labelledby="ml-showcase-title">
+      <div class="container tw-px-responsive">
+        <h2 id="ml-showcase-title" class="section-title ml-showcase-title">
+          <span class="ml-showcase-badge">Course project</span>
+          AI × Data Science — Interactive charts
+        </h2>
+        <p class="ml-showcase-desc">
+          Wisconsin breast cancer dataset · KNN classifier · Confusion matrix, training curves, feature importance, and PCA on one page.
+        </p>
+        <div class="ml-narrative" id="mlNarrative" aria-live="polite">
+          <span class="ml-narrative-avatar">🤖</span>
+          <p class="ml-narrative-text" id="mlNarrativeText">Scroll to the charts below for short explanations.</p>
+        </div>
+        <div class="ml-charts">
+          <div class="ml-chart-block ml-animate" data-narrative="K=9 confusion matrix: TN=68, TP=40, only 6 misclassifications (~94.7% accuracy).">
+            <h3 class="ml-chart-title">Confusion Matrix (KNN, K=9)</h3>
+            <div class="ml-chart-wrap ml-chart-confusion">
+              <canvas id="mlConfusionChart" width="320" height="240" aria-label="Confusion matrix"></canvas>
+            </div>
+            <p class="ml-chart-caption">TN 68 · FP 3 · FN 3 · TP 40</p>
+          </div>
+          <div class="ml-chart-block ml-animate" data-narrative="Training: loss decreases and accuracy rises — healthy convergence.">
+            <h3 class="ml-chart-title">Training Loss &amp; Accuracy</h3>
+            <div class="ml-chart-wrap ml-chart-curves">
+              <canvas id="mlLossAccChart" width="400" height="220" aria-label="Loss and accuracy curves"></canvas>
+            </div>
+            <p class="ml-chart-caption">Typical convergence curve</p>
+          </div>
+          <div class="ml-chart-block ml-animate full-width" data-narrative="Feature importance: radius, perimeter, and area dominate benign vs malignant separation.">
+            <h3 class="ml-chart-title">Feature Importance (Top 10)</h3>
+            <div class="ml-chart-wrap ml-chart-feature">
+              <canvas id="mlFeatureChart" width="500" height="280" aria-label="Feature importance"></canvas>
+            </div>
+            <p class="ml-chart-caption">Ranked from 30 Wisconsin features</p>
+          </div>
+          <div class="ml-chart-block ml-animate" data-narrative="Correlation heatmap: radius, perimeter, area are highly correlated — candidates for dimensionality reduction.">
+            <h3 class="ml-chart-title">Correlation Heatmap (selected)</h3>
+            <div class="ml-chart-wrap ml-chart-heatmap">
+              <canvas id="mlHeatmapChart" width="320" height="280" aria-label="Correlation heatmap"></canvas>
+            </div>
+            <p class="ml-chart-caption">Red = positive · Blue = negative</p>
+          </div>
+          <div class="ml-chart-block ml-animate" data-narrative="PCA 2D: benign and malignant clusters separate clearly on PC1–PC2.">
+            <h3 class="ml-chart-title">PCA 2D Scatter</h3>
+            <div class="ml-chart-wrap ml-chart-pca">
+              <canvas id="mlPcaChart" width="360" height="280" aria-label="PCA scatter plot"></canvas>
+            </div>
+            <p class="ml-chart-caption">Benign vs malignant · first two components</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gpu-showcase" class="gpu-showcase" aria-labelledby="gpu-showcase-title">
+      <div class="container tw-px-responsive">
+        <h2 id="gpu-showcase-title" class="section-title gpu-showcase-title">
+          <span class="gpu-showcase-badge">Self-study</span>
+          GPU Optimization Lab — RTX 3050
+        </h2>
+        <p class="gpu-showcase-desc">
+          CS sophomore · ~7 hours through an 8-week plan: vector add, matrix multiply, reduction, PyTorch MNIST CNN, CUDA Extension, and Triton kernels — all on a 6GB RTX 3050 laptop GPU. Expanded into a full <strong>GPU optimization lab</strong> with FlashAttention, Transformer kernels, a performance dashboard, and reproducible docs on GitHub.
+        </p>
+        <div class="gpu-stack">
+          <span class="gpu-stack-item">CUDA 12.4</span>
+          <span class="gpu-stack-item">PyTorch 2.4 + cuDNN</span>
+          <span class="gpu-stack-item">C++ / CUDA Extension</span>
+          <span class="gpu-stack-item">Triton Kernel</span>
+          <span class="gpu-stack-item">FlashAttention</span>
+        </div>
+        <div class="gpu-table-wrap">
+          <table class="gpu-table" aria-label="GPU benchmark results">
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Implementation</th>
+                <th>Performance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Matrix Multiplication</td>
+                <td>Pure CUDA (shared memory tiled)</td>
+                <td><strong>521×</strong> CPU speedup (N=1024)</td>
+              </tr>
+              <tr>
+                <td>Reduction</td>
+                <td>Pure CUDA shared memory</td>
+                <td><strong>0.763ms</strong> (1M elements)</td>
+              </tr>
+              <tr>
+                <td>MNIST CNN</td>
+                <td>PyTorch GPU (SmallCNN + AMP)</td>
+                <td><strong>99%</strong> test accuracy</td>
+              </tr>
+              <tr>
+                <td>3×3 Conv FP16</td>
+                <td>CUDA Extension</td>
+                <td><strong>1.50×</strong> PyTorch (B=1024)</td>
+              </tr>
+              <tr>
+                <td>3×3 Conv FP16</td>
+                <td>Triton Python kernel</td>
+                <td><strong>1.27×</strong> PyTorch (B=128)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86)</p>
+        </div>
+        <p class="gpu-reproduce-hint">Reproduce: <code>python tools/performance_dashboard.py</code></p>
+        <div class="gpu-actions">
+          <a href="https://github.com/boson316/RTX3050-GPU-Mastery" class="btn btn-primary" target="_blank" rel="noopener">View code on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container tw-px-responsive">
+        <h2 class="section-title">Contact</h2>
+        <p class="contact-desc">
+          Use the AI assistant below or email <a href="mailto:poboson316@gmail.com">poboson316@gmail.com</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <button type="button" class="chat-fab" id="chatFab" aria-label="Open AI chat">
+    <span class="chat-fab-icon">💬</span>
+  </button>
+
+  <aside class="chat-panel" id="chatPanel" aria-hidden="true">
+    <div class="chat-header">
+      <h3>AI Assistant</h3>
+      <button type="button" class="chat-close" id="chatClose" aria-label="Close">×</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg msg-bot">
+        <span class="msg-avatar">AI</span>
+        <p>Hi! Ask me about projects, the return calculator, or how to reach Boson.</p>
+      </div>
+    </div>
+    <div class="chat-chips" aria-label="Quick prompts">
+      <button type="button" class="chat-chip" data-chat-prompt="Introduce your projects">Projects</button>
+      <button type="button" class="chat-chip" data-chat-prompt="What is in the ML section?">ML section</button>
+      <button type="button" class="chat-chip" data-chat-prompt="CUDA project highlights">CUDA</button>
+    </div>
+    <form class="chat-form" id="chatForm">
+      <input type="text" class="chat-input" id="chatInput" placeholder="e.g. Your GPU projects? (Enter to send)" autocomplete="off">
+      <button type="submit" class="chat-send" aria-label="Send">Send</button>
+    </form>
+  </aside>
+
+  <div class="chat-overlay" id="chatOverlay" aria-hidden="true"></div>
+
+  <footer class="footer">
+    <div class="container tw-px-responsive">
+      <p>© 2026 Portfolio · GPU lab · Return calculator · AI chat · <a href="../index.html">中文</a></p>
+    </div>
+  </footer>
+
+  <script>window.PORTFOLIO_API_URL = window.PORTFOLIO_API_URL || '';</script>
+  <script src="../script.js" defer></script>
+  <script src="../hero-animation.js" defer></script>
+</body>
+</html>
