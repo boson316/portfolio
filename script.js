@@ -260,7 +260,7 @@
       return 'Hi! I can walk you through GPU projects, ML charts, the calculator, or how to reach Boson.';
     }
     if (lower.includes('project') || lower.includes('portfolio')) {
-      return 'Featured: GPU Optimization Lab, annual return calculator, news aggregator, ML charts, and RAG (WIP). Scroll to Selected projects.';
+      return 'Featured: GPU Optimization Lab, annual return calculator, news aggregator, NIU food map, ML charts, and RAG (WIP). Scroll to Selected projects.';
     }
     if (lower.includes('contact') || lower.includes('email')) {
       return 'Email: poboson316@gmail.com';
@@ -295,7 +295,7 @@
     }
 
     if (lower.includes('專案') || lower.includes('作品') || lower.includes('portfolio')) {
-      return '目前作品包含：GPU Optimization Lab、RAG（開發中）、新聞蒐集與年化報酬率計算機。請捲到「專案精選」查看卡片與連結。';
+      return '目前作品包含：GPU Optimization Lab、校園美食地圖 v2（宜大）、新聞蒐集、年化報酬率計算機與 RAG（開發中）。請捲到「專案精選」查看卡片與連結。';
     }
 
     if (
