@@ -4,7 +4,7 @@
   var isEn = (document.documentElement.getAttribute('lang') || '').toLowerCase().indexOf('en') === 0;
   var CALC_URL = isEn
     ? 'https://boson316.github.io/niu/annual_return_calculator_en_v1.html'
-    : 'https://boson316.github.io/niu/annual_return_calculator_v4.html';
+    : 'https://boson316.github.io/niu/annual_return_calculator_v5.html';
   var assetBase = (function () {
     if (typeof window.PORTFOLIO_ASSET_BASE === 'string') {
       var b = window.PORTFOLIO_ASSET_BASE;
@@ -314,7 +314,7 @@
       lower.includes('irr') ||
       lower.includes('複利')
     ) {
-      return '年化報酬率計算機在作品集第二張卡片，你也可以直接開啟：' + CALC_URL;
+      return '退休規劃 v5／年化 v4 在作品集第二張卡片，也可直接開啟：' + CALC_URL;
     }
 
     if (lower.includes('暗黑') || lower.includes('dark') || lower.includes('主題')) {
