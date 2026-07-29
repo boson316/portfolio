@@ -83,21 +83,33 @@ body {
   margin-bottom: 1.75rem;
 }
 
-.card-brand h1 {
-  margin: 0 0 0.35rem;
+.card-brand h1,
+.card-name {
+  margin: 0 0 0.2rem;
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-}
-
-.card-brand .accent {
   color: var(--accent);
 }
 
+.card-name-en {
+  margin: 0 0 0.5rem;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+}
+
 .card-brand .tagline {
-  margin: 0;
+  margin: 0 0 0.75rem;
   color: var(--text-muted);
   font-size: 0.9375rem;
+}
+
+.card-bio {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text);
+  text-align: left;
 }
 
 .card-links {
