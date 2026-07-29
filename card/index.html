@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boson · 數位名片</title>
+  <meta name="description" content="Boson 數位名片：作品集、GitHub、FinTools 年化報酬率計算機。">
+  <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="card.css">
+  <script>
+    (function () {
+      var theme = localStorage.getItem('portfolio-theme');
+      var dark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+
+      var lang = localStorage.getItem('portfolio-lang');
+      if (!lang) lang = (navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+      document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-TW' : 'en');
+      document.documentElement.setAttribute('data-lang', lang);
+    })();
+  </script>
+</head>
+<body>
+  <div class="card-top">
+    <button type="button" class="lang-btn" id="btn-zh" data-set-lang="zh" aria-pressed="true">中文</button>
+    <button type="button" class="lang-btn" id="btn-en" data-set-lang="en" aria-pressed="false">EN</button>
+    <button type="button" class="theme-btn" id="themeToggle" aria-label="切換暗黑模式">☀ / 🌙</button>
+  </div>
+
+  <main class="card-shell">
+    <header class="card-brand">
+      <h1><span class="accent">Boson</span></h1>
+      <p class="tagline" data-i18n="tagline">資工 · 前端 · AI · GPU/CUDA</p>
+    </header>
+
+    <ul class="card-links">
+      <li>
+        <a class="card-link card-link--primary" href="https://boson316.github.io/portfolio/" data-i18n="link_portfolio">作品集</a>
+      </li>
+      <li>
+        <a class="card-link" href="https://github.com/boson316" target="_blank" rel="noopener" data-i18n="link_github">GitHub Profile</a>
+      </li>
+      <li>
+        <a class="card-link" href="https://boson316.github.io/niu/annual_return_calculator_v5.html" target="_blank" rel="noopener" data-i18n="link_fintools">FinTools · 年化／退休計算機</a>
+      </li>
+      <li>
+        <a class="card-link" href="mailto:poboson316@gmail.com" data-i18n="link_email">Email</a>
+      </li>
+    </ul>
+
+    <section class="card-qr" aria-labelledby="qr-title">
+      <h2 id="qr-title" class="visually-hidden" data-i18n="qr_title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">QR Code</h2>
+      <img src="qr.png" width="512" height="512" alt="QR code linking to this digital card" data-i18n-alt="qr_alt">
+      <p class="card-url">
+        <a href="https://boson316.github.io/portfolio/card/">boson316.github.io/portfolio/card/</a>
+      </p>
+      <a class="card-dl" href="qr.png" download="boson-card-qr.png" data-i18n="dl_qr">下載 QR</a>
+    </section>
+
+    <p class="card-foot" data-i18n="foot">掃碼或分享短網址即可開啟此頁</p>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var I18N = {
+        zh: {
+          doc_title: 'Boson · 數位名片',
+          tagline: '資工 · 前端 · AI · GPU/CUDA',
+          link_portfolio: '作品集',
+          link_github: 'GitHub Profile',
+          link_fintools: 'FinTools · 年化／退休計算機',
+          link_email: 'Email',
+          qr_title: 'QR Code',
+          qr_alt: '指向此數位名片的 QR Code',
+          dl_qr: '下載 QR',
+          foot: '掃碼或分享短網址即可開啟此頁',
+          theme_aria: '切換暗黑模式'
+        },
+        en: {
+          doc_title: 'Boson · Digital Card',
+          tagline: 'CS · Frontend · AI · GPU/CUDA',
+          link_portfolio: 'Portfolio',
+          link_github: 'GitHub Profile',
+          link_fintools: 'FinTools · Annual Return / Retirement',
+          link_email: 'Email',
+          qr_title: 'QR Code',
+          qr_alt: 'QR code linking to this digital card',
+          dl_qr: 'Download QR',
+          foot: 'Scan or share the short URL to open this card',
+          theme_aria: 'Toggle dark mode'
+        }
+      };
+
+      var currentLang = document.documentElement.getAttribute('data-lang') || 'zh';
+
+      function t(key) {
+        return (I18N[currentLang] && I18N[currentLang][key]) || I18N.zh[key] || key;
+      }
+
+      function setLanguage(lang) {
+        if (!I18N[lang]) lang = 'zh';
+        currentLang = lang;
+        localStorage.setItem('portfolio-lang', lang);
+        document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-TW' : 'en');
+        document.documentElement.setAttribute('data-lang', lang);
+        document.title = t('doc_title');
+
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          el.textContent = t(el.getAttribute('data-i18n'));
+        });
+        document.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+          el.setAttribute('alt', t(el.getAttribute('data-i18n-alt')));
+        });
+
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+          var active = btn.getAttribute('data-set-lang') === lang;
+          btn.classList.toggle('is-active', active);
+          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+
+        var themeBtn = document.getElementById('themeToggle');
+        if (themeBtn) themeBtn.setAttribute('aria-label', t('theme_aria'));
+      }
+
+      document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          setLanguage(btn.getAttribute('data-set-lang'));
+        });
+      });
+
+      var themeToggle = document.getElementById('themeToggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+          var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('portfolio-theme', next);
+        });
+      }
+
+      setLanguage(currentLang);
+    })();
+  </script>
+</body>
+</html>

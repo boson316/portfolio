@@ -1,0 +1,189 @@
+/* 數位名片專用樣式（token 對齊主站 styles.css） */
+:root {
+  --bg: #f5f0eb;
+  --bg-card: #fff;
+  --text: #1a1a1a;
+  --text-muted: #5c5c5c;
+  --accent: #c45c26;
+  --accent-soft: rgba(196, 92, 38, 0.15);
+  --border: rgba(0, 0, 0, 0.08);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --font-sans: "Noto Sans TC", sans-serif;
+  --radius: 12px;
+  --transition: 0.25s ease;
+}
+
+[data-theme="dark"] {
+  --bg: #0f0f0f;
+  --bg-card: #1a1a1a;
+  --text: #e8e6e3;
+  --text-muted: #9a9a9a;
+  --accent: #e07d3c;
+  --accent-soft: rgba(224, 125, 60, 0.2);
+  --border: rgba(255, 255, 255, 0.08);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, var(--accent-soft), transparent),
+    var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  transition: background var(--transition), color var(--transition);
+}
+
+.card-top {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem 0;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.lang-btn,
+.theme-btn {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.8125rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.lang-btn.is-active,
+.lang-btn:hover,
+.theme-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.card-shell {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+}
+
+.card-brand {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.card-brand h1 {
+  margin: 0 0 0.35rem;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.card-brand .accent {
+  color: var(--accent);
+}
+
+.card-brand .tagline {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.card-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.card-link {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, border-color var(--transition), background var(--transition);
+}
+
+.card-link:hover {
+  text-decoration: none;
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.card-link--primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+.card-link--primary:hover {
+  filter: brightness(1.05);
+  color: #fff;
+}
+
+.card-qr {
+  text-align: center;
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.card-qr img {
+  display: block;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 0.75rem;
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.card-url {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+
+.card-url a {
+  color: var(--accent);
+}
+
+.card-dl {
+  display: inline-block;
+  font-size: 0.8125rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.card-dl:hover {
+  text-decoration: underline;
+}
+
+.card-foot {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
