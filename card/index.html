@@ -47,8 +47,15 @@
       <li>
         <a class="card-link" href="https://boson316.github.io/niu/annual_return_calculator_v5.html" target="_blank" rel="noopener" data-i18n="link_fintools">FinTools · 年化／退休計算機</a>
       </li>
-      <li>
-        <a class="card-link" href="mailto:poboson316@gmail.com" data-i18n="link_email">poboson316@gmail.com</a>
+      <li class="card-email-wrap">
+        <button type="button" class="card-link" id="emailBtn" data-i18n="link_email" aria-expanded="false" aria-controls="emailPopover">Email</button>
+        <div class="email-popover" id="emailPopover" hidden role="dialog" aria-label="Email">
+          <p class="email-popover-addr">poboson316@gmail.com</p>
+          <div class="email-popover-actions">
+            <button type="button" class="email-popover-btn" id="emailCopy" data-i18n="email_copy">複製</button>
+            <a class="email-popover-btn" href="mailto:poboson316@gmail.com" data-i18n="email_send">寄信</a>
+          </div>
+        </div>
       </li>
     </ul>
 
@@ -75,7 +82,10 @@
           link_portfolio: '作品集',
           link_github: 'GitHub Profile',
           link_fintools: 'FinTools · 年化／退休計算機',
-          link_email: 'poboson316@gmail.com',
+          link_email: 'Email',
+          email_copy: '複製',
+          email_send: '寄信',
+          email_copied: '已複製',
           qr_title: 'QR Code',
           qr_alt: '指向此數位名片的 QR Code',
           dl_qr: '下載 QR',
@@ -88,7 +98,10 @@
           link_portfolio: 'Portfolio',
           link_github: 'GitHub Profile',
           link_fintools: 'FinTools · Annual Return / Retirement',
-          link_email: 'poboson316@gmail.com',
+          link_email: 'Email',
+          email_copy: 'Copy',
+          email_send: 'Send',
+          email_copied: 'Copied',
           qr_title: 'QR Code',
           qr_alt: 'QR code linking to this digital card',
           dl_qr: 'Download QR',
@@ -140,6 +153,57 @@
           var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
           document.documentElement.setAttribute('data-theme', next);
           localStorage.setItem('portfolio-theme', next);
+        });
+      }
+
+      var EMAIL = 'poboson316@gmail.com';
+      var emailBtn = document.getElementById('emailBtn');
+      var emailPopover = document.getElementById('emailPopover');
+      var emailCopy = document.getElementById('emailCopy');
+
+      function closeEmailPopover() {
+        if (!emailPopover || !emailBtn) return;
+        emailPopover.hidden = true;
+        emailBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      function openEmailPopover() {
+        if (!emailPopover || !emailBtn) return;
+        emailPopover.hidden = false;
+        emailBtn.setAttribute('aria-expanded', 'true');
+        if (emailCopy) emailCopy.textContent = t('email_copy');
+      }
+
+      if (emailBtn && emailPopover) {
+        emailBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (emailPopover.hidden) openEmailPopover();
+          else closeEmailPopover();
+        });
+        emailPopover.addEventListener('click', function (e) {
+          e.stopPropagation();
+        });
+        document.addEventListener('click', closeEmailPopover);
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeEmailPopover();
+        });
+      }
+
+      if (emailCopy) {
+        emailCopy.addEventListener('click', function () {
+          function done() {
+            emailCopy.textContent = t('email_copied');
+            setTimeout(function () {
+              emailCopy.textContent = t('email_copy');
+            }, 1500);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(EMAIL).then(done).catch(function () {
+              window.prompt(t('email_copy'), EMAIL);
+            });
+          } else {
+            window.prompt(t('email_copy'), EMAIL);
+          }
         });
       }
 
