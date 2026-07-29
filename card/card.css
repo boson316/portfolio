@@ -140,14 +140,25 @@ body {
   color: #fff;
 }
 
-button.card-link {
+.card-links > li {
   width: 100%;
+}
+
+button.card-link {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   font: inherit;
+  font-weight: 500;
   cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .card-email-wrap {
   position: relative;
+  width: 100%;
 }
 
 .email-popover {
@@ -202,49 +213,8 @@ button.card-link {
   text-decoration: none;
 }
 
-.card-qr {
-  text-align: center;
-  padding: 1.25rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-.card-qr img {
-  display: block;
-  width: 180px;
-  height: 180px;
-  margin: 0 auto 0.75rem;
-  background: #fff;
-  border-radius: 8px;
-  padding: 0.5rem;
-}
-
-.card-url {
-  margin: 0 0 0.75rem;
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-  word-break: break-all;
-}
-
-.card-url a {
-  color: var(--accent);
-}
-
-.card-dl {
-  display: inline-block;
-  font-size: 0.8125rem;
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.card-dl:hover {
-  text-decoration: underline;
-}
-
 .card-foot {
-  margin-top: 1.5rem;
+  margin-top: 0.25rem;
   text-align: center;
   font-size: 0.75rem;
   color: var(--text-muted);
