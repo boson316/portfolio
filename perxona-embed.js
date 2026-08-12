@@ -69,12 +69,29 @@
     status.textContent = message || '';
   }
 
+  function getDashboardDomainHint() {
+    var host = location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') return 'localhost';
+    return host;
+  }
+
+  function getDisconnectHelpMessage() {
+    var domain = getDashboardDomainHint();
+    return (
+      'Perxona 連線失敗（401）。請依序檢查：' +
+      '① Dashboard 嵌入 apiKey 與 Render PERXONA_API_KEY 完全一致並 Redeploy；' +
+      '② Dashboard 網域白名單目前必須填「' + domain + '」（本機用 localhost，線上用 boson316.github.io）。' +
+      '改完儲存等 1～2 分鐘再 Ctrl+Shift+R。'
+    );
+  }
+
   function bindAgentLifecycle(agent) {
     var ready = false;
+    var disconnectNotified = false;
     var failTimer = window.setTimeout(function () {
       if (ready) return;
       setMountStatus(
-        'Perxona 載入逾時。本機請確認 Dashboard 網域白名單含 localhost；或改開 live 頁測試。',
+        'Perxona 載入逾時。Dashboard 網域白名單需含「' + getDashboardDomainHint() + '」。',
         true
       );
     }, 20000);
@@ -87,15 +104,14 @@
       }
       if (status === 'ready' || status === 'connection-done') {
         ready = true;
+        disconnectNotified = false;
         window.clearTimeout(failTimer);
         setMountStatus('', false);
         return;
       }
-      if (status === 'disconnected') {
-        setMountStatus(
-          'Perxona 連線失敗。Dashboard 網域白名單需含 localhost（本機）或 boson316.github.io（線上）。',
-          true
-        );
+      if (status === 'disconnected' && !disconnectNotified) {
+        disconnectNotified = true;
+        setMountStatus(getDisconnectHelpMessage(), true);
       }
     });
   }
@@ -148,6 +164,40 @@
     overlay.setAttribute('aria-hidden', 'true');
   }
 
+  function applyAgentSettings(agent) {
+    if (!agent || !sessionToken) return Promise.resolve(false);
+
+    // SDK observedAttributes 是 sessionToken（camelCase），不是 session_token
+    agent.setAttribute('sessionToken', sessionToken);
+    agent.removeAttribute('session_token');
+    agent.removeAttribute('apiKey');
+
+    var settings = {
+      agentProfileId: agentProfileId,
+      presentationMode: presentationMode,
+      displayMode: 'fullPresentation',
+      conversationMode: 'inputText',
+      readyToShowPolicy: 'ShowWhenAssetsLoading',
+      sessionToken: sessionToken,
+      appearanceMode: getAppearanceMode(),
+      enableUserActivationCheck: false
+    };
+
+    if (typeof agent.updateSessionToken === 'function') {
+      return Promise.resolve(agent.updateSessionToken(sessionToken)).then(function (ok) {
+        if (typeof agent.updateWidgetSetting === 'function') {
+          agent.updateWidgetSetting(settings);
+        }
+        return ok !== false;
+      });
+    }
+
+    if (typeof agent.updateWidgetSetting === 'function') {
+      agent.updateWidgetSetting(settings);
+    }
+    return Promise.resolve(true);
+  }
+
   function mountWidget() {
     var mount = document.getElementById('perxonaMount');
     if (!mount || mount.querySelector('sv-agent') || !sessionToken) return;
@@ -160,12 +210,15 @@
     agent.setAttribute('displayMode', 'fullPresentation');
     agent.setAttribute('conversationMode', 'inputText');
     agent.setAttribute('readyToShowPolicy', 'ShowWhenAssetsLoading');
-    agent.setAttribute('session_token', sessionToken);
+    agent.setAttribute('sessionToken', sessionToken);
     agent.setAttribute('appearanceMode', getAppearanceMode());
     agent.setAttribute('enableUserActivationCheck', 'false');
 
     bindAgentLifecycle(agent);
     mount.appendChild(agent);
+    applyAgentSettings(agent).then(function () {
+      window.setTimeout(function () { applyAgentSettings(agent); }, 0);
+    });
     hideLegacyChatUi();
 
     window.__perxonaEmbed = true;

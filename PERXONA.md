@@ -1,123 +1,144 @@
-# 小boson · Perxona 3D 助手整合指南
+# 小boson · Perxona 3D 助手 — 整合與上線總結
 
-作品集 [https://boson316.github.io/portfolio/](https://boson316.github.io/portfolio/) 的 3D 導覽助手「小boson」，使用 [Perxona Presentation SDK](https://docs.perxona.ai/docs/widget.html) 嵌入。  
-**apiKey 只放後端**；前端僅保留公開的 `agentProfileId`，執行時向 `portfolio-api` 取 JWT `session_token`。
+作品集 [https://boson316.github.io/portfolio/](https://boson316.github.io/portfolio/) 的 3D 導覽助手「小boson」，使用 [Perxona Presentation SDK](https://docs.perxona.ai/docs/widget.html) 嵌入。
+
+**核心原則：** Dashboard 的 `apiKey` **只放後端**；前端只保留公開的 `agentProfileId`，執行時向 API 取 JWT `session_token`。
 
 ---
 
-## 架構
+## 架構總覽
 
 ```
-訪客瀏覽器（GitHub Pages）
-  ├─ perxona-config.js     → agentProfileId（可 commit）
-  ├─ perxona-embed.js      → 載入 SDK、開 panel
-  └─ GET /api/perxona-token → portfolio-api 簽 JWT
+訪客瀏覽器（GitHub Pages: boson316.github.io/portfolio）
+  ├─ perxona-config.js     → agentProfileId + PRODUCTION_API_URL
+  ├─ perxona-embed.js      → 載入 SDK、fetch token、掛 <sv-agent>
+  └─ GET /api/perxona-token → Render 後端簽 JWT
                                     ↑
-                              PERXONA_API_KEY（.env，勿 commit）
+                         PERXONA_API_KEY（Render env，勿 commit）
 ```
 
-| 元件 | 路徑 |
-|------|------|
-| 前端 embed | `cursor/3_Web與API/portfolio/` |
-| 後端 API | `cursor/3_Web與API/portfolio-api/` |
+| 元件 | Repo / 路徑 |
+|------|-------------|
+| 前端 embed | [boson316/portfolio](https://github.com/boson316/portfolio) · `cursor/3_Web與API/portfolio/` |
+| 後端 API | [boson316/perxona](https://github.com/boson316/perxona) · `cursor/3_Web與API/portfolio-api/` |
+| 線上 API | https://perxona.onrender.com |
+| Live 頁（獨立） | https://live.perxona.ai/asia/boson316/xiaoboson |
+
+### 與 Dashboard 嵌入範例的對照
+
+| Dashboard 範例 | 本專案 |
+|----------------|--------|
+| `<script src="cdn.perxona.ai/asia/prod/latest/...">` | `perxona-embed.js` 動態載入 ✅ |
+| `agentProfileId="01KZTWWPD7VZY0R9G2JYF0C7X9"` | `perxona-config.js` ✅ |
+| `presentationMode="embedded"` | ✅ |
+| `apiKey="..."` 寫在 HTML | **不放前端** → 改 `session_token` ✅ |
 
 ---
 
 ## 一、Perxona Dashboard
 
-### 分享網址 slug
+### Agent 設定
 
-- 顯示名稱可為「小boson」
-- **URL slug 只能用** `a-z` `A-Z` `0-9` `_` `-`（≥3 字元）
-- 建議：`xiaoboson`
-- Live link：`https://live.perxona.ai/asia/boson316/xiaoboson`
+- 顯示名稱：小boson
+- URL slug：`xiaoboson`（只能用 `a-z` `A-Z` `0-9` `_` `-`，≥3 字）
+- Live link：https://live.perxona.ai/asia/boson316/xiaoboson
 
-### 部署存取控制（嵌入程式碼）
+### 部署存取控制（嵌入網域白名單）
 
-| 欄位 | 填什麼 |
-|------|--------|
-| 網域 | `boson316.github.io` |
-| 不要填 | `https://github.com/boson316`（那是 profile，不是網站） |
+| 欄位 | 線上填 | 本機 dev 填 |
+|------|--------|-------------|
+| **網域** | `boson316.github.io` | `localhost` |
 
-本機 dev 與線上通常只能填一個網域；優先填 `boson316.github.io`，本機用 Render API + localhost Origin 白名單測試。
+- 通常**只能填一個**；上線用 `boson316.github.io`，本機測試暫改 `localhost`
+- **不要填：** `https://github.com/boson316`、`/portfolio` path、尾端 `/`
+- 填完必須 **儲存**，等 1～2 分鐘生效
 
-### 嵌入程式碼（參考）
+### 分享連結 vs 嵌入
 
-Dashboard 會提供類似：
-
-```html
-<script type="module" src="https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js"></script>
-<sv-agent
-  agentProfileId="01KZTWWPD7VZY0R9G2JYF0C7X9"
-  presentationMode="embedded"
-  apiKey="（僅後端 .env，勿寫進前端 repo）"
-></sv-agent>
-```
+| 項目 | 用途 |
+|------|------|
+| Live 連結 `live.perxona.ai/...` | Perxona 託管頁，**不受**你的網域白名單限制 |
+| 嵌入 widget | 在作品集內嵌，**必須**通過網域白名單 |
 
 ---
 
-## 二、後端 `.env`（portfolio-api）
+## 二、後端 API（perxona repo）
 
-### 建立
+### 本機 `.env`
 
 ```powershell
 cd c:\Users\User\Documents\code\cursor\3_Web與API\portfolio-api
 Copy-Item .env.example .env
 ```
 
-### 必填（Perxona）
-
 ```env
-PERXONA_API_KEY=你的_Dashboard_apiKey
+PERXONA_API_KEY=Dashboard_嵌入_apiKey_完整_UUID
 PERXONA_TOKEN_TTL_SECONDS=10800
 PERXONA_ALLOWED_ORIGINS=https://boson316.github.io,http://localhost,http://127.0.0.1
-```
-
-### 選填（Groq 文字聊天 fallback）
-
-```env
-GROQ_API_KEY=gsk_xxxx
-GROQ_MODEL=llama-3.1-8b-instant
-PORT=5000
+GROQ_API_KEY=gsk_xxxx          # 選填，文字聊天 fallback
 FLASK_DEBUG=0
+PORT=5000
 ```
-
-### 啟動
 
 ```powershell
 pip install -r requirements.txt
 python app.py
 ```
 
-預設：`http://127.0.0.1:5000`
+根路徑 `/` 回 **404 是正常的**（只有 `/api/*`）。
 
-### 驗證
+### 本機驗證（PowerShell）
 
-> **PowerShell 注意：** `curl` 是 `Invoke-WebRequest` 別名，不支援 `-H`。請用 `curl.exe` 或下方 `Invoke-RestMethod`。
+> `curl` 是 `Invoke-WebRequest` 別名，不支援 `-H` → 用 **`curl.exe`**
 
 ```powershell
-# 方式 A（推薦）：Windows 內建 curl.exe
+curl.exe https://127.0.0.1:5000/api/health
 curl.exe -H "Origin: http://localhost:3000" http://127.0.0.1:5000/api/perxona-token
-
-# 方式 B：PowerShell 原生
-Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/perxona-token" -Headers @{ Origin = "http://localhost:3000" }
-```
-
-成功回傳：
-
-```json
-{
-  "sessionToken": "eyJ...",
-  "expiresAt": 1234567890,
-  "ttlSeconds": 10800
-}
 ```
 
 ---
 
-## 三、前端設定（portfolio）
+## 三、Render 部署
 
-### `perxona-config.js`（可 commit）
+### 建立 Service
+
+1. [render.com](https://render.com) → **New Web Service** → Connect **`boson316/perxona`**
+2. 設定：
+
+| 欄位 | 值 |
+|------|-----|
+| Name | `perxona` |
+| Build | `pip install -r requirements.txt` |
+| Start | `gunicorn --bind 0.0.0.0:$PORT app:app` |
+| Plan | Free |
+
+### Environment Variables
+
+| Key | Value |
+|-----|-------|
+| `PERXONA_API_KEY` | Dashboard 嵌入 apiKey（**與 Dashboard 逐字一致**） |
+| `PERXONA_TOKEN_TTL_SECONDS` | `10800` |
+| `PERXONA_ALLOWED_ORIGINS` | `https://boson316.github.io,http://localhost,http://127.0.0.1` |
+| `GROQ_API_KEY` | 選填 |
+| `FLASK_DEBUG` | `0` |
+
+> ⚠️ `PERXONA_API_KEY` 若與 Dashboard 不一致，widget 會 **401 Unauthorized**（JWT 驗證失敗）。
+
+### 線上驗證
+
+```powershell
+curl.exe https://perxona.onrender.com/api/health
+curl.exe -H "Origin: https://boson316.github.io" https://perxona.onrender.com/api/perxona-token
+```
+
+預期 health：`{"ok":true,"perxona":true,...}`  
+預期 token：含 `sessionToken`、`ttlSeconds:10800`
+
+---
+
+## 四、前端（portfolio repo）
+
+### `perxona-config.js`
 
 ```javascript
 window.PERXONA_CONFIG = {
@@ -127,35 +148,43 @@ window.PERXONA_CONFIG = {
   liveUrl: 'https://live.perxona.ai/asia/boson316/xiaoboson'
 };
 
-// 本機 dev
-window.PORTFOLIO_API_URL = 'http://127.0.0.1:5000';
+var PRODUCTION_API_URL = 'https://perxona.onrender.com';
 
-// GitHub Pages 上線後改為 Render / Railway URL
-// window.PORTFOLIO_API_URL = 'https://your-portfolio-api.onrender.com';
+(function () {
+  var host = location.hostname;
+  window.PORTFOLIO_API_URL = (host === 'localhost' || host === '127.0.0.1')
+    ? 'http://127.0.0.1:5000'
+    : PRODUCTION_API_URL;
+})();
 ```
 
-**不要**在前端寫 `apiKey` 或 `sessionToken`。
+**不要**在前端寫 `apiKey` 或硬編 `sessionToken`。
 
 ### 本機預覽
 
 ```powershell
+# Terminal 1
+cd c:\Users\User\Documents\code\cursor\3_Web與API\portfolio-api
+python app.py
+
+# Terminal 2
 cd c:\Users\User\Documents\code\cursor\3_Web與API\portfolio
-npx serve .
+npx serve . -l 3000
+start http://localhost:3000/
 ```
 
-1. 先起 `portfolio-api`（port 5000）
-2. 再起前端（例如 port 3000）
-3. 點右下角 💬 或「和 AI 聊聊」→ 右側 Perxona embedded panel
+本機 Perxona 3D 需 Dashboard 網域白名單含 `localhost`；否則 widget 白屏／disconnected。
 
----
+### Push GitHub Pages
 
-## 四、GitHub Pages 上線
+```powershell
+cd c:\Users\User\Documents\code\cursor\3_Web與API\portfolio
+git add perxona-config.js perxona-embed.js index.html en/index.html styles.css script.js PERXONA.md
+git commit -m "feat: Perxona 3D embed with Render API"
+git push origin main
+```
 
-1. **部署 `portfolio-api`** 到 Render / Railway
-2. 平台 Environment Variables 填入與 `.env` 相同的 `PERXONA_*`、`GROQ_*`
-3. **`perxona-config.js`** 設 `PORTFOLIO_API_URL` 為 API 根網址
-4. **push portfolio** 到 GitHub Pages repo
-5. Perxona Dashboard 網域白名單維持 `boson316.github.io`
+等 1～2 分鐘 → https://boson316.github.io/portfolio/ → **Ctrl+Shift+R** → 💬
 
 ---
 
@@ -164,20 +193,50 @@ npx serve .
 | 方法 | 路徑 | 說明 |
 |------|------|------|
 | GET | `/api/health` | `{ ok, groq, perxona }` |
-| GET | `/api/perxona-token` | 簽發 JWT；需白名單 Origin |
-| POST | `/api/chat` | Groq 文字回覆（小boson system prompt） |
+| GET | `/api/perxona-token` | 簽 JWT；檢查 Origin 白名單 |
+| POST | `/api/chat` | Groq 文字 fallback |
 
-### `/api/perxona-token` 安全
-
-- JWT 演算法：HS256
-- Payload：`iat`、`exp`（預設 TTL 3 小時）
-- 簽名 secret：`PERXONA_API_KEY`
-- 檢查 `Origin` / `Referer` 是否在 `PERXONA_ALLOWED_ORIGINS`
-- 前端在 token 到期前 60 秒會重新 fetch
+JWT：HS256 · payload `iat`/`exp` · secret = `PERXONA_API_KEY`
 
 ---
 
-## 六、Perxona 知識庫 Prompt（貼 Dashboard）
+## 六、故障排除
+
+| 現象 | 原因 | 解法 |
+|------|------|------|
+| PowerShell `curl -H` 報錯 | `curl` 是別名 | 用 `curl.exe` 或 `Invoke-RestMethod` |
+| 開 `http://127.0.0.1:5000/` 404 | 根路徑無 route | 測 `/api/health` |
+| 舊文字聊天框（快捷按鈕+送出） | token 失敗或未設 API URL | 設 `PORTFOLIO_API_URL`、確認 API 在跑 |
+| Panel 白屏 | 本機未加 `localhost` 白名單 | Dashboard 暫改 `localhost` |
+| Network **401**（`01KZTWWP...`、`disclaimer`） | Render `PERXONA_API_KEY` ≠ Dashboard apiKey | 重貼 key → Save → Redeploy |
+| `disconnected` + 401 | 同上（JWT 驗證失敗） | 逐字比對 apiKey，rotate 後兩邊同步 |
+| `/api/perxona-token` 403 | Render `PERXONA_ALLOWED_ORIGINS` 缺 Origin | 加 `https://boson316.github.io` |
+| `/api/perxona-token` 503 | 未設 `PERXONA_API_KEY` | Render env 補上 |
+| Live 頁正常、嵌入失敗 | 嵌入網域白名單或 401 | 查 Dashboard 網域 + Render key |
+| 第一次很慢 | Render Free 冷啟動 | 等 ~30s 再試 |
+
+### DevTools 快速查
+
+1. **Network** → `perxona.onrender.com/api/perxona-token` → 200
+2. **Network** → `cdn.perxona.ai` → 200
+3. **Network** → Perxona API 請求 → 非 401
+4. **Console** → `life-status: ready` 表示成功
+
+---
+
+## 七、上線 Checklist
+
+- [ ] [boson316/perxona](https://github.com/boson316/perxona) 已 push
+- [ ] Render `perxona` service Live
+- [ ] Render env：`PERXONA_API_KEY` 與 Dashboard **一致**
+- [ ] `curl.exe` health + token 皆 200
+- [ ] Dashboard 網域：`boson316.github.io`
+- [ ] [boson316/portfolio](https://github.com/boson316/portfolio) push `perxona-*` 檔案
+- [ ] https://boson316.github.io/portfolio/ 點 💬 出現 3D widget
+
+---
+
+## 八、Perxona 知識庫 Prompt（貼 Dashboard）
 
 ```
 你是「小boson」，Boson（GitHub: boson316）作品集網站的 3D 導覽助手。
@@ -199,35 +258,22 @@ npx serve .
 
 ---
 
-## 七、相關檔案
+## 九、相關檔案
 
 | 檔案 | 用途 |
 |------|------|
-| `portfolio/perxona-config.js` | 公開 agentProfileId + API URL |
-| `portfolio/perxona-config.example.js` | 範本 |
-| `portfolio/perxona-embed.js` | SDK 載入、token fetch、panel |
-| `portfolio/index.html` | `#perxonaPanel` 容器 |
-| `portfolio-api/app.py` | `/api/perxona-token` 路由 |
+| `portfolio/perxona-config.js` | agentProfileId + 本機/線上 API URL |
+| `portfolio/perxona-embed.js` | SDK、token、panel、lifecycle 提示 |
+| `portfolio/index.html` | `#perxonaPanel` / `#perxonaMount` |
+| `portfolio-api/app.py` | Flask 路由 |
 | `portfolio-api/perxona_token.py` | JWT 簽發、Origin 檢查 |
-| `portfolio-api/.env.example` | 環境變數範本 |
-| `portfolio-api/.env` | 本機 secret（**勿 commit**） |
+| `portfolio-api/render.yaml` | Render 部署範本 |
+| `portfolio-api/.env.example` | 本機 env 範本 |
 
 ---
 
-## 八、故障排除
+## 十、安全提醒
 
-| 現象 | 可能原因 |
-|------|----------|
-| 仍顯示舊文字聊天框 | `PORTFOLIO_API_URL` 未設或 token 請求失敗 |
-| `/api/perxona-token` 403 | Origin 不在白名單；本機需 `http://localhost:xxxx` |
-| `/api/perxona-token` 503 | 後端未設 `PERXONA_API_KEY` |
-| Perxona widget 空白 | Dashboard 網域未加 `boson316.github.io` |
-| 分享 slug 紅框 | slug 含中文；改用 `xiaoboson` |
-
----
-
-## 九、安全提醒
-
-- **apiKey 曾出現在聊天紀錄時**，建議至 Perxona Dashboard **rotate key**，並更新 `.env`
-- 公開 repo 絕不 commit `.env` 或含 apiKey 的 config
-- GitHub Pages 上 apiKey 可被任何人從 Network 看到；務必走 `/api/perxona-token` 路徑
+- apiKey **絕不** commit 到 GitHub；只放 Render env / 本機 `.env`
+- apiKey 曾外洩（聊天、截圖）→ Dashboard **rotate** → 同步更新 Render
+- GitHub Pages 若直接寫 `apiKey`，任何人 F12 都看得到 → 必須走 `/api/perxona-token`
