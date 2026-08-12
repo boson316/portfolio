@@ -336,7 +336,7 @@
       <div class="container tw-px-responsive">
         <h2 class="section-title">聯絡我</h2>
         <p class="contact-desc">
-          歡迎透過下方 AI 助手提問，或寄信到 poboson316@gmail.com 與我聯繫。
+          歡迎透過下方小boson提問，或寄信到 poboson316@gmail.com 與我聯繫。
         </p>
       </div>
     </section>
@@ -350,19 +350,20 @@
   <!-- AI 聊天框 -->
   <aside class="chat-panel" id="chatPanel" aria-hidden="true">
     <div class="chat-header">
-      <h3>AI 助手</h3>
+      <h3>小boson</h3>
       <button type="button" class="chat-close" id="chatClose" aria-label="關閉">×</button>
     </div>
     <div class="chat-messages" id="chatMessages">
       <div class="msg msg-bot">
-        <span class="msg-avatar">AI</span>
-        <p>你好！我是你的 AI 助手，有什麼想問的嗎？</p>
+        <span class="msg-avatar">小B</span>
+        <p>我是小boson，可介紹 GPU Lab、計算機、美食地圖、新聞蒐集、ML 專區；或給聯絡信箱。</p>
       </div>
     </div>
     <div class="chat-chips" aria-label="快捷提問">
       <button type="button" class="chat-chip" data-chat-prompt="介紹專案">介紹專案</button>
+      <button type="button" class="chat-chip" data-chat-prompt="你的 CUDA 專案有哪些亮點？">CUDA 亮點</button>
       <button type="button" class="chat-chip" data-chat-prompt="你的 ML 專區有哪些內容？">ML 專區</button>
-      <button type="button" class="chat-chip" data-chat-prompt="你的 CUDA 專案有哪些亮點？">CUDA 專案</button>
+      <button type="button" class="chat-chip" data-chat-prompt="怎麼聯絡 Boson？">怎麼聯絡</button>
     </div>
     <form class="chat-form" id="chatForm">
       <input type="text" class="chat-input" id="chatInput" placeholder="例如：你的 AI / CUDA 專案？ (Enter 送出)" autocomplete="off">
@@ -372,15 +373,26 @@
 
   <div class="chat-overlay" id="chatOverlay" aria-hidden="true"></div>
 
+  <!-- Perxona embedded avatar（無 transform，避免 widget 錯位） -->
+  <aside class="perxona-panel" id="perxonaPanel" aria-hidden="true">
+    <div class="perxona-panel-header">
+      <h3>小boson</h3>
+      <button type="button" class="perxona-panel-close" id="perxonaClose" aria-label="關閉">×</button>
+    </div>
+    <div id="perxonaMount" class="perxona-mount"></div>
+  </aside>
+
   <footer class="footer">
     <div class="container tw-px-responsive">
       <p>© 2026 作品集. GPU 專案 · 年化報酬率計算機 · AI 助手 · 暗黑模式 · <a href="card/">數位名片</a></p>
     </div>
   </footer>
 
-  <!-- Groq 聊天：由後端 portfolio-api 呼叫 Groq，API Key 放在 .env，不暴露於前端 -->
   <script>window.PORTFOLIO_API_URL = window.PORTFOLIO_API_URL || '';</script>
   <script src="script.js" defer></script>
+  <script>window.PERXONA_CONFIG = window.PERXONA_CONFIG || {};</script>
+  <script src="perxona-config.js" defer></script>
+  <script src="perxona-embed.js" defer></script>
   <script src="hero-animation.js" defer></script>
   <!-- Chart.js + PyTorch 曲線、Three.js + skills-3d 均延遲載入 -->
 </body>

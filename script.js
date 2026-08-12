@@ -192,6 +192,10 @@
   const chatChips = document.querySelectorAll('.chat-chip');
 
   function openChat() {
+    if (window.__perxonaEmbed && typeof window.__perxonaOpen === 'function') {
+      window.__perxonaOpen();
+      return;
+    }
     if (!chatPanel || !chatOverlay) return;
     chatPanel.classList.add('is-open');
     chatPanel.setAttribute('aria-hidden', 'false');
@@ -202,6 +206,10 @@
   window.openChat = openChat;
 
   function closeChat() {
+    if (window.__perxonaEmbed && typeof window.__perxonaClose === 'function') {
+      window.__perxonaClose();
+      return;
+    }
     if (!chatPanel || !chatOverlay) return;
     chatPanel.classList.remove('is-open');
     chatPanel.setAttribute('aria-hidden', 'true');
@@ -238,7 +246,7 @@
     wrap.className = 'msg msg-' + role + (options && options.typing ? ' msg-typing' : '');
     var avatar = document.createElement('span');
     avatar.className = 'msg-avatar';
-    avatar.textContent = role === 'user' ? (isEn ? 'You' : '你') : 'AI';
+    avatar.textContent = role === 'user' ? (isEn ? 'You' : '你') : '小B';
     var p = document.createElement('p');
     p.textContent = text;
     wrap.appendChild(avatar);
@@ -257,7 +265,7 @@
     var lower = text.toLowerCase();
     if (!text) return 'Ask about projects, the return calculator, or contact info.';
     if (lower.includes('hi') || lower.includes('hello')) {
-      return 'Hi! I can walk you through GPU projects, ML charts, the calculator, or how to reach Boson.';
+      return 'Hi, I\'m 小boson. I can walk you through GPU projects, ML charts, the calculator, or how to reach Boson.';
     }
     if (lower.includes('project') || lower.includes('portfolio')) {
       return 'Featured: GPU Optimization Lab, annual return calculator, news aggregator, NIU food map, ML charts, and RAG (WIP). Scroll to Selected projects.';
@@ -272,7 +280,7 @@
       return 'Use the ☀/🌙 button in the nav to toggle light/dark mode.';
     }
     if (lower.includes('cuda') || lower.includes('gpu') || lower.includes('pytorch')) {
-      return 'See the GPU Optimization Lab section — CUDA matmul 521× speedup, MNIST 99%, Triton, FlashAttention.';
+      return 'See the GPU Optimization Lab — CUDA matmul 521× speedup, MNIST 99%, Triton, FlashAttention. GitHub: https://github.com/boson316/RTX3050-GPU-Mastery';
     }
     if (lower.includes('ml') || lower.includes('knn') || lower.includes('confusion') || lower.includes('pca')) {
       return 'ML section: Wisconsin breast cancer KNN (~94.7% acc), confusion matrix, loss/acc curves, feature importance, PCA.';
@@ -291,7 +299,7 @@
     }
 
     if (lower.includes('你好') || lower.includes('嗨') || lower.includes('hi')) {
-      return '你好！我是你的作品集小助手，可以幫你介紹專案、年化報酬率計算機，或提供聯絡方式。';
+      return '你好，我是小boson。可以介紹 GPU Lab、計算機、美食地圖、新聞蒐集、ML 專區，或給聯絡信箱。';
     }
 
     if (lower.includes('專案') || lower.includes('作品') || lower.includes('portfolio')) {
@@ -329,7 +337,7 @@
     }
 
     if (lower.includes('cuda') || lower.includes('gpu') || lower.includes('pytorch')) {
-      return '有接觸 PyTorch、CUDA 與 GPU 加速的 ML；作品集含「GPU Optimization Lab」專區與 PyTorch 訓練曲線卡片。歡迎捲到專案區查看。';
+      return 'GPU Optimization Lab：matmul 521×、reduction 0.763ms、MNIST 99%。GitHub：https://github.com/boson316/RTX3050-GPU-Mastery — 本頁 #gpu-showcase。';
     }
 
     if (

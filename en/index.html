@@ -328,19 +328,20 @@
 
   <aside class="chat-panel" id="chatPanel" aria-hidden="true">
     <div class="chat-header">
-      <h3>AI Assistant</h3>
+      <h3>小boson</h3>
       <button type="button" class="chat-close" id="chatClose" aria-label="Close">×</button>
     </div>
     <div class="chat-messages" id="chatMessages">
       <div class="msg msg-bot">
-        <span class="msg-avatar">AI</span>
-        <p>Hi! Ask me about projects, the return calculator, or how to reach Boson.</p>
+        <span class="msg-avatar">小B</span>
+        <p>I'm 小boson. Ask about the GPU lab, calculator, food map, news crawler, ML charts, or how to reach Boson.</p>
       </div>
     </div>
     <div class="chat-chips" aria-label="Quick prompts">
       <button type="button" class="chat-chip" data-chat-prompt="Introduce your projects">Projects</button>
-      <button type="button" class="chat-chip" data-chat-prompt="What is in the ML section?">ML section</button>
       <button type="button" class="chat-chip" data-chat-prompt="CUDA project highlights">CUDA</button>
+      <button type="button" class="chat-chip" data-chat-prompt="What is in the ML section?">ML section</button>
+      <button type="button" class="chat-chip" data-chat-prompt="How can I contact Boson?">Contact</button>
     </div>
     <form class="chat-form" id="chatForm">
       <input type="text" class="chat-input" id="chatInput" placeholder="e.g. Your GPU projects? (Enter to send)" autocomplete="off">
@@ -349,6 +350,14 @@
   </aside>
 
   <div class="chat-overlay" id="chatOverlay" aria-hidden="true"></div>
+
+  <aside class="perxona-panel" id="perxonaPanel" aria-hidden="true">
+    <div class="perxona-panel-header">
+      <h3>小boson</h3>
+      <button type="button" class="perxona-panel-close" id="perxonaClose" aria-label="Close">×</button>
+    </div>
+    <div id="perxonaMount" class="perxona-mount"></div>
+  </aside>
 
   <footer class="footer">
     <div class="container tw-px-responsive">
@@ -359,6 +368,9 @@
   <script>window.PORTFOLIO_API_URL = window.PORTFOLIO_API_URL || '';</script>
   <script>window.PORTFOLIO_ASSET_BASE = '../';</script>
   <script src="../script.js" defer></script>
+  <script>window.PERXONA_CONFIG = window.PERXONA_CONFIG || {};</script>
+  <script src="../perxona-config.js" defer></script>
+  <script src="../perxona-embed.js" defer></script>
   <script src="../hero-animation.js" defer></script>
   <!-- EN：直接載入技能球（避免 /en/ 延遲載入路徑錯誤） -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

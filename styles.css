@@ -991,6 +991,79 @@ html[lang="en"] .project-brief > div {
 
 .chat-fab-icon { display: block; line-height: 1; }
 
+/* Perxona embedded panel — 不用 transform（Perxona docs 要求） */
+.perxona-panel {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 99;
+  width: 100%;
+  max-width: 420px;
+  height: min(85vh, 720px);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition), visibility var(--transition);
+}
+.perxona-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.perxona-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  flex-shrink: 0;
+}
+.perxona-panel-header h3 { margin: 0; font-size: 1rem; }
+.perxona-panel-close {
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0.25rem 0.5rem;
+}
+.perxona-mount {
+  flex: 1;
+  min-height: 320px;
+  overflow: hidden;
+  position: relative;
+}
+.perxona-status {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  z-index: 1;
+  pointer-events: none;
+}
+.perxona-status.is-error { color: #b45309; }
+.perxona-status[hidden] { display: none; }
+.perxona-mount sv-agent {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+body.perxona-active .chat-panel { display: none; }
+
 /* ========== Chat Panel ========== */
 .chat-overlay {
   position: fixed;
