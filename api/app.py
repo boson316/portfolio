@@ -5,6 +5,13 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 
+from perxona_proxy import (
+    MAX_BODY_BYTES,
+    build_upstream_headers,
+    client_origin,
+    forward_perxona,
+    resolve_proxy_target,
+)
 from perxona_token import create_session_token, origin_allowed, parse_allowed_origins, perxona_key_hint
 
 load_dotenv()
@@ -128,6 +135,7 @@ def health():
     if hint:
         payload["perxonaKeyHint"] = hint["hint"]
         payload["perxonaKeyLen"] = hint["len"]
+    payload["perxonaProxy"] = bool(PERXONA_API_KEY)
     return jsonify(payload)
 
 
@@ -147,6 +155,39 @@ def perxona_token():
         "expiresAt": expires_at,
         "ttlSeconds": PERXONA_TOKEN_TTL_SECONDS,
     })
+
+
+@app.route("/api/perxona-proxy", methods=["GET", "POST", "PUT", "PATCH", "DELETE"])
+def perxona_proxy():
+    """SDK 的 console.perxona.ai 請求改走這裡，用 server-side x-api-key 避開 JWT 1002。"""
+    if not PERXONA_API_KEY:
+        return jsonify({"error": "PERXONA_API_KEY 未設定"}), 503
+
+    origin = request.headers.get("Origin") or ""
+    referer = request.headers.get("Referer") or ""
+    if not origin_allowed(origin, referer, PERXONA_ALLOWED_ORIGINS):
+        return jsonify({"error": "來源未授權"}), 403
+
+    target = resolve_proxy_target(request.args.get("target") or "")
+    if not target:
+        return jsonify({"error": "target 不合法"}), 400
+
+    body = request.get_data() or None
+    if body and len(body) > MAX_BODY_BYTES:
+        return jsonify({"error": "payload 過大"}), 413
+
+    status, headers, payload = forward_perxona(
+        request.method,
+        target,
+        build_upstream_headers(dict(request.headers), PERXONA_API_KEY, client_origin(origin, referer)),
+        body,
+    )
+    response = app.response_class(payload, status=status)
+    for key, value in headers.items():
+        if key.lower() == "content-length":
+            continue
+        response.headers[key] = value
+    return response
 
 
 @app.route("/api/chat", methods=["POST"])

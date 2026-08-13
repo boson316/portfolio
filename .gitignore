@@ -29,3 +29,11 @@ __pycache__/
 .venv/
 venv/
 api/.env
+# Cursor 子 workspace 護欄（project_bootstrap 方案 A — 勿 commit symlink／內部文件）
+.cursor/
+.cursorrules
+AGENTS.md
+AGENTS.full.md
+prompt-patterns.md
+.cursorignore
+.cursorindexingignore

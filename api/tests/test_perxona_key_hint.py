@@ -9,9 +9,9 @@ from perxona_token import perxona_key_hint
 
 
 def test_perxona_key_hint_masks_middle():
-    hint = perxona_key_hint("4b69da5a-53d0-4da8-82d5-2f55b7a5726e")
+    hint = perxona_key_hint("01234567-89ab-cdef-0123-456789abcdef")
     assert hint is not None
-    assert hint["hint"] == "4b69…726e"
+    assert hint["hint"] == "0123…cdef"
     assert hint["len"] == 36
 
 

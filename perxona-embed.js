@@ -11,6 +11,7 @@
   var sessionToken = '';
   var tokenExpiresAt = 0;
   var sdkReady = false;
+  var liveFallbackMounted = false;
   var panel = null;
   var overlay = null;
   var closeBtn = null;
@@ -19,18 +20,48 @@
     return String(window.PORTFOLIO_API_URL || cfg.apiUrl || '').replace(/\/$/, '');
   }
 
+  function installPerxonaApiProxy(apiBase) {
+    if (!apiBase || window.__perxonaProxyInstalled) return;
+    window.__perxonaProxyInstalled = true;
+
+    function proxiedUrl(url) {
+      try {
+        var parsed = new URL(String(url), location.href);
+        if (parsed.protocol === 'https:' && parsed.hostname === 'console.perxona.ai') {
+          return apiBase + '/api/perxona-proxy?target=' + encodeURIComponent(parsed.href);
+        }
+      } catch (err) {}
+      return null;
+    }
+
+    var nativeFetch = window.fetch;
+    if (typeof nativeFetch === 'function') {
+      window.fetch = function (input, init) {
+        var url = (input && typeof input.url === 'string') ? input.url : String(input);
+        var rewritten = proxiedUrl(url);
+        if (!rewritten) return nativeFetch.apply(this, arguments);
+        if (typeof Request !== 'undefined' && input instanceof Request) {
+          return nativeFetch.call(this, new Request(rewritten, input));
+        }
+        return nativeFetch.call(this, rewritten, init);
+      };
+    }
+
+    var nativeOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (method, url) {
+      var rewritten = proxiedUrl(url);
+      var args = Array.prototype.slice.call(arguments);
+      if (rewritten) args[1] = rewritten;
+      return nativeOpen.apply(this, args);
+    };
+  }
+
   function hasAgent() {
     return Boolean(agentProfileId);
   }
 
   function getAppearanceMode() {
     return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-  }
-
-  function getDashboardDomainHint() {
-    var host = location.hostname;
-    if (host === 'localhost' || host === '127.0.0.1') return 'localhost';
-    return host;
   }
 
   function markPerxonaReady() {
@@ -124,29 +155,25 @@
     help.innerHTML =
       '<strong>' + reason + '</strong>' +
       (extraHtml || '') +
-      '<ol class="perxona-help-list">' +
-      '<li>Dashboard <strong>Desktop 嵌入 apiKey</strong> → Render <code>PERXONA_API_KEY</code> 逐字貼上 → Save → 等 redeploy</li>' +
-      '<li>比對指紋：<code>curl.exe https://perxona.onrender.com/api/health</code> 的 <code>perxonaKeyHint</code> 前4後4 是否與 Dashboard 相同</li>' +
-      '<li>agentProfileId：<code>' + agentProfileId + '</code></li>' +
-      '</ol>' +
-      '<a class="perxona-live-link" href="' + liveUrl + '" target="_blank" rel="noopener noreferrer">Live 3D 頁（已確認正常）</a>';
+      '<p>也可改從 Live 頁開啟 3D 小boson。</p>' +
+      '<a class="perxona-live-link" href="' + liveUrl + '" target="_blank" rel="noopener noreferrer">Live 3D 頁</a>';
   }
 
-  function appendKeyHintToHelp() {
-    var apiBase = getApiBase();
-    if (!apiBase) return;
-    fetch(apiBase + '/api/health', { headers: { Accept: 'application/json' } })
-      .then(function (res) { return res.ok ? res.json() : null; })
-      .then(function (data) {
-        if (!data || !data.perxonaKeyHint) return;
-        var help = document.getElementById('perxonaHelp');
-        if (!help) return;
-        var el = document.createElement('p');
-        el.className = 'perxona-key-hint';
-        el.innerHTML = 'Render key 指紋：<code>' + data.perxonaKeyHint + '</code>（' + data.perxonaKeyLen + ' 字）';
-        help.appendChild(el);
-      })
-      .catch(function () {});
+  function mountLiveIframe() {
+    var mount = document.getElementById('perxonaMount');
+    if (!mount || liveFallbackMounted) return;
+    liveFallbackMounted = true;
+    var agent = mount.querySelector('sv-agent');
+    if (agent) agent.remove();
+    var frame = document.createElement('iframe');
+    frame.className = 'perxona-live-frame';
+    frame.src = liveUrl;
+    frame.title = '3D 小boson';
+    frame.allow = 'microphone; camera; autoplay; clipboard-write';
+    frame.setAttribute('allowfullscreen', '');
+    mount.appendChild(frame);
+    setMountStatus('', false);
+    markPerxonaReady();
   }
 
   function applySessionToken(agent) {
@@ -161,8 +188,9 @@
     var disconnectNotified = false;
     var failTimer = window.setTimeout(function () {
       if (ready) return;
-      setMountStatus('3D 載入逾時', true);
-      renderHelpPanel('3D 載入逾時 → Console 紅字；Network All 查 cdn.perxona.ai 與 perxona.ai API');
+      console.warn('[perxona] 3D 載入逾時，改開 Live iframe');
+      mountLiveIframe();
+      renderHelpPanel('嵌入逾時，已改開 Live 3D');
     }, 25000);
 
     agent.addEventListener('life-status', function (event) {
@@ -181,12 +209,9 @@
       }
       if (status === 'disconnected' && !disconnectNotified) {
         disconnectNotified = true;
-        setMountStatus('Perxona 連線失敗', true);
-        renderHelpPanel(
-          'Perxona API 403（token 200 但 initialize 403）→ JWT 簽章 key 與 Dashboard apiKey 不一致',
-          '<p>Network 若見 <code>initialize</code>、agent id 皆 403，幾乎一定是 Render key 錯。</p>'
-        );
-        appendKeyHintToHelp();
+        console.warn('[perxona] initialize 失敗（常見 code 1002），改開 Live iframe');
+        mountLiveIframe();
+        renderHelpPanel('嵌入初始化失敗，已改開 Live 3D');
       }
     });
   }
@@ -282,6 +307,7 @@
       return Promise.reject(new Error('perxona_config_missing'));
     }
 
+    installPerxonaApiProxy(apiBase);
     return ensureSessionToken(apiBase)
       .then(function () { return loadSdk(false); })
       .then(mountWidget);
@@ -295,32 +321,10 @@
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden', 'false');
 
-    if (!sessionToken) {
-      setMountStatus('3D token 未取得', true);
-      renderHelpPanel('後端 token 失敗');
-      return;
-    }
-
     ensureWidgetReady().catch(function (err) {
       console.error('[perxona] ensureWidgetReady failed', err);
-      var msg = String(err && err.message || err || '');
-      if (msg.indexOf('perxona_sdk_load_failed') !== -1 || msg.indexOf('perxona_sdk_timeout') !== -1) {
-        setMountStatus('SDK 載入失敗', true);
-        renderHelpPanel('cdn.perxona.ai 載入失敗或逾時（Network 改 All 篩 cdn.perxona.ai；關擋廣告）');
-        return;
-      }
-      if (msg.indexOf('perxona_config_missing') !== -1) {
-        setMountStatus('設定缺失', true);
-        renderHelpPanel('perxona-config.js 未載入或 PORTFOLIO_API_URL 空白');
-        return;
-      }
-      if (msg.indexOf('perxona_token_') !== -1) {
-        setMountStatus('3D token 失敗', true);
-        renderHelpPanel('後端 token ' + msg.replace('perxona_token_', ''));
-        return;
-      }
-      setMountStatus('3D 初始化失敗', true);
-      renderHelpPanel('Live 正常＝Agent OK。查 Console 紅字；Network All 篩 cdn.perxona.ai / perxona.ai');
+      mountLiveIframe();
+      renderHelpPanel('嵌入載入失敗，已改開 Live 3D');
     });
   }
 
@@ -368,6 +372,7 @@
     var apiBase = getApiBase();
     if (!hasAgent() || !apiBase) return;
 
+    installPerxonaApiProxy(apiBase);
     // 背景預載 token + SDK；真正 mount 等按 3D 且 panel 已開
     ensureSessionToken(apiBase)
       .then(loadSdk)

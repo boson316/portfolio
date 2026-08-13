@@ -13,8 +13,9 @@
 | Render `PERXONA_ALLOWED_ORIGINS` | ✅ | 含 `https://boson316.github.io` |
 | Render health / token | ✅ | `ok/perxona/groq` 全 true；token 200 |
 | Perxona Live Agent | ✅ | 正常 |
+| 嵌入 3D initialize | ⚠️ **code 1002 繞過** | Render `/api/perxona-proxy` 改走 `x-api-key`；失敗則 iframe Live |
 
-> **Agent 排查約定：** 白名單與 Live 已確認。**嵌入仍失敗時**改查：GitHub Pages 是否已 push 最新 `perxona-embed.js`（目前 `?v=6`）、Network **All** 篩 `cdn.perxona.ai`、Console 紅字、Render `PERXONA_API_KEY` 與 Dashboard apiKey 是否一致（401）。
+> **Agent 排查約定：** 白名單、Live、Render JWT 簽發均已 OK。JWT `initialize` 仍 403 code **1002**（Perxona session key 未 provision）。**不要**把 apiKey 寫進前端；走 proxy 或 Live iframe。
 
 ### 快速導覽
 
@@ -243,7 +244,7 @@ var PRODUCTION_API_URL = 'https://perxona.onrender.com';
 2. 使用者按 **3D** → 開 `#perxonaPanel` → **此時才** mount `<sv-agent>`  
 3. 避免在 hidden panel 內初始化造成逾時  
 
-HTML 載入加 cache bust：`perxona-config.js?v=4`、`perxona-embed.js?v=6`
+HTML 載入加 cache bust：`perxona-config.js?v=4`、`perxona-embed.js?v=8`
 
 ---
 
@@ -251,8 +252,9 @@ HTML 載入加 cache bust：`perxona-config.js?v=4`、`perxona-embed.js?v=6`
 
 | 方法 | 路徑 | 說明 |
 |------|------|------|
-| GET | `/api/health` | `{ ok, groq, perxona }` |
+| GET | `/api/health` | `{ ok, groq, perxona, perxonaProxy }` |
 | GET | `/api/perxona-token` | 簽 JWT；檢查 Origin |
+| GET/POST… | `/api/perxona-proxy?target=` | 只轉 `https://console.perxona.ai/*`，改掛 `x-api-key` |
 | POST | `/api/chat` | Groq 文字聊天 `{ message, history? }` |
 
 JWT：`HS256` · payload `iat` + `exp` · secret = `PERXONA_API_KEY`  
@@ -287,28 +289,26 @@ git push origin main
 | 層 | 端點 | 誰擋 | 本專案狀態 |
 |----|------|------|------------|
 | **A. Flask** | `GET /api/perxona-token` → 403 | `PERXONA_ALLOWED_ORIGINS` | ✅ 已通（token 200） |
-| **B. Perxona 雲端** | `validness` / `initialize` → 403 | Dashboard 網域白名單 | ✅ 已填 `boson316.github.io` |
+| **B. Perxona 雲端** | `initialize` → 403 | session JWT 驗簽 | ❌ code **1002**（§14） |
 
-**嵌入仍失敗時（token 200 但 Perxona 雲端 403）：**
+**嵌入仍失敗時（token 200 · initialize 403）：**
 
 ```
-token 200 + initialize / agentProfileId / disclaimer 全 403
-  ① 先確認測試環境 Origin（本機 localhost → Dashboard 白名單只有 boson316.github.io 會 403）
-  ② 點 Network 裡 initialize 那條 → 貼 Request URL、Origin、Response body
-  ③ 比對 key：curl /api/health 的 perxonaKeyHint；或用 dashboard key 驗 live JWT（見 §14）
-  ④ key 已一致仍 403 → Perxona 支援（allowlist 未同步，少見）
+① DevTools → initialize → Response 是否 {"code":1002,"details":"All session keys unable to decode"}
+   → 是：Perxona 後端未 provision session key（§14 根因）· 聯絡 Perxona 或 Dashboard 刪除重建 apiKey
+   → 否：查 Origin 是否 boson316.github.io、401/其他 code
 
-1. GitHub Pages 是否最新？perxona-embed.js?v=7 已 push？Ctrl+Shift+R 強刷
-2. Network All → cdn.perxona.ai/index.js 是否 200？
-3. Console 紅字
+② GitHub Pages 最新？perxona-embed.js?v=8 · Ctrl+Shift+R
+③ Network All → cdn.perxona.ai/index.js 200？
+④ Console 紅字
 ```
 
 | 現象 | 原因 | 解法 |
 |------|------|------|
-| token 200，畫面「初始化失敗」 | 舊版 embed / SDK 未載入 | push `perxona-embed.js?v=7`；Network **All** 查 `cdn.perxona.ai` |
-| token 200，`initialize` / agent id **403**（**本機**） | Dashboard 白名單無 `localhost` | 改在 **https://boson316.github.io/portfolio/** 測；或 Dashboard 加 `localhost` |
-| token 200，`initialize` **403**（**Pages Origin 正確**） | key 不一致 **或** Perxona 雲端 allowlist | 先驗 JWT 簽章（§14）；key OK 仍 403 → 聯絡 Perxona |
-| token 200，Perxona API **403**（其他） | 同上或 allowlist 延遲 | 先比 key + Origin；仍失敗聯絡 Perxona |
+| token 200，`initialize` **403** + **code 1002** | Perxona 無法解 JWT；raw **apiKey 可 201** | Dashboard **刪除重建 apiKey** → Render → redeploy；仍失敗 → **Perxona 支援**（§14 範本） |
+| token 200，畫面「初始化失敗」 | 舊版 embed / SDK 未載入 | push `perxona-embed.js?v=8`；Network **All** 查 `cdn.perxona.ai` |
+| token 200，`initialize` **403**（**本機**） | Dashboard 白名單無 `localhost` | 改在 **https://boson316.github.io/portfolio/** 測；或 Dashboard 加 `localhost` |
+| token 200，`initialize` **403**（非 1002） | allowlist 未同步或 agent scope | 比 Origin + Response code；聯絡 Perxona |
 | Perxona API **401** | Render `PERXONA_API_KEY` ≠ Dashboard apiKey | 重貼 → Save → Redeploy |
 | `/api/perxona-token` **403** | `PERXONA_ALLOWED_ORIGINS` 缺 Origin（A 層） | 加 `https://boson316.github.io` |
 | SDK 載入失敗／逾時 | CDN 被擋、adblock | 關擋廣告；無痕視窗重試 |
@@ -344,7 +344,7 @@ token 200 + initialize / agentProfileId / disclaimer 全 403
 - [ ] Render service `perxona` Live（Root Directory: `api`）
 - [ ] `PERXONA_API_KEY` = Dashboard apiKey
 - [ ] `GROQ_API_KEY` 已設（文字聊天）
-- [ ] GitHub push → Pages 含 `perxona-embed.js?v=7`
+- [ ] GitHub push → Pages 含 `perxona-embed.js?v=8`；Render 含 `/api/perxona-proxy`
 - [ ] 作品集右下角 **3D + 💬** 兩顆 FAB
 - [ ] 3D 面板載入成功
 
@@ -405,130 +405,160 @@ token 200 + initialize / agentProfileId / disclaimer 全 403
 
 ---
 
-## 14. 排查紀錄（2026-08-13 · Agent 對話摘要）
+## 14. 排查紀錄（2026-08-13 · 完整對話摘要）
 
-### 背景驗證（使用者）
+### 最終根因（已確認）
 
-| 項目 | 結果 |
-|------|------|
-| `GET /api/health` | **200** · `{"ok":true,"perxona":true,"groq":true}` |
-| `GET /api/perxona-token`（含 Origin） | **200** · JWT 長度 128 · `iat` / `exp` 齊 |
-| 初步假設 | 403 因 JWT 缺欄位 **或** Render `PERXONA_API_KEY` ≠ Dashboard apiKey |
+**403 Response body（59 bytes）：**
 
-### 實測結論（Agent 覆核 · 同日下午）
+```json
+{"code":1002,"details":"All session keys unable to decode"}
+```
 
-**key 一致，JWT 簽章正確 — 初步假設的「key 不一致」不成立。**
+| 驗證方式 | HTTP | 說明 |
+|----------|------|------|
+| `x-api-token` + Render 簽的 JWT（HS256 · `iat`/`exp` · secret=embed apiKey） | **403** · code 1002 | SDK 嵌入走這條 → **失敗** |
+| `x-api-key` + 原始 embed apiKey UUID | **201** · initialize 成功 | 網域白名單、agent、apiKey **全 OK** |
+
+**結論：** 問題在 **Perxona 後端未 provision / 未綁定 session signing key**，不是 Render 簽 JWT 錯、不是 Dashboard apiKey 無效、不是 Origin 白名單。本地 PyJWT 用 embed apiKey 驗簽會過，但 Perxona 雲端用另一套 session key 表驗 JWT，全部解碼失敗。
+
+---
+
+### 排查時間軸
+
+| 階段 | 假設 | 結果 |
+|------|------|------|
+| 1 | JWT 缺 `iat`/`exp` | ❌ 128 字元 · 欄位齊 |
+| 2 | Render `PERXONA_API_KEY` ≠ Dashboard apiKey | ❌ 截圖一致 · live JWT 本地驗簽 OK |
+| 3 | 測錯環境（localhost） | ❌ Origin 為 `https://boson316.github.io` |
+| 4 | 網域白名單未填 | ❌ CORS 回 `access-control-allow-origin: https://boson316.github.io` |
+| 5 | curl 重現 initialize + 讀 Response | ✅ **code 1002** · A/B 證明 apiKey 路徑可 201 |
+
+---
+
+### 已確認設定
 
 | 比對項 | 值 |
 |--------|-----|
-| Dashboard Desktop 嵌入 apiKey | `4b69da5a-53d0-4da8-82d5-2f55b7a5726e` |
-| Render `PERXONA_API_KEY` | 同上（截圖一致） |
+| Dashboard Desktop 嵌入 apiKey | 與 Render 相同（見 health `perxonaKeyHint`） |
+| Render `PERXONA_API_KEY` | 同上 · **完整 key 勿寫進文件** |
 | Dashboard 部署存取控制網域 | `boson316.github.io` |
 | Render `PERXONA_ALLOWED_ORIGINS` | 含 `https://boson316.github.io`、localhost |
+| agentProfileId | `01KZTWWPD7VZY0R9G2JYF0C7X9` |
+| embed 版本（push 後） | `perxona-embed.js?v=8` |
 
-驗簽指令（live token + Dashboard key → OK）：
+---
 
-```powershell
-curl.exe -s -H "Origin: https://boson316.github.io" https://perxona.onrender.com/api/perxona-token
-
-python -c "import jwt; jwt.decode('<sessionToken>', '4b69da5a-53d0-4da8-82d5-2f55b7a5726e', algorithms=['HS256']); print('VERIFY OK')"
-```
-
-### Network 截圖（GitHub Pages · 嵌入 3D）
+### Network 現象（GitHub Pages）
 
 | 請求 | Status | 說明 |
 |------|--------|------|
-| `perxona-token` | **200** | Render 簽 token 正常 |
-| **`initialize`** | **403** | Perxona 雲端拒絕 session · **主兇** |
-| `01KZTWWPD7VZY0R9G2JYF0C7X9` | **403** | agent 資源 · 連帶 |
+| `perxona-token` | **200** | Render 簽 JWT OK |
+| `health` | **200** | 後端 OK |
+| **`initialize`** | **403** | code 1002 · Initiator：`useWidgetThreeDViewEventBus.js` |
+| `01KZTWWPD7VZY0R9G2JYF0C7X9` | **403** | 連帶 |
 | `disclaimer?lang=en` | **403** | 連帶 · 可忽略 |
 
-Initiator 皆為 SDK 內 `useWidgetThreeDViewEventBus.js`。  
-截圖當下載入 `perxona-embed.js?v=6`（repo 已 `?v=7`）→ 需強刷或確認 Pages 已 push。
+**initialize Request 摘要：**
+
+| 欄位 | 值 |
+|------|-----|
+| URL | `POST https://console.perxona.ai/asia/api/v1/services/conversation/initialize` |
+| Origin | `https://boson316.github.io` |
+| Header | `x-api-token: eyJ…`（JWT） |
+| Header | `x-fingerprint: <32 hex>` |
+| POST body | `agent_profile_id`（snake_case · SDK 送出） |
+
+---
+
+### curl 重現指令（PowerShell）
+
+**JWT 路徑 → 403 code 1002：**
+
+```powershell
+curl.exe -s -w "`nHTTP:%{http_code}" -X POST "https://console.perxona.ai/asia/api/v1/services/conversation/initialize" `
+  -H "Origin: https://boson316.github.io" `
+  -H "Content-Type: application/json" `
+  -H "x-api-token: <Render 簽的 JWT>" `
+  -H "x-fingerprint: <DevTools 複製>" `
+  --data-raw '{"agent_profile_id":"01KZTWWPD7VZY0R9G2JYF0C7X9"}'
+```
+
+**apiKey 路徑 → 201（證明 key／網域／agent 正常 · 勿在 GitHub Pages 用）：**
+
+```powershell
+curl.exe -s -w "`nHTTP:%{http_code}" -X POST "https://console.perxona.ai/asia/api/v1/services/conversation/initialize" `
+  -H "Origin: https://boson316.github.io" `
+  -H "Content-Type: application/json" `
+  -H "x-api-key: <Dashboard embed apiKey>" `
+  -H "x-fingerprint: <32 hex>" `
+  --data-raw '{"agent_profile_id":"01KZTWWPD7VZY0R9G2JYF0C7X9"}'
+```
+
+本地驗 JWT 簽章：
+
+```powershell
+python -c "import jwt; jwt.decode('<sessionToken>', '<PERXONA_API_KEY>', algorithms=['HS256']); print('VERIFY OK')"
+```
+
+---
 
 ### 403 兩層（釐清因果）
 
 ```
 A 層 Flask     perxona-token 200  →  PERXONA_ALLOWED_ORIGINS、簽 JWT  OK
-B 層 Perxona   initialize 403     →  雲端驗 session + 部署存取控制（網域白名單）
+B 層 Perxona   initialize 403     →  code 1002 · session keys unable to decode（非 allowlist）
 ```
 
-**常見誤判：**
+**常見誤判（本案例已排除）：**
 
-- ❌ 「JWT 格式 OK 所以 403 一定是 key 錯」→ key 已驗一致仍可能 403（Origin 不對、allowlist 延遲）
-- ❌ 在本機測 3D → token 200（Flask 允 localhost）但 initialize 403（Dashboard 只白名單 `boson316.github.io`）
-- ❌ 重貼 apiKey / redeploy Render → **key 已一致時無效**
-
-### 待補證據（解 B 層 403）
-
-在 **https://boson316.github.io/portfolio/** 點 **`initialize` 403** 那條，記錄：
-
-1. **Request URL**（完整含 domain）
-2. **Request Headers → Origin**（應為 `https://boson316.github.io`）
-3. **Response body**（JSON 若有）
-
-Origin 正確 + key 已驗仍 403 → 聯絡 Perxona 支援。
-
-### initialize 403 實證（2026-08-13 · GitHub Pages 正式站）
-
-**Request**
-
-| 欄位 | 值 |
-|------|-----|
-| URL | `POST https://console.perxona.ai/asia/api/v1/services/conversation/initialize` |
-| Origin | `https://boson316.github.io` ✅ |
-| Referer | `https://boson316.github.io/` ✅ |
-| Header | `x-api-token: eyJ…`（JWT · HS256） |
-| Header | `x-fingerprint: 8c7fcf09…` |
-
-**Response**
-
-| 欄位 | 值 |
-|------|-----|
-| Status | **403** |
-| CORS | `access-control-allow-origin: https://boson316.github.io`（CORS 有過，非瀏覽器擋） |
-| Body | **59 bytes JSON** — DevTools → Response 分頁需複製全文（判斷 domain / token / agent 哪個被拒） |
-
-**已排除**
-
-| 假設 | 結果 |
-|------|------|
-| 測錯環境（localhost） | ❌ Origin 是正式 Pages |
-| Render key ≠ Dashboard apiKey | ❌ live JWT 用 `4b69da5a-…5726e` 驗簽 OK |
-| JWT 缺 `iat`/`exp` | ❌ payload 齊 · 長度 128 |
-| Flask A 層 | ❌ `perxona-token` 200 |
-
-**仍可能（B 層 · 需 Response body 或 Perxona 支援）**
-
-1. Dashboard「部署存取控制」UI 已存，**後端 allowlist 未同步**（CORS 過、initialize 仍 403 的典型）
-2. 此 apiKey **未綁定** agent `01KZTWWPD7VZY0R9G2JYF0C7X9`（scope 403）
-3. apiKey 曾 rotate／刪除重建，Perxona 後端與 Dashboard 顯示不一致（少見；JWT 本地驗簽仍過）
-
-**下一步（依序）**
-
-1. DevTools → `initialize` → **Response** + **Payload** 分頁全文貼上
-2. Dashboard → 部署存取控制 → 確認 `boson316.github.io` → **儲存** → 等 2 分鐘 → 強刷
-3. 仍 403 → Dashboard **刪除 apiKey → 重建** → 整段貼 Render `PERXONA_API_KEY` → redeploy
-4. 仍 403 → 帶下列資訊聯絡 Perxona 支援：
-   - Origin、`agentProfileId`、initialize URL、403 Response JSON
-   - 說明 Live Agent 正常、嵌入 initialize 403、JWT HS256 僅 iat/exp
-
-**附：A/B 對照（選用）**
-
-本機開 `test.html`（含 Dashboard 範例 `apiKey` + `bubble`），用 `npx serve` 無法模擬 Pages Origin。  
-若需確認 key 本身：Dashboard 預覽或 Live 頁正常即可；嵌入路徑問題集中查 session_token + allowlist。
-
-
-`curl /api/health` 若**無** `perxonaKeyHint` / `perxonaKeyLen` → Render 跑舊版 `api/`（不影響 key 正確性，但建議 push 最新 `api/app.py` 後 redeploy 以便比對指紋）。
-
-### 附：模型選擇（非 code 問題）
-
-此類 **DevTools + 第三方 SaaS 白名單** 排查：
-
-- **不必**換 Codex（演算法／hot path 用）
-- **不必**為 403 升 Opus；缺的是 Network 證據，不是 impl
-- 若需換 Agent：Sonnet / Terra 照 §9 checklist 收斂即可
+- ❌ 「403 = Render key 跟 Dashboard 不一致」→ key 一致 · raw apiKey 可 201
+- ❌ 「JWT 格式 OK 就一定是 key 錯」→ 本地驗簽 OK · 雲端 session key 表未 provision
+- ❌ 「重貼 apiKey / redeploy Render 會好」→ Render 無誤 · 需 Perxona 端修 session key
+- ❌ 在本機 localhost 測 → 本案例 Origin 已是正式 Pages
 
 ---
 
-**文件版本：** 2026-08-13 · §14 排查紀錄 · embed `?v=7`
+### 解法（依序）
+
+1. Dashboard → **刪除 embed apiKey → 重建** → 整段貼 Render `PERXONA_API_KEY` → Save → redeploy → 強刷測 3D
+2. 仍 code 1002 → **聯絡 Perxona 支援**，貼下列範本
+3. **勿**在 GitHub Pages 改用 `apiKey` attribute（key 會曝光）；僅本機短期 A/B 可驗證
+
+**Perxona 支援範本：**
+
+```
+嵌入 initialize 回 403：
+{"code":1002,"details":"All session keys unable to decode"}
+
+環境：
+- Origin: https://boson316.github.io
+- agent_profile_id: 01KZTWWPD7VZY0R9G2JYF0C7X9
+- POST https://console.perxona.ai/asia/api/v1/services/conversation/initialize
+- x-api-token: HS256 JWT，payload 僅 iat/exp，secret 為 Dashboard Desktop 嵌入 apiKey
+
+同 apiKey 改 x-api-key header → HTTP 201 initialize 成功。
+Live Agent 正常。請為此 embed apiKey 啟用 session token / session signing key。
+```
+
+---
+
+### 附：Render api 版本
+
+`curl /api/health` 若**無** `perxonaKeyHint` / `perxonaKeyLen` → Render 跑舊版 `api/`（不影響本根因，但建議 push 最新 `api/app.py` 後 redeploy）。
+
+### 附：模型選擇（非 code 問題）
+
+DevTools + 第三方 SaaS 排查：**不必**換 Codex；缺 Network Response 證據時換模型無效。Gate 紅才換 Terra。
+
+---
+
+### 繞過（2026-08-13 · embed `?v=8`）
+
+JWT 路徑 Perxona 雲端仍 1002。本專案改：
+
+1. 前端把 `console.perxona.ai` fetch/XHR 改打 Render `GET/POST /api/perxona-proxy?target=`
+2. Render 用 `PERXONA_API_KEY` 掛 `x-api-key` 轉送（host allowlist + Origin 白名單）
+3. 若 SDK 仍 disconnected／逾時 → panel iframe `liveUrl`；連結文案為「Live 3D 頁」
+
+**文件版本：** 2026-08-13 · §14 根因 code 1002 · 繞過 proxy + Live iframe · embed `?v=8`
