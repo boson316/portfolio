@@ -192,6 +192,9 @@
   const chatChips = document.querySelectorAll('.chat-chip');
 
   function openChat() {
+    if (window.__perxonaEmbed && typeof window.__perxonaClose === 'function') {
+      window.__perxonaClose();
+    }
     if (!chatPanel || !chatOverlay) return;
     chatPanel.classList.add('is-open');
     chatPanel.setAttribute('aria-hidden', 'false');
@@ -205,14 +208,24 @@
     if (!chatPanel || !chatOverlay) return;
     chatPanel.classList.remove('is-open');
     chatPanel.setAttribute('aria-hidden', 'true');
-    chatOverlay.classList.remove('is-open');
-    chatOverlay.setAttribute('aria-hidden', 'true');
+    var perxonaOpen = document.getElementById('perxonaPanel') && document.getElementById('perxonaPanel').classList.contains('is-open');
+    if (!perxonaOpen) {
+      chatOverlay.classList.remove('is-open');
+      chatOverlay.setAttribute('aria-hidden', 'true');
+    }
   }
   window.closeTextChat = closeChat;
 
   if (chatFab) chatFab.addEventListener('click', openChat);
   if (chatClose) chatClose.addEventListener('click', closeChat);
-  if (chatOverlay) chatOverlay.addEventListener('click', closeChat);
+  if (chatOverlay) {
+    chatOverlay.addEventListener('click', function () {
+      closeChat();
+      if (window.__perxonaEmbed && typeof window.__perxonaClose === 'function') {
+        window.__perxonaClose();
+      }
+    });
+  }
 
   // ========== 互動卡片 tilt ==========
   var cards = document.querySelectorAll('.card[data-tilt]');

@@ -4,11 +4,14 @@
   var cfg = window.PERXONA_CONFIG || {};
   var SDK_URL = String(cfg.sdkUrl || 'https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js').trim();
   var agentProfileId = String(cfg.agentProfileId || '').trim();
-  var presentationMode = String(cfg.presentationMode || 'bubble').trim();
+  var presentationMode = String(cfg.presentationMode || 'embedded').trim();
   var liveUrl = String(cfg.liveUrl || 'https://live.perxona.ai/asia/boson316/xiaoboson').trim();
 
   var sessionToken = '';
   var tokenExpiresAt = 0;
+  var panel = null;
+  var overlay = null;
+  var closeBtn = null;
 
   function getApiBase() {
     return String(window.PORTFOLIO_API_URL || cfg.apiUrl || '').replace(/\/$/, '');
@@ -50,17 +53,59 @@
     });
   }
 
+  function setMountStatus(message, isError) {
+    var mount = document.getElementById('perxonaMount');
+    if (!mount) return;
+    var status = mount.querySelector('.perxona-status');
+    if (!status) {
+      status = document.createElement('div');
+      status.className = 'perxona-status';
+      mount.insertBefore(status, mount.firstChild);
+    }
+    status.hidden = !message;
+    status.classList.toggle('is-error', Boolean(isError));
+    status.textContent = message || '';
+  }
+
   function getDashboardDomainHint() {
     var host = location.hostname;
     if (host === 'localhost' || host === '127.0.0.1') return 'localhost';
     return host;
   }
 
+  function getDisconnectHelpMessage() {
+    var domain = getDashboardDomainHint();
+    return (
+      'Perxona 連線失敗（401）。請確認 Render PERXONA_API_KEY 與 Dashboard apiKey 一致；' +
+      '網域白名單需含「' + domain + '」。'
+    );
+  }
+
   function bindAgentLifecycle(agent) {
+    var ready = false;
+    var disconnectNotified = false;
+    var failTimer = window.setTimeout(function () {
+      if (ready) return;
+      setMountStatus('3D 載入逾時。Dashboard 網域白名單需含「' + getDashboardDomainHint() + '」。', true);
+    }, 20000);
+
     agent.addEventListener('life-status', function (event) {
       var status = event.detail && event.detail.status;
+      if (status === 'downloading-assets' || status === 'connection-start' || status === 'agent-preparation') {
+        setMountStatus('3D 小boson 載入中…', false);
+        return;
+      }
       if (status === 'ready' || status === 'connection-done') {
+        ready = true;
+        disconnectNotified = false;
+        window.clearTimeout(failTimer);
+        setMountStatus('', false);
         markPerxonaReady();
+        return;
+      }
+      if (status === 'disconnected' && !disconnectNotified) {
+        disconnectNotified = true;
+        setMountStatus(getDisconnectHelpMessage(), true);
       }
     });
   }
@@ -93,6 +138,45 @@
     agent.updateWidgetSetting({ appearanceMode: getAppearanceMode() });
   }
 
+  function bindPerxonaFab() {
+    var fab = document.getElementById('perxonaFab');
+    if (!fab || fab.dataset.bound === '1') return;
+    fab.dataset.bound = '1';
+    fab.addEventListener('click', function () {
+      if (typeof window.closeTextChat === 'function') window.closeTextChat();
+      openPerxonaPanel();
+    });
+  }
+
+  function openPerxonaPanel() {
+    if (!panel || !overlay) return;
+
+    if (!sessionToken) {
+      setMountStatus('3D 後端未就緒。若持續失敗，請改開 Live 頁：' + liveUrl, true);
+      panel.classList.add('is-open');
+      panel.setAttribute('aria-hidden', 'false');
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      return;
+    }
+
+    panel.classList.add('is-open');
+    panel.setAttribute('aria-hidden', 'false');
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+  }
+
+  function closePerxonaPanel() {
+    if (!panel || !overlay) return;
+    panel.classList.remove('is-open');
+    panel.setAttribute('aria-hidden', 'true');
+    var chatOpen = document.getElementById('chatPanel') && document.getElementById('chatPanel').classList.contains('is-open');
+    if (!chatOpen) {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+  }
+
   function applyAgentSettings(agent) {
     if (!agent || !sessionToken) return Promise.resolve(false);
 
@@ -103,6 +187,9 @@
     var settings = {
       agentProfileId: agentProfileId,
       presentationMode: presentationMode,
+      displayMode: 'fullPresentation',
+      conversationMode: 'inputText',
+      readyToShowPolicy: 'ShowWhenAssetsLoading',
       sessionToken: sessionToken,
       appearanceMode: getAppearanceMode(),
       enableUserActivationCheck: false
@@ -124,41 +211,64 @@
   }
 
   function mountWidget() {
-    if (document.querySelector('sv-agent') || !sessionToken) return;
+    var mount = document.getElementById('perxonaMount');
+    if (!mount || mount.querySelector('sv-agent') || !sessionToken) return;
+
+    setMountStatus('3D 小boson 載入中…', false);
 
     var agent = document.createElement('sv-agent');
     agent.setAttribute('agentProfileId', agentProfileId);
     agent.setAttribute('presentationMode', presentationMode);
+    agent.setAttribute('displayMode', 'fullPresentation');
+    agent.setAttribute('conversationMode', 'inputText');
+    agent.setAttribute('readyToShowPolicy', 'ShowWhenAssetsLoading');
     agent.setAttribute('sessionToken', sessionToken);
     agent.setAttribute('appearanceMode', getAppearanceMode());
     agent.setAttribute('enableUserActivationCheck', 'false');
 
     bindAgentLifecycle(agent);
-    document.body.appendChild(agent);
+    mount.appendChild(agent);
     applyAgentSettings(agent).then(function () {
       window.setTimeout(function () { applyAgentSettings(agent); }, 0);
     });
-    markPerxonaReady();
 
     window.__perxonaEmbed = true;
+    window.__perxonaOpen = openPerxonaPanel;
+    window.__perxonaClose = closePerxonaPanel;
   }
 
-  function init() {
-    var apiBase = getApiBase();
-    if (!hasAgent() || !apiBase) return;
+  function bindUi() {
+    panel = document.getElementById('perxonaPanel');
+    overlay = document.getElementById('chatOverlay');
+    closeBtn = document.getElementById('perxonaClose');
+
+    bindPerxonaFab();
+
+    if (closeBtn) closeBtn.addEventListener('click', closePerxonaPanel);
+    if (overlay) {
+      overlay.addEventListener('click', function () {
+        closePerxonaPanel();
+      });
+    }
 
     var toggle = document.getElementById('themeToggle');
     if (toggle) toggle.addEventListener('click', function () { setTimeout(syncTheme, 0); });
+  }
+
+  function init() {
+    bindUi();
+    var apiBase = getApiBase();
+    if (!hasAgent() || !apiBase) {
+      setMountStatus('未設定 API URL 或 agentProfileId。', true);
+      return;
+    }
 
     ensureSessionToken(apiBase)
       .then(loadSdk)
       .then(mountWidget)
       .catch(function () {
         window.__perxonaEmbed = false;
-        console.warn(
-          '[Perxona] 3D bubble 未載入。請確認 Render PERXONA_API_KEY 與 Dashboard apiKey 一致，' +
-          '且網域白名單含「' + getDashboardDomainHint() + '」。Live: ' + liveUrl
-        );
+        setMountStatus('3D token 取得失敗。請確認 Render PERXONA_API_KEY 與 Dashboard 一致。', true);
       });
   }
 
