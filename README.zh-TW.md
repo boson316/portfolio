@@ -70,16 +70,23 @@
 
 ## 數位名片
 
-一個短網址／QR，方便分享：
+一個短網址／QR，方便分享；頁面含 **FB、IG、LinkedIn、YouTube（生活／財金）、方格子** 社群 icon 列：
 
 | 入口 | 連結 |
 |------|------|
+| 名片頁 | <https://boson316.github.io/portfolio/card/> |
 | 作品集 | <https://boson316.github.io/portfolio/> |
 | GitHub Profile | <https://github.com/boson316> |
 | FinTools（年化／退休計算機） | <https://boson316.github.io/niu/annual_return_calculator_v5.html> |
+| Facebook | <https://www.facebook.com/boson.huang.960102> |
+| Instagram | <https://www.instagram.com/boson_0727/> |
+| LinkedIn | <https://www.linkedin.com/in/boson-huang-334b03303/> |
+| YouTube · 生活 | <https://www.youtube.com/@boson0777> |
+| YouTube · 財金 | <https://www.youtube.com/@Boson0727> |
+| 方格子部落格 | <https://vocus.cc/user/@Boson> |
 | Email | poboson316@gmail.com |
 
-掃碼或開啟：<https://boson316.github.io/portfolio/card/>
+掃碼或開啟：<https://boson316.github.io/portfolio/card/> · QR：[`card/qr.png`](card/qr.png)
 
 ## 專案
 
@@ -99,6 +106,7 @@
 ```
 portfolio/
 ├── index.html, en/          # GitHub Pages（靜態前端）
+├── card/                    # 數位名片（社群 icon + 連結）
 ├── script.js                # 💬 Groq 文字聊天
 ├── perxona-config.js        # Agent ID、API URL（無 secret）
 ├── perxona-embed.js         # 3D Perxona 嵌入 + Live iframe

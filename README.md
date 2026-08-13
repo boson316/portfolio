@@ -70,16 +70,23 @@ Full integration notes: [`PERXONA.md`](PERXONA.md) · Backend: [`api/README.md`]
 
 ## Digital card
 
-One short URL / QR for sharing:
+One short URL / QR for sharing; the page includes **Facebook, Instagram, LinkedIn, YouTube (life / finance), and Vocus blog** icon links:
 
 | Entry | Link |
 |-------|------|
+| Card page | <https://boson316.github.io/portfolio/card/> |
 | Portfolio | <https://boson316.github.io/portfolio/> |
 | GitHub Profile | <https://github.com/boson316> |
 | FinTools (annual return / retirement) | <https://boson316.github.io/niu/annual_return_calculator_v5.html> |
+| Facebook | <https://www.facebook.com/boson.huang.960102> |
+| Instagram | <https://www.instagram.com/boson_0727/> |
+| LinkedIn | <https://www.linkedin.com/in/boson-huang-334b03303/> |
+| YouTube · Life | <https://www.youtube.com/@boson0777> |
+| YouTube · Finance | <https://www.youtube.com/@Boson0727> |
+| Vocus blog | <https://vocus.cc/user/@Boson> |
 | Email | poboson316@gmail.com |
 
-Scan or open: <https://boson316.github.io/portfolio/card/>
+Scan or open: <https://boson316.github.io/portfolio/card/> · QR: [`card/qr.png`](card/qr.png)
 
 ## Projects
 
@@ -99,6 +106,7 @@ Scan or open: <https://boson316.github.io/portfolio/card/>
 ```
 portfolio/
 ├── index.html, en/          # GitHub Pages (static frontend)
+├── card/                    # Digital card (social icons + links)
 ├── script.js                # 💬 Groq text chat
 ├── perxona-config.js        # Agent ID, API URL (no secrets)
 ├── perxona-embed.js         # 3D Perxona embed + Live iframe
