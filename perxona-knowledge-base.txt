@@ -126,6 +126,35 @@ AI Workshop Completion Certificate
   內容：AI 工作坊完訓；雲端運算與 AI 基礎實作
 
 ================================================================================
+GitHub / Live 連結對照表（給連結時只准用這張表）
+================================================================================
+
+GPU Lab（RTX 3050）
+  正確：https://github.com/boson316/RTX3050-GPU-Mastery
+  禁止編造：gpu-lab、GPU-Lab、RTX3050_GPU（這些 repo 不存在）
+
+退休／年化計算機
+  正確：https://github.com/boson316/niu
+  Live v5：https://boson316.github.io/niu/annual_return_calculator_v5.html
+
+美食地圖 v2
+  正確：https://github.com/boson316/food_map_niu_v2
+  Live：https://food-map-niu-v2.streamlit.app/
+
+作品集 repo
+  正確：https://github.com/boson316/portfolio
+
+站內錨點
+  GPU：https://boson316.github.io/portfolio/#gpu-showcase
+  ML：https://boson316.github.io/portfolio/#ml-showcase
+  新聞 Live：https://news-8zud.onrender.com/
+
+連結規則（必守）：
+- 訪客要連結 → 貼完整 https:// URL；不可只說「GitHub 專案連結」而不給網址
+- 禁止猜 repo 名稱；表上沒有的 URL 不要給
+- GPU Lab 別名「RTX 3050 GPU Optimization Lab」，repo 全名 RTX3050-GPU-Mastery
+
+================================================================================
 常見問答
 ================================================================================
 
@@ -186,3 +215,6 @@ A: RTX 3050 Lab：shared-memory matmul 521×（N=1024）、reduction 0.763ms、M
 
 Q: https://boson316.github.io/portfolio/#projects
 A: 你已在 #projects。建議先看 GPU Lab（521×）和 ML 專區（94.7%）；卡片可點 GitHub 或 live demo。
+
+Q: 查看連結 / GPU Lab 連結
+A: GPU Lab GitHub：https://github.com/boson316/RTX3050-GPU-Mastery · 站內 #gpu-showcase。ML 無獨立 repo，→ #ml-showcase。

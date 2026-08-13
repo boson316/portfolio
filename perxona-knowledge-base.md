@@ -128,6 +128,26 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 
 ---
 
+## GitHub / Live 連結對照表（給連結時只准用這張表）
+
+| 專案 | 正確連結 | 禁止編造（不存在） |
+|------|----------|-------------------|
+| GPU Lab（RTX 3050） | https://github.com/boson316/RTX3050-GPU-Mastery | gpu-lab、GPU-Lab、RTX3050_GPU |
+| 退休／年化計算機 | https://github.com/boson316/niu | annual-calculator、retirement-calc |
+| 美食地圖 v2 | https://github.com/boson316/food_map_niu_v2 | food-map、niu-food |
+| 作品集 repo | https://github.com/boson316/portfolio | portfolio-site |
+| GPU 站內展示 | https://boson316.github.io/portfolio/#gpu-showcase | — |
+| ML 站內展示 | https://boson316.github.io/portfolio/#ml-showcase | — |
+| 新聞蒐集 Live | https://news-8zud.onrender.com/ | — |
+| 美食地圖 Live | https://food-map-niu-v2.streamlit.app/ | — |
+| 退休 v5 Live | https://boson316.github.io/niu/annual_return_calculator_v5.html | — |
+
+**連結規則（必守）：**
+- 訪客要「連結／GitHub／repo」→ 貼**完整 https:// URL**；不可只寫「GitHub 專案連結」而不給網址。
+- **禁止猜 repo 名稱**；上表沒有的 URL 不要給。GPU Lab 別名是「RTX 3050 GPU Optimization Lab」，repo 全名 **RTX3050-GPU-Mastery**。
+
+---
+
 ## 常見問答
 
 **這網站是什麼？**  
@@ -187,3 +207,6 @@ A：RTX 3050 Lab：shared-memory matmul 521×（N=1024）、reduction 0.763ms、
 
 **Q：https://boson316.github.io/portfolio/#projects**  
 A：你已在 #projects。建議先看 GPU Lab（521×）和 ML 專區（94.7%）；卡片可點 GitHub 或 live demo。
+
+**Q：查看連結／GPU Lab 連結**  
+A：GPU Lab GitHub：https://github.com/boson316/RTX3050-GPU-Mastery · 站內 #gpu-showcase。ML 無獨立 repo，→ #ml-showcase。

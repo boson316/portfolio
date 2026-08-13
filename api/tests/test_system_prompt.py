@@ -30,3 +30,9 @@ def test_prompt_forbids_brand_consultant_fluff():
     assert "禁止品牌顧問腔" in PROMPT
     assert "極具潛力" in PROMPT
     assert "不要只問「從哪個開始」" in PROMPT
+
+
+def test_prompt_link_registry_forbids_hallucinated_gpu_repo():
+    assert "https://github.com/boson316/RTX3050-GPU-Mastery" in PROMPT
+    assert "gpu-lab" in PROMPT  # 列為禁止編造的 repo 名
+    assert "禁止猜 repo" in PROMPT
