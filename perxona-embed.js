@@ -7,16 +7,18 @@
   // Dashboard Desktop 範例為 bubble；本站 3D FAB 開 panel 用 embedded
   var presentationMode = String(cfg.presentationMode || 'embedded').trim();
   var liveUrl = String(cfg.liveUrl || 'https://live.perxona.ai/asia/boson316/littleboson').trim();
-  var preferLiveIframe = cfg.preferLiveIframe === true;
+  var preferLiveIframe = cfg.preferLiveIframe !== false;
   var disconnectGraceMs = Number(cfg.disconnectGraceMs);
   if (!Number.isFinite(disconnectGraceMs) || disconnectGraceMs < 0) {
-    disconnectGraceMs = 5000;
+    disconnectGraceMs = 2000;
   }
 
   var sessionToken = '';
   var tokenExpiresAt = 0;
   var sdkReady = false;
   var liveFallbackMounted = false;
+  var liveFramePreload = null;
+  var liveFrameLoaded = false;
   var initializeSucceeded = false;
   var panel = null;
   var overlay = null;
@@ -26,23 +28,49 @@
     return String(window.PORTFOLIO_API_URL || cfg.apiUrl || '').replace(/\/$/, '');
   }
 
+  function rewriteMotionAssetUrl(url) {
+    if (cfg.rewriteMotionNativeZip === false) return null;
+    try {
+      var parsed = new URL(String(url), location.href);
+      if (parsed.protocol !== 'https:' || parsed.hostname !== 'cdn.perxona.ai') return null;
+      if (!/\/native\.zip$/i.test(parsed.pathname)) return null;
+      parsed.pathname = parsed.pathname.replace(/\/native\.zip$/i, '/import.zip');
+      return parsed.href;
+    } catch (err) {}
+    return null;
+  }
+
+  function installMotionAssetRewrite() {
+    if (window.__perxonaMotionRewriteInstalled) return;
+    window.__perxonaMotionRewriteInstalled = true;
+
+    var nativeFetch = window.fetch;
+    if (typeof nativeFetch === 'function') {
+      window.fetch = function (input, init) {
+        var url = (input && typeof input.url === 'string') ? input.url : String(input);
+        var rewritten = rewriteMotionAssetUrl(url);
+        if (!rewritten) return nativeFetch.apply(this, arguments);
+        if (typeof Request !== 'undefined' && input instanceof Request) {
+          return nativeFetch.call(this, new Request(rewritten, input));
+        }
+        return nativeFetch.call(this, rewritten, init);
+      };
+    }
+
+    var nativeOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (method, url) {
+      var rewritten = rewriteMotionAssetUrl(url);
+      var args = Array.prototype.slice.call(arguments);
+      if (rewritten) args[1] = rewritten;
+      return nativeOpen.apply(this, args);
+    };
+  }
+
+  installMotionAssetRewrite();
+
   function installPerxonaApiProxy(apiBase) {
     if (!apiBase || window.__perxonaProxyInstalled) return;
     window.__perxonaProxyInstalled = true;
-
-    var rewriteMotionNativeZip = cfg.rewriteMotionNativeZip !== false;
-
-    function rewriteMotionAssetUrl(url) {
-      if (!rewriteMotionNativeZip) return null;
-      try {
-        var parsed = new URL(String(url), location.href);
-        if (parsed.protocol !== 'https:' || parsed.hostname !== 'cdn.perxona.ai') return null;
-        if (!/\/native\.zip$/i.test(parsed.pathname)) return null;
-        parsed.pathname = parsed.pathname.replace(/\/native\.zip$/i, '/import.zip');
-        return parsed.href;
-      } catch (err) {}
-      return null;
-    }
 
     function proxiedConsoleUrl(url) {
       try {
@@ -219,28 +247,61 @@
       '<a class="perxona-live-link" href="' + liveUrl + '" target="_blank" rel="noopener noreferrer">Live 3D 頁</a>';
   }
 
+  function finalizeLiveFrame(frame) {
+    hideHelpPanel();
+    setMountStatus('', false);
+    markPerxonaReady();
+  }
+
+  function bindLiveFrameLoad(frame) {
+    if (!frame || frame.dataset.perxonaBound === '1') return;
+    frame.dataset.perxonaBound = '1';
+    frame.onload = function () {
+      liveFrameLoaded = true;
+      if (liveFallbackMounted && frame.parentNode) finalizeLiveFrame(frame);
+    };
+  }
+
+  function preloadLiveIframe() {
+    if (liveFramePreload || !liveUrl) return;
+    liveFramePreload = document.createElement('iframe');
+    liveFramePreload.className = 'perxona-live-frame';
+    liveFramePreload.src = liveUrl;
+    liveFramePreload.title = '3D 小boson';
+    liveFramePreload.allow = 'microphone; camera; autoplay; clipboard-write';
+    liveFramePreload.setAttribute('allowfullscreen', '');
+    liveFramePreload.setAttribute('aria-hidden', 'true');
+    liveFramePreload.style.cssText = 'position:fixed;width:1px;height:1px;left:-9999px;top:0;border:0;opacity:0;pointer-events:none';
+    bindLiveFrameLoad(liveFramePreload);
+    document.body.appendChild(liveFramePreload);
+  }
+
   function mountLiveIframe() {
     var mount = document.getElementById('perxonaMount');
     if (!mount || liveFallbackMounted) return;
     liveFallbackMounted = true;
     var agent = mount.querySelector('sv-agent');
     if (agent) agent.remove();
-    setMountStatus('Live 3D 載入中…', false);
-    var frame = document.createElement('iframe');
-    frame.className = 'perxona-live-frame';
-    frame.src = liveUrl;
-    frame.title = '3D 小boson';
-    frame.allow = 'microphone; camera; autoplay; clipboard-write';
-    frame.setAttribute('allowfullscreen', '');
-    frame.onload = function () {
-      hideHelpPanel();
-      setMountStatus('', false);
-      markPerxonaReady();
-    };
-    frame.onerror = function () {
-      renderHelpPanel('Live 3D 載入失敗');
-    };
+    setMountStatus(liveFrameLoaded ? '' : 'Live 3D 載入中…', false);
+
+    var frame = liveFramePreload;
+    if (frame) {
+      liveFramePreload = null;
+    } else {
+      frame = document.createElement('iframe');
+      frame.className = 'perxona-live-frame';
+      frame.src = liveUrl;
+      frame.title = '3D 小boson';
+      frame.allow = 'microphone; camera; autoplay; clipboard-write';
+      frame.setAttribute('allowfullscreen', '');
+      bindLiveFrameLoad(frame);
+    }
+
+    frame.removeAttribute('aria-hidden');
+    frame.style.cssText = '';
     mount.appendChild(frame);
+
+    if (liveFrameLoaded) finalizeLiveFrame(frame);
   }
 
   function applySessionToken(agent) {
@@ -474,7 +535,10 @@
     if (!hasAgent() || !apiBase) return;
 
     installPerxonaApiProxy(apiBase);
-    if (preferLiveIframe) return;
+    if (preferLiveIframe) {
+      preloadLiveIframe();
+      return;
+    }
     // 背景預載 token + SDK；真正 mount 等按 3D 且 panel 已開
     ensureSessionToken(apiBase)
       .then(loadSdk)

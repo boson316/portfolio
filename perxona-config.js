@@ -5,7 +5,9 @@ window.PERXONA_CONFIG = {
   sdkUrl: 'https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js',
   agentProfileId: '01KZTWWPD7VZY0R9G2JYF0C7X9',
   presentationMode: 'embedded',
-  liveUrl: 'https://live.perxona.ai/asia/boson316/littleboson'
+  liveUrl: 'https://live.perxona.ai/asia/boson316/littleboson',
+  // 預設直接 Live iframe + 背景預載，不走 SDK（避免 native.zip 403 空等）
+  preferLiveIframe: true
 };
 
 var PRODUCTION_API_URL = 'https://perxona.onrender.com';
