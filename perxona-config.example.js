@@ -4,7 +4,7 @@
 window.PERXONA_CONFIG = {
   sdkUrl: 'https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js',
   agentProfileId: 'YOUR_AGENT_PROFILE_ID',
-  presentationMode: 'embedded',
+  presentationMode: 'bubble',
   liveUrl: 'https://live.perxona.ai/asia/boson316/xiaoboson'
 };
 

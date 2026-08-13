@@ -342,15 +342,10 @@
     </section>
   </main>
 
-  <!-- 浮動助手按鈕：💬 文字聊天 ＋ 3D 人物（Perxona 就緒後顯示） -->
-  <div class="fab-stack" id="fabStack">
-    <button type="button" class="chat-fab perxona-fab" id="perxonaFab" aria-label="開啟 3D 小boson" hidden>
-      <span class="chat-fab-icon" aria-hidden="true">3D</span>
-    </button>
-    <button type="button" class="chat-fab" id="chatFab" aria-label="開啟文字聊天">
-      <span class="chat-fab-icon" aria-hidden="true">💬</span>
-    </button>
-  </div>
+  <!-- 浮動文字聊天（3D 由 Perxona bubble 自帶按鈕） -->
+  <button type="button" class="chat-fab" id="chatFab" aria-label="開啟文字聊天">
+    <span class="chat-fab-icon" aria-hidden="true">💬</span>
+  </button>
 
   <!-- AI 聊天框 -->
   <aside class="chat-panel" id="chatPanel" aria-hidden="true">
@@ -377,15 +372,6 @@
   </aside>
 
   <div class="chat-overlay" id="chatOverlay" aria-hidden="true"></div>
-
-  <!-- Perxona embedded avatar（無 transform，避免 widget 錯位） -->
-  <aside class="perxona-panel" id="perxonaPanel" aria-hidden="true">
-    <div class="perxona-panel-header">
-      <h3>3D 小boson</h3>
-      <button type="button" class="perxona-panel-close" id="perxonaClose" aria-label="關閉">×</button>
-    </div>
-    <div id="perxonaMount" class="perxona-mount"></div>
-  </aside>
 
   <footer class="footer">
     <div class="container tw-px-responsive">
