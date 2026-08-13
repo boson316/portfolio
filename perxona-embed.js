@@ -39,25 +39,48 @@
     if (help) help.hidden = true;
   }
 
-  function loadSdk() {
-    return new Promise(function (resolve, reject) {
-      function waitForAgent() {
-        if (window.customElements && typeof window.customElements.whenDefined === 'function') {
-          window.customElements.whenDefined('sv-agent').then(resolve).catch(reject);
-          return;
-        }
-        resolve();
-      }
+  function removeSdkScript() {
+    var stale = document.querySelector('script[data-perxona-sdk="1"]');
+    if (stale) stale.remove();
+    sdkReady = false;
+  }
 
-      if (sdkReady) {
+  function waitForSvAgent(timeoutMs) {
+    return new Promise(function (resolve, reject) {
+      if (!window.customElements || typeof window.customElements.whenDefined !== 'function') {
+        resolve();
+        return;
+      }
+      var timer = window.setTimeout(function () {
+        reject(new Error('perxona_sdk_timeout'));
+      }, timeoutMs || 20000);
+      window.customElements.whenDefined('sv-agent').then(function () {
+        window.clearTimeout(timer);
+        resolve();
+      }).catch(function (err) {
+        window.clearTimeout(timer);
+        reject(err || new Error('perxona_sdk_define_failed'));
+      });
+    });
+  }
+
+  function loadSdk(forceReload) {
+    if (forceReload) removeSdkScript();
+
+    return new Promise(function (resolve, reject) {
+      if (sdkReady && !forceReload) {
         resolve();
         return;
       }
 
-      if (document.querySelector('script[data-perxona-sdk="1"]')) {
-        waitForAgent().then(function () {
+      var existing = document.querySelector('script[data-perxona-sdk="1"]');
+      if (existing && !forceReload) {
+        waitForSvAgent(20000).then(function () {
           sdkReady = true;
           resolve();
+        }).catch(function (err) {
+          removeSdkScript();
+          reject(err);
         });
         return;
       }
@@ -67,12 +90,15 @@
       s.src = SDK_URL;
       s.dataset.perxonaSdk = '1';
       s.onload = function () {
-        waitForAgent().then(function () {
+        waitForSvAgent(20000).then(function () {
           sdkReady = true;
           resolve();
-        });
+        }).catch(reject);
       };
-      s.onerror = function () { reject(new Error('perxona_sdk_load_failed')); };
+      s.onerror = function () {
+        removeSdkScript();
+        reject(new Error('perxona_sdk_load_failed'));
+      };
       document.head.appendChild(s);
     });
   }
@@ -188,23 +214,13 @@
       enableUserActivationCheck: false
     };
 
-    if (typeof agent.updateSessionToken === 'function') {
-      return Promise.resolve(agent.updateSessionToken(sessionToken))
-        .catch(function (err) {
-          // token 屬性已設；API 拒絕時仍 mount，交給 life-status 顯示連線錯誤
-          console.warn('[perxona] updateSessionToken failed, using attribute fallback', err);
-          return true;
-        })
-        .then(function (ok) {
-          if (typeof agent.updateWidgetSetting === 'function') {
-            agent.updateWidgetSetting(settings);
-          }
-          return ok !== false;
-        });
-    }
-
-    if (typeof agent.updateWidgetSetting === 'function') {
-      agent.updateWidgetSetting(settings);
+    // 只用 attribute + updateWidgetSetting；不呼叫 updateSessionToken（同步 throw 會整段 abort）
+    try {
+      if (typeof agent.updateWidgetSetting === 'function') {
+        agent.updateWidgetSetting(settings);
+      }
+    } catch (err) {
+      console.warn('[perxona] updateWidgetSetting failed', err);
     }
     return Promise.resolve(true);
   }
@@ -246,7 +262,7 @@
     }
 
     return ensureSessionToken(apiBase)
-      .then(loadSdk)
+      .then(function () { return loadSdk(false); })
       .then(mountWidget);
   }
 
@@ -267,9 +283,14 @@
     ensureWidgetReady().catch(function (err) {
       console.error('[perxona] ensureWidgetReady failed', err);
       var msg = String(err && err.message || err || '');
-      if (msg.indexOf('perxona_sdk_load_failed') !== -1) {
+      if (msg.indexOf('perxona_sdk_load_failed') !== -1 || msg.indexOf('perxona_sdk_timeout') !== -1) {
         setMountStatus('SDK 載入失敗', true);
-        renderHelpPanel('cdn.perxona.ai 載入失敗（檢查 Network / 擋廣告）');
+        renderHelpPanel('cdn.perxona.ai 載入失敗或逾時（Network 改 All 篩 cdn.perxona.ai；關擋廣告）');
+        return;
+      }
+      if (msg.indexOf('perxona_config_missing') !== -1) {
+        setMountStatus('設定缺失', true);
+        renderHelpPanel('perxona-config.js 未載入或 PORTFOLIO_API_URL 空白');
         return;
       }
       if (msg.indexOf('perxona_token_') !== -1) {
@@ -278,7 +299,7 @@
         return;
       }
       setMountStatus('3D 初始化失敗', true);
-      renderHelpPanel('token 200 仍失敗 → Network 篩 perxona.ai 找 403（Dashboard 白名單）或 401（apiKey 不一致）');
+      renderHelpPanel('Live 正常＝Agent OK。嵌入還需 Dashboard 白名單填 boson316.github.io → Console 貼紅字給我');
     });
   }
 
