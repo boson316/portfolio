@@ -178,6 +178,13 @@
     status.textContent = message || '';
   }
 
+  function hideHelpPanel() {
+    var help = document.getElementById('perxonaHelp');
+    if (!help) return;
+    help.hidden = true;
+    help.innerHTML = '';
+  }
+
   function renderHelpPanel(reason, extraHtml) {
     var help = document.getElementById('perxonaHelp');
     if (!help) return;
@@ -195,15 +202,22 @@
     liveFallbackMounted = true;
     var agent = mount.querySelector('sv-agent');
     if (agent) agent.remove();
+    setMountStatus('Live 3D 載入中…', false);
     var frame = document.createElement('iframe');
     frame.className = 'perxona-live-frame';
     frame.src = liveUrl;
     frame.title = '3D 小boson';
     frame.allow = 'microphone; camera; autoplay; clipboard-write';
     frame.setAttribute('allowfullscreen', '');
+    frame.onload = function () {
+      hideHelpPanel();
+      setMountStatus('', false);
+      markPerxonaReady();
+    };
+    frame.onerror = function () {
+      renderHelpPanel('Live 3D 載入失敗');
+    };
     mount.appendChild(frame);
-    setMountStatus('', false);
-    markPerxonaReady();
   }
 
   function applySessionToken(agent) {
@@ -222,7 +236,7 @@
       'connection-start': true,
       'agent-preparation': true
     };
-    var LOAD_TIMEOUT_MS = 45000;
+    var LOAD_TIMEOUT_MS = 120000;
 
     function clearFallbackTimers() {
       window.clearTimeout(failTimer);
@@ -239,7 +253,6 @@
         disconnectNotified = true;
         console.warn('[perxona] ' + reason + '，改開 Live iframe');
         mountLiveIframe();
-        renderHelpPanel('嵌入初始化失敗，已改開 Live 3D');
       }, graceMs);
     }
 
@@ -247,7 +260,6 @@
       if (ready) return;
       console.warn('[perxona] 3D 載入逾時，改開 Live iframe');
       mountLiveIframe();
-      renderHelpPanel('嵌入逾時，已改開 Live 3D');
     }, LOAD_TIMEOUT_MS);
 
     agent.addEventListener('life-status', function (event) {
@@ -386,7 +398,6 @@
     ensureWidgetReady().catch(function (err) {
       console.error('[perxona] ensureWidgetReady failed', err);
       mountLiveIframe();
-      renderHelpPanel('嵌入載入失敗，已改開 Live 3D');
     });
   }
 
