@@ -1,5 +1,5 @@
 /**
- * Perxona 公開設定（可 commit）。apiKey 僅放 portfolio-api / Render env
+ * Perxona 公開設定（可 commit）。apiKey 僅放 api/.env / Render env
  */
 window.PERXONA_CONFIG = {
   sdkUrl: 'https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js',

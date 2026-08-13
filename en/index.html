@@ -322,9 +322,14 @@
     </section>
   </main>
 
-  <button type="button" class="chat-fab" id="chatFab" aria-label="Open AI chat">
-    <span class="chat-fab-icon">💬</span>
-  </button>
+  <div class="fab-stack" id="fabStack">
+    <button type="button" class="chat-fab perxona-fab" id="perxonaFab" aria-label="Open 3D avatar" hidden>
+      <span class="chat-fab-icon" aria-hidden="true">3D</span>
+    </button>
+    <button type="button" class="chat-fab" id="chatFab" aria-label="Open text chat">
+      <span class="chat-fab-icon" aria-hidden="true">💬</span>
+    </button>
+  </div>
 
   <aside class="chat-panel" id="chatPanel" aria-hidden="true">
     <div class="chat-header">
@@ -353,7 +358,7 @@
 
   <aside class="perxona-panel" id="perxonaPanel" aria-hidden="true">
     <div class="perxona-panel-header">
-      <h3>小boson</h3>
+      <h3>3D 小boson</h3>
       <button type="button" class="perxona-panel-close" id="perxonaClose" aria-label="Close">×</button>
     </div>
     <div id="perxonaMount" class="perxona-mount"></div>

@@ -26,8 +26,7 @@
   }
 
   function hideLegacyChatUi() {
-    var legacy = document.getElementById('chatPanel');
-    if (legacy) legacy.hidden = true;
+    // 保留文字聊天；僅標記 Perxona 已就緒（供 3D FAB 顯示）
     document.body.classList.add('perxona-active');
   }
 
@@ -144,6 +143,21 @@
     agent.updateWidgetSetting({ appearanceMode: getAppearanceMode() });
   }
 
+  function showPerxonaFab() {
+    var fab = document.getElementById('perxonaFab');
+    if (fab) fab.hidden = false;
+  }
+
+  function bindPerxonaFab() {
+    var fab = document.getElementById('perxonaFab');
+    if (!fab || fab.dataset.bound === '1') return;
+    fab.dataset.bound = '1';
+    fab.addEventListener('click', function () {
+      if (typeof window.closeTextChat === 'function') window.closeTextChat();
+      openPerxonaPanel();
+    });
+  }
+
   function openPerxonaPanel() {
     if (!sessionToken) {
       window.open(liveUrl, '_blank', 'noopener,noreferrer');
@@ -160,8 +174,11 @@
     if (!panel || !overlay) return;
     panel.classList.remove('is-open');
     panel.setAttribute('aria-hidden', 'true');
-    overlay.classList.remove('is-open');
-    overlay.setAttribute('aria-hidden', 'true');
+    var chatOpen = document.getElementById('chatPanel') && document.getElementById('chatPanel').classList.contains('is-open');
+    if (!chatOpen) {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
   }
 
   function applyAgentSettings(agent) {
@@ -220,11 +237,12 @@
       window.setTimeout(function () { applyAgentSettings(agent); }, 0);
     });
     hideLegacyChatUi();
+    showPerxonaFab();
+    bindPerxonaFab();
 
     window.__perxonaEmbed = true;
     window.__perxonaOpen = openPerxonaPanel;
     window.__perxonaClose = closePerxonaPanel;
-    window.openChat = openPerxonaPanel;
   }
 
   function bindUi() {

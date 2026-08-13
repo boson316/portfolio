@@ -968,11 +968,21 @@ html[lang="en"] .project-brief > div {
 }
 
 /* ========== Chat FAB ========== */
-.chat-fab {
+.fab-stack {
   position: fixed;
   bottom: 1.5rem;
   right: 1.5rem;
   z-index: 90;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.chat-fab {
+  position: relative;
+  bottom: auto;
+  right: auto;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -990,6 +1000,18 @@ html[lang="en"] .project-brief > div {
 }
 
 .chat-fab-icon { display: block; line-height: 1; }
+
+.perxona-fab {
+  background: linear-gradient(145deg, #6366f1, #8b5cf6);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.perxona-fab:hover {
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.45);
+}
+.perxona-fab[hidden] { display: none; }
 
 /* Perxona embedded panel — 不用 transform（Perxona docs 要求） */
 .perxona-panel {
@@ -1062,7 +1084,7 @@ html[lang="en"] .project-brief > div {
   width: 100%;
   height: 100%;
 }
-body.perxona-active .chat-panel { display: none; }
+body.perxona-active .chat-panel { display: flex; }
 
 /* ========== Chat Panel ========== */
 .chat-overlay {
