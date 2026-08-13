@@ -73,12 +73,28 @@
     return host;
   }
 
-  function getDisconnectHelpMessage() {
-    var domain = getDashboardDomainHint();
+  function getDomainFixMessage() {
     return (
-      'Perxona 連線失敗（401）。請確認 Render PERXONA_API_KEY 與 Dashboard apiKey 一致；' +
-      '網域白名單需含「' + domain + '」。'
+      'Perxona 403：請到 Dashboard → 部署存取控制 → 網域白名單填「' +
+      getDashboardDomainHint() +
+      '」（不要加 https 或 /portfolio）→ 儲存等 2 分鐘再 Ctrl+Shift+R。' +
+      ' 或先開 Live：' + liveUrl
     );
+  }
+
+  function showPanelError(message) {
+    var help = document.getElementById('perxonaHelp');
+    if (!help) return;
+    help.hidden = !message;
+    help.textContent = message || '';
+  }
+
+  function applySessionToken(agent) {
+    if (!agent || !sessionToken) return;
+    // 官方文件屬性名為 session_token（非 camelCase）
+    agent.setAttribute('session_token', sessionToken);
+    agent.setAttribute('sessionToken', sessionToken);
+    agent.removeAttribute('apiKey');
   }
 
   function bindAgentLifecycle(agent) {
@@ -105,7 +121,9 @@
       }
       if (status === 'disconnected' && !disconnectNotified) {
         disconnectNotified = true;
-        setMountStatus(getDisconnectHelpMessage(), true);
+        var msg = getDomainFixMessage();
+        setMountStatus(msg, true);
+        showPanelError(msg);
       }
     });
   }
@@ -180,9 +198,7 @@
   function applyAgentSettings(agent) {
     if (!agent || !sessionToken) return Promise.resolve(false);
 
-    agent.setAttribute('sessionToken', sessionToken);
-    agent.removeAttribute('session_token');
-    agent.removeAttribute('apiKey');
+    applySessionToken(agent);
 
     var settings = {
       agentProfileId: agentProfileId,
@@ -190,7 +206,7 @@
       displayMode: 'fullPresentation',
       conversationMode: 'inputText',
       readyToShowPolicy: 'ShowWhenAssetsLoading',
-      sessionToken: sessionToken,
+      session_token: sessionToken,
       appearanceMode: getAppearanceMode(),
       enableUserActivationCheck: false
     };
@@ -222,7 +238,7 @@
     agent.setAttribute('displayMode', 'fullPresentation');
     agent.setAttribute('conversationMode', 'inputText');
     agent.setAttribute('readyToShowPolicy', 'ShowWhenAssetsLoading');
-    agent.setAttribute('sessionToken', sessionToken);
+    agent.setAttribute('session_token', sessionToken);
     agent.setAttribute('appearanceMode', getAppearanceMode());
     agent.setAttribute('enableUserActivationCheck', 'false');
 
