@@ -157,7 +157,23 @@ def perxona_token():
     })
 
 
-@app.route("/api/perxona-proxy", methods=["GET", "POST", "PUT", "PATCH", "DELETE"])
+def apply_proxy_cors_headers(response, origin: str, referer: str):
+    allowed_origin = client_origin(origin, referer)
+    if not allowed_origin:
+        return response
+    response.headers["Access-Control-Allow-Origin"] = allowed_origin
+    response.headers["Vary"] = "Origin"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    request_headers = (request.headers.get("Access-Control-Request-Headers") or "").strip()
+    if request_headers:
+        response.headers["Access-Control-Allow-Headers"] = request_headers
+    else:
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, X-Api-Token, X-Fingerprint, Accept"
+    response.headers["Access-Control-Max-Age"] = "600"
+    return response
+
+
+@app.route("/api/perxona-proxy", methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"])
 def perxona_proxy():
     """SDK 的 console.perxona.ai 請求改走這裡，用 server-side x-api-key 避開 JWT 1002。"""
     if not PERXONA_API_KEY:
@@ -167,6 +183,8 @@ def perxona_proxy():
     referer = request.headers.get("Referer") or ""
     if not origin_allowed(origin, referer, PERXONA_ALLOWED_ORIGINS):
         return jsonify({"error": "來源未授權"}), 403
+    if request.method == "OPTIONS":
+        return apply_proxy_cors_headers(app.response_class("", status=204), origin, referer)
 
     target = resolve_proxy_target(request.args.get("target") or "")
     if not target:
@@ -187,7 +205,7 @@ def perxona_proxy():
         if key.lower() == "content-length":
             continue
         response.headers[key] = value
-    return response
+    return apply_proxy_cors_headers(response, origin, referer)
 
 
 @app.route("/api/chat", methods=["POST"])

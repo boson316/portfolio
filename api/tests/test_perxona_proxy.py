@@ -9,7 +9,12 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from perxona_proxy import build_upstream_headers, resolve_proxy_target
+from perxona_proxy import (
+    build_upstream_headers,
+    filter_response_headers,
+    forward_perxona,
+    resolve_proxy_target,
+)
 
 
 def test_resolve_proxy_target_allows_console_https():
@@ -23,6 +28,43 @@ def test_resolve_proxy_target_rejects_ssrf():
     assert resolve_proxy_target("https://cdn.perxona.ai/index.js") is None
     assert resolve_proxy_target("https://127.0.0.1/") is None
     assert resolve_proxy_target("https://user:pass@console.perxona.ai/") is None
+
+
+def test_filter_response_headers_strips_cors():
+    filtered = filter_response_headers(
+        {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "https://console.perxona.ai",
+            "Access-Control-Allow-Headers": "x-api-key",
+            "Connection": "keep-alive",
+        }
+    )
+    lowered = {k.lower(): v for k, v in filtered.items()}
+    assert lowered == {"content-type": "application/json"}
+
+
+def test_forward_perxona_read_io_error_returns_structured_json():
+    class BrokenResponse:
+        headers = {"Content-Type": "application/json"}
+
+        def getcode(self):
+            return 200
+
+        def read(self):
+            raise OSError("upstream read failed")
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+    with patch("perxona_proxy._urlopen", return_value=BrokenResponse()):
+        status, headers, body = forward_perxona("GET", "https://console.perxona.ai/x", {}, None)
+
+    assert status == 502
+    assert headers["Content-Type"] == "application/json"
+    assert body == b'{"error":"perxona_upstream_io_error"}'
 
 
 def test_build_upstream_headers_swaps_jwt_for_api_key():
@@ -81,6 +123,7 @@ def test_proxy_route_rejects_bad_origin_and_swaps_auth():
         )
     assert allowed.status_code == 201
     assert allowed.get_data() == b'{"ok":true}'
+    assert allowed.headers.get("Access-Control-Allow-Origin") == "https://boson316.github.io"
     args = mocked.call_args.args
     assert args[0] == "POST"
     assert args[1] == target
@@ -89,3 +132,25 @@ def test_proxy_route_rejects_bad_origin_and_swaps_auth():
     assert lowered["x-api-key"] == "route-test-key"
     assert "x-api-token" not in lowered
     assert args[3] == b'{"agent_profile_id":"01TEST"}'
+
+
+def test_proxy_options_preflight_returns_cors_headers():
+    os.environ["PERXONA_API_KEY"] = "route-test-key"
+    os.environ["PERXONA_ALLOWED_ORIGINS"] = "https://boson316.github.io"
+    loaded = _load_app_module()
+    client = loaded.app.test_client()
+    target = "https://console.perxona.ai/asia/api/v1/services/profiles/widget-profiles/01KZTWWPD7VZY0R9G2JYF0C7X9"
+
+    response = client.open(
+        f"/api/perxona-proxy?target={quote(target, safe='')}",
+        method="OPTIONS",
+        headers={
+            "Origin": "https://boson316.github.io",
+            "Access-Control-Request-Method": "GET",
+            "Access-Control-Request-Headers": "x-api-token,x-fingerprint,content-type",
+        },
+    )
+    assert response.status_code == 204
+    assert response.headers.get("Access-Control-Allow-Origin") == "https://boson316.github.io"
+    assert response.headers.get("Access-Control-Allow-Methods") == "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    assert response.headers.get("Access-Control-Allow-Headers") == "x-api-token,x-fingerprint,content-type"
