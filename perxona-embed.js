@@ -12,6 +12,7 @@
   var tokenExpiresAt = 0;
   var sdkReady = false;
   var liveFallbackMounted = false;
+  var initializeSucceeded = false;
   var panel = null;
   var overlay = null;
   var closeBtn = null;
@@ -34,16 +35,29 @@
       return null;
     }
 
+    function markInitializeSuccess(url) {
+      if (/conversation\/initialize/i.test(String(url || ''))) {
+        initializeSucceeded = true;
+      }
+    }
+
     var nativeFetch = window.fetch;
     if (typeof nativeFetch === 'function') {
       window.fetch = function (input, init) {
         var url = (input && typeof input.url === 'string') ? input.url : String(input);
         var rewritten = proxiedUrl(url);
         if (!rewritten) return nativeFetch.apply(this, arguments);
+        markInitializeSuccess(url);
+        var requestPromise;
         if (typeof Request !== 'undefined' && input instanceof Request) {
-          return nativeFetch.call(this, new Request(rewritten, input));
+          requestPromise = nativeFetch.call(this, new Request(rewritten, input));
+        } else {
+          requestPromise = nativeFetch.call(this, rewritten, init);
         }
-        return nativeFetch.call(this, rewritten, init);
+        return requestPromise.then(function (res) {
+          if (res.ok) markInitializeSuccess(url);
+          return res;
+        });
       };
     }
 
@@ -51,8 +65,24 @@
     XMLHttpRequest.prototype.open = function (method, url) {
       var rewritten = proxiedUrl(url);
       var args = Array.prototype.slice.call(arguments);
-      if (rewritten) args[1] = rewritten;
+      if (rewritten) {
+        args[1] = rewritten;
+        this.__perxonaInitialize = /conversation\/initialize/i.test(String(url || ''));
+      } else {
+        this.__perxonaInitialize = false;
+      }
       return nativeOpen.apply(this, args);
+    };
+
+    var nativeSend = XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.send = function () {
+      var xhr = this;
+      if (xhr.__perxonaInitialize) {
+        xhr.addEventListener('load', function () {
+          if (xhr.status >= 200 && xhr.status < 300) initializeSucceeded = true;
+        });
+      }
+      return nativeSend.apply(this, arguments);
     };
   }
 
@@ -186,32 +216,58 @@
   function bindAgentLifecycle(agent) {
     var ready = false;
     var disconnectNotified = false;
+    var disconnectTimer = null;
+    var loadingStatuses = {
+      'downloading-assets': true,
+      'connection-start': true,
+      'agent-preparation': true
+    };
+    var LOAD_TIMEOUT_MS = 45000;
+
+    function clearFallbackTimers() {
+      window.clearTimeout(failTimer);
+      window.clearTimeout(disconnectTimer);
+      disconnectTimer = null;
+    }
+
+    function scheduleDisconnectFallback(reason) {
+      if (ready || disconnectNotified) return;
+      window.clearTimeout(disconnectTimer);
+      var graceMs = initializeSucceeded ? 15000 : 5000;
+      disconnectTimer = window.setTimeout(function () {
+        if (ready || disconnectNotified) return;
+        disconnectNotified = true;
+        console.warn('[perxona] ' + reason + '，改開 Live iframe');
+        mountLiveIframe();
+        renderHelpPanel('嵌入初始化失敗，已改開 Live 3D');
+      }, graceMs);
+    }
+
     var failTimer = window.setTimeout(function () {
       if (ready) return;
       console.warn('[perxona] 3D 載入逾時，改開 Live iframe');
       mountLiveIframe();
       renderHelpPanel('嵌入逾時，已改開 Live 3D');
-    }, 25000);
+    }, LOAD_TIMEOUT_MS);
 
     agent.addEventListener('life-status', function (event) {
       var status = event.detail && event.detail.status;
-      if (status === 'downloading-assets' || status === 'connection-start' || status === 'agent-preparation') {
+      if (loadingStatuses[status]) {
+        window.clearTimeout(disconnectTimer);
+        disconnectTimer = null;
         setMountStatus('3D 小boson 載入中…', false);
         return;
       }
       if (status === 'ready' || status === 'connection-done') {
         ready = true;
         disconnectNotified = false;
-        window.clearTimeout(failTimer);
+        clearFallbackTimers();
         setMountStatus('', false);
         markPerxonaReady();
         return;
       }
-      if (status === 'disconnected' && !disconnectNotified) {
-        disconnectNotified = true;
-        console.warn('[perxona] initialize 失敗（常見 code 1002），改開 Live iframe');
-        mountLiveIframe();
-        renderHelpPanel('嵌入初始化失敗，已改開 Live 3D');
+      if (status === 'disconnected') {
+        scheduleDisconnectFallback('life-status disconnected');
       }
     });
   }
@@ -275,6 +331,12 @@
     var mount = document.getElementById('perxonaMount');
     if (!mount || mount.querySelector('sv-agent') || !sessionToken) {
       return Promise.resolve();
+    }
+
+    var liveFrame = mount.querySelector('.perxona-live-frame');
+    if (liveFrame) {
+      liveFrame.remove();
+      liveFallbackMounted = false;
     }
 
     setMountStatus('3D 小boson 載入中…', false);
