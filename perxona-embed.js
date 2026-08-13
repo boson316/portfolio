@@ -189,12 +189,18 @@
     };
 
     if (typeof agent.updateSessionToken === 'function') {
-      return Promise.resolve(agent.updateSessionToken(sessionToken)).then(function (ok) {
-        if (typeof agent.updateWidgetSetting === 'function') {
-          agent.updateWidgetSetting(settings);
-        }
-        return ok !== false;
-      });
+      return Promise.resolve(agent.updateSessionToken(sessionToken))
+        .catch(function (err) {
+          // token 屬性已設；API 拒絕時仍 mount，交給 life-status 顯示連線錯誤
+          console.warn('[perxona] updateSessionToken failed, using attribute fallback', err);
+          return true;
+        })
+        .then(function (ok) {
+          if (typeof agent.updateWidgetSetting === 'function') {
+            agent.updateWidgetSetting(settings);
+          }
+          return ok !== false;
+        });
     }
 
     if (typeof agent.updateWidgetSetting === 'function') {
@@ -258,9 +264,21 @@
       return;
     }
 
-    ensureWidgetReady().catch(function () {
+    ensureWidgetReady().catch(function (err) {
+      console.error('[perxona] ensureWidgetReady failed', err);
+      var msg = String(err && err.message || err || '');
+      if (msg.indexOf('perxona_sdk_load_failed') !== -1) {
+        setMountStatus('SDK 載入失敗', true);
+        renderHelpPanel('cdn.perxona.ai 載入失敗（檢查 Network / 擋廣告）');
+        return;
+      }
+      if (msg.indexOf('perxona_token_') !== -1) {
+        setMountStatus('3D token 失敗', true);
+        renderHelpPanel('後端 token ' + msg.replace('perxona_token_', ''));
+        return;
+      }
       setMountStatus('3D 初始化失敗', true);
-      renderHelpPanel('請確認 Render PERXONA_API_KEY 與 Dashboard apiKey 一致');
+      renderHelpPanel('token 200 仍失敗 → Network 篩 perxona.ai 找 403（Dashboard 白名單）或 401（apiKey 不一致）');
     });
   }
 
