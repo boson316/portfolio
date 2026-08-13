@@ -76,7 +76,8 @@ def build_upstream_headers(
 def filter_response_headers(headers: Mapping[str, str]) -> dict[str, str]:
     out: dict[str, str] = {}
     for key, value in headers.items():
-        if key.lower() in _DROP_RESPONSE_HEADERS:
+        lower = key.lower()
+        if lower in _DROP_RESPONSE_HEADERS or lower.startswith("access-control-"):
             continue
         out[key] = value
     return out
@@ -106,3 +107,5 @@ def forward_perxona(
         return int(err.code), filter_response_headers(raw_headers), err.read() or b""
     except urllib.error.URLError:
         return 504, {"Content-Type": "application/json"}, b'{"error":"perxona_upstream_timeout"}'
+    except OSError:
+        return 502, {"Content-Type": "application/json"}, b'{"error":"perxona_upstream_io_error"}'

@@ -24,3 +24,9 @@ def test_prompt_forbids_invention():
     assert "禁止編造" in PROMPT
     assert "#gpu-showcase" in PROMPT
     assert 'SYSTEM_PROMPT = """' in PROMPT
+
+
+def test_prompt_forbids_brand_consultant_fluff():
+    assert "禁止品牌顧問腔" in PROMPT
+    assert "極具潛力" in PROMPT
+    assert "不要只問「從哪個開始」" in PROMPT

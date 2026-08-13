@@ -13,6 +13,37 @@
 [![AWS AIWave Hackathon](https://img.shields.io/badge/AWS%20Hackathon-AIWave%202026-orange?style=for-the-badge&logo=amazon-aws)](assets/AIWave_Hackathon_Certificate.png)
 [![AI Workshop](https://img.shields.io/badge/AWS-AI%20Workshop%20May%202026-232F3E?style=for-the-badge&logo=amazon-aws)](assets/AI_Workshop_Certificate.png)
 
+## 網站功能
+
+單頁作品集（GitHub Pages），中英雙語介面與互動區塊：
+
+| 區塊 | 錨點 | 重點 |
+|------|------|------|
+| 首頁 | `#hero` | 自我介紹 · **和 AI 聊聊** 按鈕 |
+| 3D 技能雲 | `#skills` | 六類技能 · Three.js 球體 |
+| 專案精選 | `#projects` | 七張專案卡片 |
+| ML 專區 | `#ml-showcase` | 威斯康辛乳腺癌 · KNN ~**94.7%** · 五張 Chart.js 圖表 |
+| GPU 專區 | `#gpu-showcase` | RTX 3050 benchmark — matmul **521×**、MNIST **99%** |
+| 認證 | `#credentials` | AWS AIWave + AI Workshop（lightbox 放大） |
+| 聯絡 | `#contact` | 信箱 · AI 助手 |
+
+另有：**暗黑模式**（導覽列切換）、Chart.js / Three.js 延遲載入、RWD 排版。
+
+## AI 助手（雙 FAB）
+
+右下角兩顆浮動按鈕 — 同一個 **小boson** 人設，後端不同：
+
+| FAB | 面板 | 後端 |
+|-----|------|------|
+| **3D**（紫色） | `#perxonaPanel` · Perxona 虛擬人 | [Perxona Live](https://live.perxona.ai/asia/boson316/littleboson) iframe（預設）· SDK + Render proxy 備援 |
+| **💬**（橘色） | `#chatPanel` · 文字 + 快捷 chips | Groq · `POST /api/chat`（[Render API](https://perxona.onrender.com)） |
+
+- **apiKey 永不進前端** — 機密只在 Render（`api/`）。
+- 3D 知識：Perxona Dashboard Storyboard + 上傳 `perxona-knowledge-base.txt`。
+- 文字聊天知識：`api/app.py` 的 `SYSTEM_PROMPT`（Groq）。
+
+完整整合說明：[`PERXONA.md`](PERXONA.md) · 後端：[`api/README.md`](api/README.md)
+
 ## 認證與戰果
 
 | 證書 | 頒發單位 | 日期 |
@@ -63,7 +94,24 @@
 
 **聯絡：** poboson316@gmail.com
 
+## Repo 結構
+
+```
+portfolio/
+├── index.html, en/          # GitHub Pages（靜態前端）
+├── script.js                # 💬 Groq 文字聊天
+├── perxona-config.js        # Agent ID、API URL（無 secret）
+├── perxona-embed.js         # 3D Perxona 嵌入 + Live iframe
+├── perxona-knowledge-base.* # 3D avatar 知識庫（Dashboard 上傳 .txt）
+├── PERXONA.md               # Perxona + Groq 整合說明
+└── api/                     # Render 後端（Root Directory: api）
+    ├── app.py               # health、chat、perxona-token、perxona-proxy
+    └── README.md
+```
+
 ## 本機預覽
+
+**前端（靜態）：**
 
 ```bash
 cd c:\Users\User\Documents\code\cursor\3_Web與API\portfolio
@@ -71,3 +119,14 @@ npx serve .
 # 名片：http://localhost:3000/card/
 # 英文：http://localhost:3000/en/
 ```
+
+**後端（選用 — 本機跑 💬 聊天與 3D token）：**
+
+```powershell
+cd api
+Copy-Item .env.example .env   # 填入 GROQ_API_KEY、PERXONA_API_KEY
+pip install -r requirements.txt
+python app.py                 # http://127.0.0.1:5000
+```
+
+瀏覽器 console 設 `window.PORTFOLIO_API_URL = 'http://127.0.0.1:5000'`，或改 `perxona-config.js` 指向本機 API。

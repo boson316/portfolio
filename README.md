@@ -13,6 +13,37 @@ CS sophomore portfolio — frontend, AI applications, and GPU/CUDA optimization 
 [![AWS AIWave Hackathon](https://img.shields.io/badge/AWS%20Hackathon-AIWave%202026-orange?style=for-the-badge&logo=amazon-aws)](assets/AIWave_Hackathon_Certificate.png)
 [![AI Workshop](https://img.shields.io/badge/AWS-AI%20Workshop%20May%202026-232F3E?style=for-the-badge&logo=amazon-aws)](assets/AI_Workshop_Certificate.png)
 
+## Site features
+
+Single-page portfolio (GitHub Pages) with bilingual UI and interactive sections:
+
+| Section | Anchor | Highlights |
+|---------|--------|------------|
+| Hero | `#hero` | Intro + **Chat with AI** CTA |
+| 3D skills cloud | `#skills` | Six skill categories · Three.js sphere |
+| Projects | `#projects` | Seven project cards |
+| ML showcase | `#ml-showcase` | Wisconsin breast cancer · KNN ~**94.7%** · five Chart.js charts |
+| GPU showcase | `#gpu-showcase` | RTX 3050 benchmarks — matmul **521×**, MNIST **99%** |
+| Credentials | `#credentials` | AWS AIWave + AI Workshop (lightbox) |
+| Contact | `#contact` | Email + AI assistants |
+
+Also: **dark mode** (nav toggle), lazy-loaded Chart.js / Three.js, responsive layout.
+
+## AI assistants (dual FAB)
+
+Two floating buttons in the bottom-right corner — same agent persona **小boson**, different backends:
+
+| FAB | Panel | Backend |
+|-----|-------|---------|
+| **3D** (purple) | `#perxonaPanel` · Perxona avatar | [Perxona Live](https://live.perxona.ai/asia/boson316/littleboson) iframe (default) · SDK + Render proxy fallback |
+| **💬** (orange) | `#chatPanel` · text + quick chips | Groq · `POST /api/chat` on [Render API](https://perxona.onrender.com) |
+
+- **apiKey never in frontend** — secrets stay on Render (`api/`).
+- 3D knowledge: Perxona Dashboard Storyboard + `perxona-knowledge-base.txt`.
+- Text chat knowledge: `api/app.py` `SYSTEM_PROMPT` (Groq).
+
+Full integration notes: [`PERXONA.md`](PERXONA.md) · Backend: [`api/README.md`](api/README.md)
+
 ## Achievements & Credentials
 
 | Certificate | Issuer | Date |
@@ -63,7 +94,24 @@ Scan or open: <https://boson316.github.io/portfolio/card/>
 
 **Contact:** poboson316@gmail.com
 
+## Repo layout
+
+```
+portfolio/
+├── index.html, en/          # GitHub Pages (static frontend)
+├── script.js                # 💬 Groq text chat
+├── perxona-config.js        # Agent ID, API URL (no secrets)
+├── perxona-embed.js         # 3D Perxona embed + Live iframe
+├── perxona-knowledge-base.* # 3D avatar knowledge (upload .txt to Dashboard)
+├── PERXONA.md               # Perxona + Groq integration guide
+└── api/                     # Render backend (Root Directory: api)
+    ├── app.py               # health, chat, perxona-token, perxona-proxy
+    └── README.md
+```
+
 ## Local preview
+
+**Frontend (static):**
 
 ```bash
 cd c:\Users\User\Documents\code\cursor\3_Web與API\portfolio
@@ -71,3 +119,14 @@ npx serve .
 # Card: http://localhost:3000/card/
 # English: http://localhost:3000/en/
 ```
+
+**Backend (optional — for 💬 chat & 3D token on localhost):**
+
+```powershell
+cd api
+Copy-Item .env.example .env   # fill GROQ_API_KEY, PERXONA_API_KEY
+pip install -r requirements.txt
+python app.py                 # http://127.0.0.1:5000
+```
+
+Set `window.PORTFOLIO_API_URL = 'http://127.0.0.1:5000'` in browser console, or point `perxona-config.js` at your local API.

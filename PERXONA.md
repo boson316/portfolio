@@ -5,47 +5,53 @@
 **後端 API：** https://perxona.onrender.com（Render · Root Directory: `api`）  
 **Perxona Live（備援）：** https://live.perxona.ai/asia/boson316/littleboson
 
-### 現況總結（2026-08-13 · 已 push · 勿再從頭排查）
+### 現況總結（2026-08-13 下午 · 整合版）
 
 | 項目 | 狀態 | 值 |
 |------|------|-----|
 | Dashboard **部署存取控制 → 網域** | ✅ | `boson316.github.io` |
 | Render `PERXONA_ALLOWED_ORIGINS` | ✅ | 含 `https://boson316.github.io` |
-| Render **Repository** | ✅ | **`boson316/portfolio`**（已自舊 `boson316/perxona` 切換） |
-| Render **Root Directory** | ✅ | **`api`** |
-| Render health / proxy 預檢 | ✅ | `perxonaProxy: true` · OPTIONS **204**（2026-08-13 07:04 UTC 驗證） |
+| Render **Repository / Root** | ✅ | `boson316/portfolio` · **`api`** |
+| Render health / proxy 預檢 | ✅ | `perxonaProxy: true` · OPTIONS **204** |
 | Perxona Live Agent | ✅ | https://live.perxona.ai/asia/boson316/littleboson |
-| JWT `initialize` | ❌ code **1002** | Perxona 雲端 session key 未 provision（不是 Render 簽錯、不是白名單） |
-| 線上繞過 | ✅ `8d741a7` + `0729995` | `/api/perxona-proxy` 改掛 `x-api-key` + CORS 預檢；失敗則 iframe Live |
-| 3D 面板（Live iframe） | ✅ | 可顯示小 boson + 對話；全資源載入 ~2.4 min |
-| `native.zip` motion 資產 | ❌ **403** | `cdn.perxona.ai` S3/CloudFront · **非** Render/proxy 能修 |
-| 嵌入 embed 版本 | ✅ | `perxona-embed.js?v=10`（debounce + 120s + iframe onload 清錯誤文案） |
-| 嵌入文案 | ✅ | Live 載入成功後不再顯示「嵌入逾時/失敗」 |
-| 與 `#credentials` | ✅ 無衝突 | 證書 `ac145fb` 在 GPU↔聯絡之間，不碰 FAB / `#perxonaPanel` |
+| JWT `initialize` code **1002** | ❌ | Perxona 雲端 session key 未 provision → **proxy 繞過** |
+| 線上繞過 A′ | ✅ | `/api/perxona-proxy` + `x-api-key` + CORS |
+| **3D 嵌入策略（v13）** | ✅ | **預設 Live iframe + 背景預載**；略過 SDK 空等 |
+| `native.zip` CDN | ❌ **403** | S3 AccessDenied；同 rev **`import.zip` 200** |
+| SDK motion 改寫（v12+） | ✅ | fetch 層 `native.zip` → `import.zip`（SDK 路徑用） |
+| **3D 知識庫** | 📋 待上傳 | `perxona-knowledge-base.txt` → Dashboard 知識庫 |
+| **💬 文字聊天知識** | ✅ | `api/app.py` `SYSTEM_PROMPT`（Groq） |
+| embed 版本 | ✅ | `perxona-embed.js?v=13` · `perxona-config.js?v=5` |
 
-> **Agent 約定：** apiKey **永不**進前端。JWT 路徑仍 1002 → 走 proxy 或 Live iframe。**不是** key 不一致、**不是**改 JWT payload。
+> **Agent 約定：** apiKey **永不**進前端。3D 與 💬 **知識來源不同**——見 [§13](#13-perxona-知識庫3d-avatar-必設) 與 [§17](#17-本次對話總結2026-08-13-下午)。
 
-**3D 實際路徑（`perxona-embed.js?v=10`）：**
+**3D 實際路徑（`perxona-embed.js?v=13` · `preferLiveIframe: true`）：**
 
-1. 背景取 `GET /api/perxona-token`（SDK 仍要 `session_token` 才肯 mount）
-2. 把瀏覽器打到 `console.perxona.ai` 的 fetch/XHR **改寫**成 `https://perxona.onrender.com/api/perxona-proxy?target=…`
-3. Render 只允許 host `console.perxona.ai` + Origin 白名單；丟掉 `x-api-token`，改掛 server-side `x-api-key`
-4. `initialize` 200/201 後 SDK 可能短暫 `disconnected` 或資源載入 >45s → **debounce 15s** 才 fallback
-5. fallback：卸 `<sv-agent>`，iframe `liveUrl`；iframe `onload` 清錯誤文案；逾時 **120s**
-6. `cdn.perxona.ai/.../native.zip` **403** → Perxona CDN 資產權限，基本對話仍可用
+1. 進站 → **背景預載** `live.perxona.ai` iframe（隱藏）
+2. 按 3D FAB → **立刻**把預載 iframe 移入 `#perxonaMount`（不再走 SDK → disconnected → 空等）
+3. 若改 `preferLiveIframe: false`：走 SDK；`console.perxona.ai` → proxy；CDN `native.zip` → `import.zip` 改寫
+4. SDK fallback grace：**2s**（`disconnectGraceMs` 可調）；全逾時 **120s**
+5. `native.zip` 403 根因：CDN **未 publish native.zip**，只有 `import.zip` → 見 [§16](#16-3d-前端載入與-nativezip-4032026-08-13)
 
-**commit**
+**embed 版本史**
 
-| hash | 內容 |
+| 版本 | 內容 |
 |------|------|
-| `8d741a7` | proxy + Live iframe + 文案 + `?v=8` |
-| `ac145fb` | AWS 證書區塊（正交，已確認未蓋掉 3D） |
-| `0729995` | proxy CORS 預檢（OPTIONS 204）+ 回應 header；剝上游 CORS、`OSError`→502 + 測試 |
-| `v=9` | `disconnected` debounce 15s；`initialize` 成功後延長 grace |
-| `v=10` | timeout 120s；iframe `onload` 清錯誤文案；Live 成功不顯示「嵌入逾時/失敗」 |
+| `v=8`～`10` | proxy fallback · Live iframe · grace 15s · timeout 120s |
+| `v=11` | grace 15s→5s · `preferLiveIframe` 選項 |
+| `v=12` | 同步 hook：`native.zip`→`import.zip` |
+| `v=13` | **預設 Live iframe + 背景預載** · grace 2s |
 
-**Render 部署：** 見 [§15](#15-render-部署與-repo-切換2026-08-13)。  
-**3D 前端 / native.zip：** 見 [§16](#16-3d-前端載入與-nativezip-4032026-08-13)。
+**commit（建議一併 push）**
+
+| 檔案 | 內容 |
+|------|------|
+| `perxona-embed.js` | v13 Live 預載 · motion 改寫 · grace |
+| `perxona-config.js` | `preferLiveIframe: true` |
+| `perxona-knowledge-base.txt` / `.md` | 3D avatar 知識庫（上傳 .txt） |
+| `PERXONA.md` | 本總結 |
+
+**Render 部署：** [§15](#15-render-部署與-repo-切換2026-08-13) · **native.zip / embed：** [§16](#16-3d-前端載入與-nativezip-4032026-08-13) · **知識庫：** [§13](#13-perxona-知識庫3d-avatar-必設) · **對話總結：** [§17](#17-本次對話總結2026-08-13-下午)
 
 ### 快速導覽
 
@@ -55,7 +61,7 @@
 | `portfolio-api` → `api/` 合併 | [§2](#2-架構與-repo-結構) |
 | Dashboard / Render 設定 | [§3](#3-perxona-dashboard-設定) · [§4](#4-render-環境變數) |
 | `bubble` vs 本專案 `embedded` | [§3](#本專案與-dashboard-差異) |
-| 403 排查 · Checklist · Push | [§9](#9-故障排除) · [§14](#14-排查紀錄2026-08-13--完整對話摘要) · [§15](#15-render-部署與-repo-切換2026-08-13) · [§16](#16-3d-前端載入與-nativezip-4032026-08-13) · [§10](#10-上線-checklist) · [§8](#8-push-指令powershell) |
+| 403 排查 · Checklist · Push | [§9](#9-故障排除) · [§14](#14-排查紀錄2026-08-13--完整對話摘要) · [§15](#15-render-部署與-repo-切換2026-08-13) · [§16](#16-3d-前端載入與-nativezip-4032026-08-13) · [§17](#17-本次對話總結2026-08-13-下午) · [§13](#13-perxona-知識庫3d-avatar-必設) · [§10](#10-上線-checklist) · [§8](#8-push-指令powershell) |
 | 安全（apiKey 不放前端） | [§11](#11-安全) |
 
 ---
@@ -412,10 +418,50 @@ git push origin main
 
 ---
 
-## 13. Perxona 知識庫 Prompt（貼 Dashboard）
+## 13. Perxona 知識庫（3D Avatar 必設）
+
+> **💬 文字聊天**走 Groq `api/app.py` 的 `SYSTEM_PROMPT`（已含完整專案事實）。  
+> **3D 小boson**走 Perxona Storyboard + **知識庫**——兩邊內容需手動對齊。  
+> **上傳檔：** `perxona-knowledge-base.txt`（Dashboard 支援 DOC/DOCX/CSV/TXT/PDF，**不支援 .md**）  
+> **編輯用：** `perxona-knowledge-base.md`（同內容，改完再同步到 .txt）
+
+### Dashboard 操作（對應你 Storyboard 截圖）
+
+1. **知識庫**（左側選單）→ **上傳** `perxona-knowledge-base.txt`（或 DOCX/PDF 匯出同一內容）
+2. **全體設定**（第一個節點）→ 角色：
 
 ```
-你是「小boson」，Boson（GitHub: boson316）作品集網站的 3D 導覽助手。
+你是 Boson 作品集網站的 3D 導覽助手「小boson」。
+任務：用知識庫事實介紹網站、專案、技能、聯絡方式。
+禁止：品牌顧問腔（「精煉數位品牌」「極具潛力」「我很榮幸」）、空泛讚美、連續反問不給內容。
+訪客說「好／可以／介紹」→ 立刻列專案名＋量化數字（521×、94.7%、99%），不要只問「從哪個開始」。
+只根據知識庫回答；不知道就 poboson316@gmail.com。
+語氣：繁體中文、同屆資工同學、每則 ≤120 字。不要編造。
+```
+
+3. **需求探索與引導**（第二節點）→ 目標：
+
+```
+直接回答，用知識庫裡的專案名、數字、錨點、連結。
+問題模糊時：先給 30 秒速覽（GPU Lab 521×、ML 94.7%、美食地圖、退休計算機、新聞、RAG 開發中），末尾最多問一次偏好。
+禁止：只回「您想從哪個專案開始」而沒列任何專案。
+引導至 #projects、#gpu-showcase、#ml-showcase、#skills。
+```
+
+4. **專業技能與內容說明**（第三節點）→ 目標 + DO：
+
+```
+目標：說明單一專案的背景、技術選型、量化成果（521×、94.7%、99% 等）。
+DO：履歷用語、benchmark、GitHub/live 連結、技能對應（CUDA→GPU Lab、KNN→ML 專區）。
+DON'T：不做「品牌／敘事優化顧問」、不幫寫 code、不代做 server、不答政治/作業。
+```
+
+5. 右上角 **已發布** → 確認 Agent `littleboson` 已 publish
+
+### 精簡 Prompt（知識庫太長時備用）
+
+```
+你是「小boson」，Boson（GitHub: boson316）作品集 3D 導覽助手。
 語言：繁體中文（台灣）。語氣：同屆資工同學，每則 ≤120 字。
 
 作品集：https://boson316.github.io/portfolio/
@@ -433,6 +479,16 @@ git push origin main
 
 禁止編造未列出的成就。偏題帶回作品集。
 ```
+
+### 與 index.html 對齊檢查
+
+| 訪客常問 | 知識庫章節 | 站內錨點 |
+|----------|------------|----------|
+| CUDA 亮點 | GPU Lab benchmark | #gpu-showcase |
+| ML 內容 | KNN 94.7% 五圖 | #ml-showcase |
+| 技能 | 六類 skillData | #skills |
+| 聯絡 | poboson316@gmail.com | #contact |
+| 認證 | AIWave + Workshop | #credentials |
 
 ---
 
@@ -724,7 +780,8 @@ git push perxona 0729995:main
 | 1 | `perxona-proxy` CORS error | Render 綁舊 repo + 缺 OPTIONS 預檢 → §15 已修 |
 | 2 | `initialize` 200 但「嵌入初始化失敗」 | SDK 短暫 `disconnected`；舊 embed 立刻 fallback |
 | 3 | 3D 有畫面但底部「嵌入逾時」 | iframe 已成功；45s timeout 太短（全資源 ~2.4 min）+ 錯誤文案未清 |
-| 4 | `native.zip` **403** | `cdn.perxona.ai` S3/CloudFront 拒絕 HEAD/GET |
+| 4 | `native.zip` **403** | CDN 無 native.zip；同路徑 **import.zip 200** → §16 |
+| 5 | 按 3D 空等 ~15s + SDK toast | 舊版 grace 15s + 仍走 SDK；v13 改 Live 預載 → §17 |
 
 ### Network 成功指標（2026-08-13 實測）
 
@@ -734,56 +791,76 @@ git push perxona 0729995:main
 | `perxona-proxy` → initialize | 200/201 | proxy + x-api-key 繞過 1002 ✓ |
 | `stt` / `tts` | 201 | 語音 API OK |
 | Live iframe 內 3D | 可見 | 小 boson + 對話框 |
-| **`native.zip`** | **403** | motion 資產 · Perxona CDN |
+| **`import.zip`** | **200** | 同 motion rev 存在；web 用 |
+| **`native.zip`** | **403** | S3 AccessDenied · 檔案未 publish |
 
-### native.zip 403（我們修不了）
+### native.zip 403 — 實測根因（2026-08-13 下午）
 
-```
-HEAD/GET https://cdn.perxona.ai/asia/prod/org/01K4440W2737YSN7E4QD4TAHT2/resources/assets/motion/.../native.zip
-→ 403 Forbidden (AmazonS3 / CloudFront)
-Origin: https://live.perxona.ai
+```bash
+# 同 rev、同目錄：
+HEAD .../native.zip  → 403 AccessDenied (S3/CloudFront)
+HEAD .../import.zip  → 200 OK (~187KB)
 ```
 
 | 項目 | 說明 |
 |------|------|
-| Host | `cdn.perxona.ai`（**不是** `console.perxona.ai`，proxy 管不到） |
-| 原因 | Agent motion rev 未 publish 或 org CDN 權限未開 |
-| 影響 | 部分動作/表情可能缺失；**基本文字對話仍可用** |
-| 誰修 | **Perxona 支援** |
+| 根因 | Perxona CDN **有 import.zip、無 native.zip**（非 CORS、非 proxy） |
+| SDK 行為 | `index.js` HEAD `native.zip` → 403 重試 → toast「服務暫時無法使用」 |
+| proxy 為何無用 | Host 是 `cdn.perxona.ai`，不是 `console.perxona.ai` |
+| 我們的修補 | v12+ fetch 改寫 `native.zip`→`import.zip`；v13 **預設 Live iframe 預載** |
+| Live iframe 內 | 仍可能 403（改寫管不到 iframe 內）；基本 3D+對話可用 |
+| 長期 | Perxona 支援：請 publish `native.zip` 或確認 web 應只用 import.zip |
 
-**Perxona 支援範本：**
+**Perxona 支援範本（更新版）：**
 
 ```
-Agent: 01KZTWWPD7VZY0R9G2JYF0C7X9 (littleboson)
-Live + 嵌入皆無法載入 motion asset：
-HEAD https://cdn.perxona.ai/asia/prod/org/01K4440W2737YSN7E4QD4TAHT2/resources/assets/motion/57a4323b-47e3-4610-8636-e1b124021ef7/rev/01KZD7WF50D598QS6TNVQVNFW5/.../native.zip
-→ 403 Forbidden (CloudFront/S3)
+Agent: littleboson (01KZTWWPD7VZY0R9G2JYF0C7X9)
+Org: 01K4440W2737YSN7E4QD4TAHT2
+
+同 motion rev 下：
+  import.zip → 200 OK
+  native.zip → 403 AccessDenied (S3/CloudFront)
+例：.../motion/57a4323b-.../rev/01KZD7WF50D598QS6TNVQVNFW5/.../native.zip
+
+SDK 與 Live 頁皆 HEAD native.zip 失敗。請確認是否應 publish native.zip，
+或 web widget 應改抓 import.zip。
 Origin: https://live.perxona.ai
-請確認 motion rev 01KZD7WF50D598QS6TNVQVNFW5 已 publish 且 CDN 可讀。
 ```
 
-### 前端修補（`perxona-embed.js?v=10`）
+### 前端修補（embed 版本史）
 
-| 問題 | 修補 |
-|------|------|
-| `disconnected` 過早 fallback | `initialize` 成功後 debounce **15s** |
-| 全資源載入 >45s | timeout **45s → 120s** |
-| iframe 成功仍顯示「嵌入逾時/失敗」 | iframe `onload` → `hideHelpPanel()` |
-| Live 載入中 UX | 顯示「Live 3D 載入中…」，成功後清 status |
+| 版本 | 問題 | 修補 |
+|------|------|------|
+| v10 | disconnected 過早 fallback | grace **15s**；timeout 120s；iframe onload 清錯誤 |
+| v11 | 15s 空等太久 | grace **5s**；`preferLiveIframe` 選項 |
+| v12 | native.zip 403 | 同步 hook：`native.zip`→`import.zip` |
+| **v13** | 仍等 SDK + toast | **`preferLiveIframe: true` 預設** · **背景預載 Live** · grace **2s** |
 
-### Push 指令（PowerShell）
+**設定（`perxona-config.js`）：**
+
+```javascript
+preferLiveIframe: true,           // 預設：直接 Live，不跑 SDK
+// rewriteMotionNativeZip: false, // Perxona 修好 native.zip 後可關
+// disconnectGraceMs: 2000,      // SDK fallback 等待（毫秒）
+```
+
+### Push 指令（PowerShell · 含知識庫）
 
 ```powershell
 cd "C:\Users\User\Documents\code\cursor\3_Web與API\portfolio"
 
-git add perxona-embed.js index.html en/index.html PERXONA.md
+git add perxona-embed.js perxona-config.js index.html en/index.html `
+  perxona-knowledge-base.txt perxona-knowledge-base.md PERXONA.md
 
-git commit -m "fix: Perxona Live iframe UX; document native.zip 403"
+git commit -m @"
+fix(perxona): Live iframe preload v13; knowledge base; native.zip doc
+
+"@
 
 git push origin main
 ```
 
-等 GitHub Pages 1～3 分鐘 → https://boson316.github.io/portfolio/ **Ctrl+Shift+R**。
+等 GitHub Pages 1～3 分鐘 → https://boson316.github.io/portfolio/ **Ctrl+Shift+R**（DevTools 勾 Disable cache，確認 `?v=13`）。
 
 ### 403 三層（釐清）
 
@@ -791,9 +868,63 @@ git push origin main
 A 層 Flask      /api/perxona-token 403     → PERXONA_ALLOWED_ORIGINS     ✅ 已通
 A′ 層 proxy     /api/perxona-proxy CORS    → OPTIONS 204 + CORS headers  ✅ 已通
 B 層 Perxona    initialize code 1002       → session key 未 provision  → proxy 繞過 ✅
-C 層 CDN        cdn.perxona.ai native.zip  → S3/CloudFront 403         → Perxona 支援 ❌
+C 層 CDN        cdn.perxona.ai native.zip  → 無檔案（import.zip 200）  → Perxona 支援 ❌
 ```
 
 ---
 
-**文件版本：** 2026-08-13 · 根因 1002 · proxy `0729995` · Render `portfolio/api` ✓ · embed `?v=10` · native.zip 403 §16
+## 17. 本次對話總結（2026-08-13 下午）
+
+### 問題與結論一覽
+
+| # | 現象 | 結論 | 處置 |
+|---|------|------|------|
+| 1 | `perxona-proxy` + initialize | ✅ 已通 | 無需再加 proxy |
+| 2 | `native.zip` 403 | CDN 缺檔；`import.zip` 同 rev 200 | v12 改寫；ticket 給 Perxona |
+| 3 | 等 ~15s 才出 3D | 舊 embed grace 15s + SDK 失敗重試 | **v13 Live 預載** |
+| 4 | toast「服務暫時無法使用」 | SDK motion 403 重試 | v13 略過 SDK |
+| 5 | avatar 要能答網站/專案 | 3D 知識在 **Dashboard 知識庫** | 上傳 `perxona-knowledge-base.txt` |
+
+### 雙入口知識對齊
+
+| 入口 | 後端 | 知識來源 | 狀態 |
+|------|------|----------|------|
+| 💬 文字 FAB | Groq · `POST /api/chat` | `api/app.py` `SYSTEM_PROMPT` | ✅ repo 內已完整 |
+| 3D FAB | Perxona Live iframe | Dashboard **知識庫** + Storyboard | 📋 上傳 `.txt` |
+
+**知識庫檔案**
+
+| 檔 | 用途 |
+|----|------|
+| `perxona-knowledge-base.txt` | **上傳 Perxona**（支援 DOC/DOCX/CSV/TXT/PDF） |
+| `perxona-knowledge-base.md` | 編輯用；改完同步 .txt |
+
+**Dashboard 步驟：** 知識庫上傳 `.txt` → Storyboard 三節點（§13）→ **已發布**。
+
+### 403 四層（更新）
+
+```
+A   Flask token     /api/perxona-token           ✅
+A′  proxy           /api/perxona-proxy + CORS    ✅
+B   Perxona API     initialize 1002 → proxy     ✅
+C   CDN motion      native.zip 403 · import 200  → Perxona / v12 改寫 / v13 繞過 SDK
+```
+
+### 驗證 checklist（push v13 後）
+
+- [ ] Network：`perxona-embed.js?v=13`、`perxona-config.js?v=5`
+- [ ] 按 3D：應 **Live 預載**，非 SDK「載入中…」+ toast
+- [ ] 首頁停留 20s 再按 3D → 應接近秒開
+- [ ] 💬 問「CUDA 亮點」→ Groq 短答 + #gpu-showcase
+- [ ] 3D 語音問同題 → 需知識庫已上傳才準
+- [ ] Dashboard 知識庫已上傳 `perxona-knowledge-base.txt`
+
+### 待辦（非 code）
+
+- [ ] Perxona ticket：native.zip 缺檔 / import.zip only
+- [ ] Dashboard 知識庫上傳 + publish
+- [ ] 網站內容更新時：同步 `perxona-knowledge-base.txt` + `SYSTEM_PROMPT`
+
+---
+
+**文件版本：** 2026-08-13 下午 · embed `?v=13` · 知識庫 `.txt` · §16 native/import · §17 對話總結
