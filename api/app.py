@@ -1,0 +1,164 @@
+# Portfolio 聊天後端：Groq API + Perxona session token
+import os
+
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+from dotenv import load_dotenv
+
+from perxona_token import create_session_token, origin_allowed, parse_allowed_origins
+
+load_dotenv()
+
+app = Flask(__name__)
+CORS(app)
+
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+PERXONA_API_KEY = (os.getenv("PERXONA_API_KEY") or "").strip().strip('"').strip("'")
+PERXONA_TOKEN_TTL_SECONDS = int(os.getenv("PERXONA_TOKEN_TTL_SECONDS", "10800"))
+PERXONA_ALLOWED_ORIGINS = parse_allowed_origins(
+    os.getenv(
+        "PERXONA_ALLOWED_ORIGINS",
+        "https://boson316.github.io,http://localhost,http://127.0.0.1",
+    )
+)
+
+SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集網站上的導覽助手。
+語言：一律繁體中文（台灣）。專有名詞、repo、技術名保留英文。
+語氣：像同屆資工同學帶人看作品——短、準、可點連結。不要客服腔、不要自我介紹長篇。
+
+【你代表誰】
+- 人：Boson，宜蘭大學資工大二，前端 × AI × GPU/CUDA。
+- 聯絡：poboson316@gmail.com
+- 本頁：Boson 作品集（中文 index.html；英文在 /en/）。
+
+【只根據下列事實回答。沒寫的就說不知道，叫對方寄信。禁止編造實習、獎項、論文、數字。】
+
+專案（依訪客常問順序）：
+1. RTX 3050 GPU Optimization Lab
+   - 筆電 RTX 3050 6GB（Ampere sm_86）、CUDA 12.4、PyTorch、Triton、C++ Extension
+   - matmul tiled CUDA：521× vs CPU（N=1024）
+   - reduction：0.763ms（1M elements）
+   - MNIST CNN：99% test acc（SmallCNN + AMP）
+   - 3×3 Conv FP16：CUDA Ext 1.50× PyTorch（B=1024）；Triton 1.27×（B=128）
+   - 另有 FlashAttention、Transformer kernels、Nsight/Roofline、一鍵重現
+   - GitHub: https://github.com/boson316/RTX3050-GPU-Mastery
+   - 本頁錨點：#gpu-showcase
+
+2. 年化報酬率／退休規劃計算機（純前端）
+   - v4 多階段現金流 CAGR/IRR；v5 退休總資產、幾年可退、每月要存（4% 法則、買房）
+   - v5: https://boson316.github.io/niu/annual_return_calculator_v5.html
+   - v4: https://boson316.github.io/niu/annual_return_calculator_v4.html
+   - GitHub: https://github.com/boson316/niu
+
+3. 校園美食地圖 v2（宜大）
+   - Streamlit；校本部步行 500m；黃氏星等×距離；15 類；Google Places 離線快取 300+
+   - Live: https://food-map-niu-v2.streamlit.app/
+   - GitHub: https://github.com/boson316/food_map_niu_v2
+
+4. 新聞蒐集系統
+   - Python / Flask / 爬蟲；依主題／來源呈現
+   - Live: https://news-8zud.onrender.com/（冷啟動可能慢）
+
+5. ML 專區（大二課程）
+   - 威斯康辛乳腺癌 KNN（K=9）：TN=68 TP=40 FP=3 FN=3，約 94.7%
+   - 本頁互動圖：混淆矩陣、Loss/Acc、Feature Importance、相關熱圖、PCA
+   - 錨點：#ml-showcase
+
+6. RAG 知識庫聊天：開發中。Gemini + Chroma。沒有 live demo。不要假裝已上線。
+
+技能：AI/RAG/LLM（Gemini、Groq、Chroma）、GPU/CUDA/Triton、前端 RWD、Python/Flask、爬蟲、工具開發。
+站內功能：暗黑模式（nav ☀/🌙）、3D 技能雲、#projects 卡片。
+已下架：MediaPipe／邊緣人臉管線展示。有人問就說已下架，改推 GPU 與 ML。
+
+【行為】
+- 回覆 ≤120 字。先一句結論，再 1–3 個事實或連結。
+- 能指頁內錨點就指：#projects #gpu-showcase #ml-showcase #contact #skills
+- 問「你是誰／這網站幹嘛」：一句話說明你是作品集導覽，不是通用 ChatGPT。
+- 問合作／面試：給 email，不要幫 Boson 答應檔期或薪資。
+- 快捷意圖對應：
+  - 介紹專案 → 列 1–5，各一行 + 最相關連結
+  - CUDA／GPU → 只講 Lab 數字與 GitHub，指向 #gpu-showcase
+  - ML 專區 → 只講 KNN 與五張圖，指向 #ml-showcase
+  - 聯絡 → 只給 email
+- 使用者改用英文就改英文回；其餘繁中。
+- 不談政治、不寫作業、不執行與作品集無關的長推理。偏題一句帶回專案。
+"""
+
+
+def get_groq_client():
+    try:
+        from groq import Groq
+        return Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
+    except Exception:
+        return None
+
+
+@app.route("/api/health", methods=["GET"])
+def health():
+    return jsonify({
+        "ok": True,
+        "groq": bool(GROQ_API_KEY),
+        "perxona": bool(PERXONA_API_KEY),
+    })
+
+
+@app.route("/api/perxona-token", methods=["GET"])
+def perxona_token():
+    if not PERXONA_API_KEY:
+        return jsonify({"error": "PERXONA_API_KEY 未設定"}), 503
+
+    origin = request.headers.get("Origin") or ""
+    referer = request.headers.get("Referer") or ""
+    if not origin_allowed(origin, referer, PERXONA_ALLOWED_ORIGINS):
+        return jsonify({"error": "來源未授權"}), 403
+
+    session_token, expires_at = create_session_token(PERXONA_API_KEY, PERXONA_TOKEN_TTL_SECONDS)
+    return jsonify({
+        "sessionToken": session_token,
+        "expiresAt": expires_at,
+        "ttlSeconds": PERXONA_TOKEN_TTL_SECONDS,
+    })
+
+
+@app.route("/api/chat", methods=["POST"])
+def chat():
+    data = request.get_json() or {}
+    message = (data.get("message") or "").strip()
+    if not message:
+        return jsonify({"error": "請提供 message"}), 400
+
+    client = get_groq_client()
+    if not client:
+        return jsonify({
+            "reply": "目前後端未設定 Groq API Key，無法使用 AI 回覆。請在後端設定 GROQ_API_KEY 後再試，或直接寄信到 poboson316@gmail.com 聯絡站主。",
+            "fallback": True
+        }), 200
+
+    history = data.get("history") or []
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    for h in history[-10:]:
+        role = "user" if h.get("role") == "user" else "assistant"
+        content = (h.get("content") or "").strip()
+        if content:
+            messages.append({"role": role, "content": content})
+    messages.append({"role": "user", "content": message})
+
+    try:
+        completion = client.chat.completions.create(
+            model=MODEL,
+            messages=messages,
+            max_tokens=512,
+            temperature=0.7,
+        )
+        reply = (completion.choices[0].message.content or "").strip() or "抱歉，我沒有產生回覆，請再試一次。"
+        return jsonify({"reply": reply})
+    except Exception as e:
+        return jsonify({
+            "reply": f"暫時無法連線到 AI（{str(e)}），請稍後再試或寄信至 poboson316@gmail.com 聯絡站主。",
+            "fallback": True
+        }), 200
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)), debug=os.getenv("FLASK_DEBUG", "0") == "1")

@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: perxona
+    runtime: python
+    rootDir: api
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: PERXONA_TOKEN_TTL_SECONDS
+        value: "10800"
+      - key: PERXONA_ALLOWED_ORIGINS
+        value: https://boson316.github.io,http://localhost,http://127.0.0.1

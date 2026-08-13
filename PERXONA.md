@@ -20,7 +20,7 @@
 | 元件 | Repo / 路徑 |
 |------|-------------|
 | 前端 embed | [boson316/portfolio](https://github.com/boson316/portfolio) · `cursor/3_Web與API/portfolio/` |
-| 後端 API | [boson316/perxona](https://github.com/boson316/perxona) · `cursor/3_Web與API/portfolio-api/` |
+| 後端 API | [boson316/portfolio](https://github.com/boson316/portfolio) · `api/` |
 | 線上 API | https://perxona.onrender.com |
 | Live 頁（獨立） | https://live.perxona.ai/asia/boson316/xiaoboson |
 
@@ -67,7 +67,7 @@
 ### 本機 `.env`
 
 ```powershell
-cd c:\Users\User\Documents\code\cursor\3_Web與API\portfolio-api
+cd c:\Users\User\Documents\code\cursor\3_Web與API\portfolio\api
 Copy-Item .env.example .env
 ```
 
@@ -102,7 +102,7 @@ curl.exe -H "Origin: http://localhost:3000" http://127.0.0.1:5000/api/perxona-to
 
 ### 建立 Service
 
-1. [render.com](https://render.com) → **New Web Service** → Connect **`boson316/perxona`**
+1. [render.com](https://render.com) → **New Web Service** → Connect **`boson316/portfolio`**（Root Directory: **`api`**）
 2. 設定：
 
 | 欄位 | 值 |
@@ -164,7 +164,7 @@ var PRODUCTION_API_URL = 'https://perxona.onrender.com';
 
 ```powershell
 # Terminal 1
-cd c:\Users\User\Documents\code\cursor\3_Web與API\portfolio-api
+cd c:\Users\User\Documents\code\cursor\3_Web與API\portfolio\api
 python app.py
 
 # Terminal 2
@@ -226,7 +226,7 @@ JWT：HS256 · payload `iat`/`exp` · secret = `PERXONA_API_KEY`
 
 ## 七、上線 Checklist
 
-- [ ] [boson316/perxona](https://github.com/boson316/perxona) 已 push
+- [ ] [boson316/portfolio](https://github.com/boson316/portfolio) `api/` 已 push
 - [ ] Render `perxona` service Live
 - [ ] Render env：`PERXONA_API_KEY` 與 Dashboard **一致**
 - [ ] `curl.exe` health + token 皆 200
@@ -265,10 +265,10 @@ JWT：HS256 · payload `iat`/`exp` · secret = `PERXONA_API_KEY`
 | `portfolio/perxona-config.js` | agentProfileId + 本機/線上 API URL |
 | `portfolio/perxona-embed.js` | SDK、token、panel、lifecycle 提示 |
 | `portfolio/index.html` | `#perxonaPanel` / `#perxonaMount` |
-| `portfolio-api/app.py` | Flask 路由 |
-| `portfolio-api/perxona_token.py` | JWT 簽發、Origin 檢查 |
-| `portfolio-api/render.yaml` | Render 部署範本 |
-| `portfolio-api/.env.example` | 本機 env 範本 |
+| `api/app.py` | Flask 路由 |
+| `api/perxona_token.py` | JWT 簽發、Origin 檢查 |
+| `render.yaml`（rootDir: api） | Render 部署範本 |
+| `api/.env.example` | 本機 env 範本 |
 
 ---
 
