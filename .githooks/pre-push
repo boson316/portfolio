@@ -1,0 +1,52 @@
+#!/bin/sh
+# 阻擋 push：tracked、staged 或即將推送的 commit 含 .env 類檔案（允許 .env.example）
+# 安裝：.\scripts\install-git-hooks.ps1
+
+set -eu
+
+ENV_PATTERN='(\.env$|\.env\.(?!example)|/\.env$|\.envrc$|line\.env$)'
+
+blocked=0
+
+check_names() {
+  names="$1"
+  reason="$2"
+  if [ -n "$names" ]; then
+    printf '%s\n' "$names" | grep -E "$ENV_PATTERN" >/dev/null 2>&1 || return 0
+    echo "BLOCKED: $reason"
+    printf '%s\n' "$names" | grep -E "$ENV_PATTERN" || true
+    blocked=1
+  fi
+}
+
+tracked=$(git ls-files 2>/dev/null || true)
+check_names "$tracked" "tracked env files detected"
+
+staged=$(git diff --cached --name-only 2>/dev/null || true)
+check_names "$staged" "staged env files detected"
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ -n "$local_ref" ] || continue
+
+  if [ "$local_sha" = "0000000000000000000000000000000000000000" ]; then
+    continue
+  fi
+
+  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+    range="$local_sha"
+  else
+    range="$remote_sha..$local_sha"
+  fi
+
+  pushing=$(git diff --name-only --diff-filter=AM "$range" 2>/dev/null || true)
+  check_names "$pushing" "push would upload env files"
+done
+
+if [ "$blocked" -ne 0 ]; then
+  echo ""
+  echo "Fix: git rm --cached <file>  # 保留本機檔，取消追蹤"
+  echo "     確認 .gitignore 含 .env / .env.*"
+  exit 1
+fi
+
+exit 0
