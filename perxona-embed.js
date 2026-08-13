@@ -5,7 +5,7 @@
   var SDK_URL = String(cfg.sdkUrl || 'https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js').trim();
   var agentProfileId = String(cfg.agentProfileId || '').trim();
   var presentationMode = String(cfg.presentationMode || 'embedded').trim();
-  var liveUrl = String(cfg.liveUrl || 'https://live.perxona.ai/asia/boson316/xiaoboson').trim();
+  var liveUrl = String(cfg.liveUrl || 'https://live.perxona.ai/asia/boson316/littleboson').trim();
 
   var sessionToken = '';
   var tokenExpiresAt = 0;

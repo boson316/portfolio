@@ -22,7 +22,7 @@
 | 前端 embed | [boson316/portfolio](https://github.com/boson316/portfolio) · `cursor/3_Web與API/portfolio/` |
 | 後端 API | [boson316/portfolio](https://github.com/boson316/portfolio) · `api/` |
 | 線上 API | https://perxona.onrender.com |
-| Live 頁（獨立） | https://live.perxona.ai/asia/boson316/xiaoboson |
+| Live 頁（獨立） | https://live.perxona.ai/asia/boson316/littleboson |
 
 ### 與 Dashboard 嵌入範例的對照
 

@@ -5,7 +5,7 @@ window.PERXONA_CONFIG = {
   sdkUrl: 'https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js',
   agentProfileId: 'YOUR_AGENT_PROFILE_ID',
   presentationMode: 'embedded',
-  liveUrl: 'https://live.perxona.ai/asia/boson316/xiaoboson'
+  liveUrl: 'https://live.perxona.ai/asia/boson316/littleboson'
 };
 
 // Render 部署後填入 service 根網址（不含尾端 /）
