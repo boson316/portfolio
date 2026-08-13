@@ -255,10 +255,6 @@
     if (shell) shell.hidden = true;
   }
 
-  function preloadFrameStyle() {
-    return 'position:fixed;width:420px;height:min(85vh,720px);left:-9999px;top:0;border:0;opacity:0;pointer-events:none;visibility:hidden;z-index:-1';
-  }
-
   function hideHelpPanel() {
     var help = document.getElementById('perxonaHelp');
     if (!help) return;
@@ -294,19 +290,28 @@
     };
   }
 
+  function createLiveFrame() {
+    var frame = document.createElement('iframe');
+    frame.className = 'perxona-live-frame';
+    frame.src = liveUrl;
+    frame.title = '3D 小boson';
+    frame.allow = 'microphone; camera; autoplay; clipboard-write';
+    frame.setAttribute('allowfullscreen', '');
+    frame.setAttribute('loading', 'eager');
+    bindLiveFrameLoad(frame);
+    return frame;
+  }
+
   function preloadLiveIframe() {
-    if (liveFramePreload || !liveUrl) return;
-    liveFramePreload = document.createElement('iframe');
-    liveFramePreload.className = 'perxona-live-frame';
-    liveFramePreload.src = liveUrl;
-    liveFramePreload.title = '3D 小boson';
-    liveFramePreload.allow = 'microphone; camera; autoplay; clipboard-write';
-    liveFramePreload.setAttribute('allowfullscreen', '');
+    if (liveFramePreload || liveFallbackMounted || !liveUrl) return;
+    var mount = document.getElementById('perxonaMount');
+    if (!mount || mount.querySelector('.perxona-live-frame')) return;
+
+    liveFramePreload = createLiveFrame();
+    liveFramePreload.classList.add('is-preloading');
     liveFramePreload.setAttribute('aria-hidden', 'true');
-    liveFramePreload.setAttribute('loading', 'eager');
-    liveFramePreload.style.cssText = preloadFrameStyle();
-    bindLiveFrameLoad(liveFramePreload);
-    document.body.appendChild(liveFramePreload);
+    // 掛在 panel 內（非 visibility:hidden 離屏），避免瀏覽器節流 iframe 資源
+    mount.appendChild(liveFramePreload);
   }
 
   function kickPreload() {
@@ -321,23 +326,17 @@
     if (agent) agent.remove();
     showLoadingShell(liveFrameLoaded ? '3D 小boson 準備中…' : 'Live 3D 連線中…');
 
-    var frame = liveFramePreload;
+    var frame = liveFramePreload || mount.querySelector('.perxona-live-frame');
     if (frame) {
       liveFramePreload = null;
     } else {
-      frame = document.createElement('iframe');
-      frame.className = 'perxona-live-frame';
-      frame.src = liveUrl;
-      frame.title = '3D 小boson';
-      frame.allow = 'microphone; camera; autoplay; clipboard-write';
-      frame.setAttribute('allowfullscreen', '');
-      frame.setAttribute('loading', 'eager');
-      bindLiveFrameLoad(frame);
+      frame = createLiveFrame();
+      mount.appendChild(frame);
     }
 
+    frame.classList.remove('is-preloading');
     frame.removeAttribute('aria-hidden');
     frame.style.cssText = '';
-    mount.appendChild(frame);
 
     if (liveFrameLoaded) finalizeLiveFrame(frame);
   }

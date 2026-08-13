@@ -5,7 +5,7 @@
 **後端 API：** https://perxona.onrender.com（Render · Root Directory: `api`）  
 **Perxona Live（備援）：** https://live.perxona.ai/asia/boson316/littleboson
 
-### 現況總結（2026-08-13 下午 · 整合版）
+### 現況總結（2026-08-13 晚 · 整合版）
 
 | 項目 | 狀態 | 值 |
 |------|------|-----|
@@ -16,22 +16,27 @@
 | Perxona Live Agent | ✅ | https://live.perxona.ai/asia/boson316/littleboson |
 | JWT `initialize` code **1002** | ❌ | Perxona 雲端 session key 未 provision → **proxy 繞過** |
 | 線上繞過 A′ | ✅ | `/api/perxona-proxy` + `x-api-key` + CORS |
-| **3D 嵌入策略（v13）** | ✅ | **預設 Live iframe + 背景預載**；略過 SDK 空等 |
+| **3D 嵌入策略（v15）** | ✅ | Live iframe · **進站即掛 `#perxonaMount` 預載** · 載入殼 · FAB hover 二次 kick |
 | `native.zip` CDN | ❌ **403** | S3 AccessDenied；同 rev **`import.zip` 200** |
 | SDK motion 改寫（v12+） | ✅ | fetch 層 `native.zip` → `import.zip`（SDK 路徑用） |
-| **3D 知識庫** | 📋 待上傳 | `perxona-knowledge-base.txt` → Dashboard 知識庫 |
-| **💬 文字聊天知識** | ✅ | `api/app.py` `SYSTEM_PROMPT`（Groq） |
-| embed 版本 | ✅ | `perxona-embed.js?v=13` · `perxona-config.js?v=5` |
+| **3D 知識庫（repo）** | ✅ | `perxona-knowledge-base.txt` 已 push · **Dashboard 需重傳** |
+| **連結對照表** | ✅ | 禁止 `gpu-lab`；GPU 唯一 repo：`RTX3050-GPU-Mastery` |
+| **💬 文字聊天知識** | ✅ | `api/app.py` `SYSTEM_PROMPT`（Groq · Render redeploy） |
+| **README 雙語** | ✅ | `README.md` / `README.zh-TW.md` 含雙 FAB、repo 結構 |
+| embed 版本 | ✅ | `perxona-embed.js?v=14` · `perxona-config.js?v=5` |
+| **Storyboard 開場白** | 📋 | 仍可能英文 brand narrative · 見 [§13 Greeting](#greeting-開場白preview-第一句) |
+| **Git push** | ✅ | `c062366` docs · `4a8a43f` perf v14 |
 
-> **Agent 約定：** apiKey **永不**進前端。3D 與 💬 **知識來源不同**——見 [§13](#13-perxona-知識庫3d-avatar-必設) 與 [§17](#17-本次對話總結2026-08-13-下午)。
+> **Agent 約定：** apiKey **永不**進前端。3D 與 💬 **知識來源不同**——見 [§13](#13-perxona-知識庫3d-avatar-必設) 與 [§17](#17-本次對話總結2026-08-13)。
 
-**3D 實際路徑（`perxona-embed.js?v=13` · `preferLiveIframe: true`）：**
+**3D 實際路徑（`perxona-embed.js?v=15` · `preferLiveIframe: true`）：**
 
-1. 進站 → **背景預載** `live.perxona.ai` iframe（隱藏）
-2. 按 3D FAB → **立刻**把預載 iframe 移入 `#perxonaMount`（不再走 SDK → disconnected → 空等）
-3. 若改 `preferLiveIframe: false`：走 SDK；`console.perxona.ai` → proxy；CDN `native.zip` → `import.zip` 改寫
-4. SDK fallback grace：**2s**（`disconnectGraceMs` 可調）；全逾時 **120s**
-5. `native.zip` 403 根因：CDN **未 publish native.zip**，只有 `import.zip` → 見 [§16](#16-3d-前端載入與-nativezip-4032026-08-13)
+1. `<head>` **preconnect / dns-prefetch / prefetch** → Live 文件提早排程
+2. 腳本載入後 **立刻 kickPreload** → iframe **直接掛 `#perxonaMount`**（panel 關閉時仍載入，不用 visibility:hidden 離屏）
+3. FAB **hover / focus** 再 kick 一次；按 3D → 開 panel + **載入殼**（已預載則幾乎立即可見）
+4. Perxona Live 頁內仍會跑自己的 % 進度條（**瓶頸在 Perxona 3D 資源**，我們只能縮短「按下去才開始載」）
+5. 若改 `preferLiveIframe: false`：走 SDK；`console.perxona.ai` → proxy；CDN `native.zip` → `import.zip` 改寫
+6. SDK fallback grace：**2s**；全逾時 **120s** → 見 [§16](#16-3d-前端載入與-nativezip-4032026-08-13)
 
 **embed 版本史**
 
@@ -41,17 +46,17 @@
 | `v=11` | grace 15s→5s · `preferLiveIframe` 選項 |
 | `v=12` | 同步 hook：`native.zip`→`import.zip` |
 | `v=13` | **預設 Live iframe + 背景預載** · grace 2s |
+| **`v=14`** | **全尺寸預載**（避免 1×1 被節流）· **載入殼** · 提早 kickPreload · preconnect |
+| **`v=15`** | **進站即掛 panel 內預載**（非離屏 hidden）· `<head>` prefetch · 腳本去掉 defer |
 
-**commit（建議一併 push）**
+**commit（已 push `main`）**
 
-| 檔案 | 內容 |
-|------|------|
-| `perxona-embed.js` | v13 Live 預載 · motion 改寫 · grace |
-| `perxona-config.js` | `preferLiveIframe: true` |
-| `perxona-knowledge-base.txt` / `.md` | 3D avatar 知識庫（上傳 .txt） |
-| `PERXONA.md` | 本總結 |
+| Commit | 內容 |
+|--------|------|
+| `c062366` | README 雙語 · 知識庫 · `api/app.py` 連結規則 · PERXONA.md |
+| `4a8a43f` | v14：全尺寸預載 · 載入殼 · preconnect · styles.css |
 
-**Render 部署：** [§15](#15-render-部署與-repo-切換2026-08-13) · **native.zip / embed：** [§16](#16-3d-前端載入與-nativezip-4032026-08-13) · **知識庫：** [§13](#13-perxona-知識庫3d-avatar-必設) · **對話總結：** [§17](#17-本次對話總結2026-08-13-下午)
+**Render 部署：** [§15](#15-render-部署與-repo-切換2026-08-13) · **native.zip / embed：** [§16](#16-3d-前端載入與-nativezip-4032026-08-13) · **知識庫：** [§13](#13-perxona-知識庫3d-avatar-必設) · **全日總結：** [§17](#17-本次對話總結2026-08-13)
 
 ### 快速導覽
 
@@ -61,7 +66,7 @@
 | `portfolio-api` → `api/` 合併 | [§2](#2-架構與-repo-結構) |
 | Dashboard / Render 設定 | [§3](#3-perxona-dashboard-設定) · [§4](#4-render-環境變數) |
 | `bubble` vs 本專案 `embedded` | [§3](#本專案與-dashboard-差異) |
-| 403 排查 · Checklist · Push | [§9](#9-故障排除) · [§14](#14-排查紀錄2026-08-13--完整對話摘要) · [§15](#15-render-部署與-repo-切換2026-08-13) · [§16](#16-3d-前端載入與-nativezip-4032026-08-13) · [§17](#17-本次對話總結2026-08-13-下午) · [§13](#13-perxona-知識庫3d-avatar-必設) · [§10](#10-上線-checklist) · [§8](#8-push-指令powershell) |
+| 403 排查 · Checklist · Push | [§9](#9-故障排除) · [§14](#14-排查紀錄2026-08-13--完整對話摘要) · [§15](#15-render-部署與-repo-切換2026-08-13) · [§16](#16-3d-前端載入與-nativezip-4032026-08-13) · [§17](#17-本次對話總結2026-08-13) · [§13](#13-perxona-知識庫3d-avatar-必設) · [§10](#10-上線-checklist) · [§8](#8-push-指令powershell) |
 | 安全（apiKey 不放前端） | [§11](#11-安全) |
 
 ---
@@ -458,6 +463,46 @@ DON'T：不做「品牌／敘事優化顧問」、不幫寫 code、不代做 ser
 
 5. 右上角 **已發布** → 確認 Agent `littleboson` 已 publish
 
+### Greeting（開場白／Preview 第一句）
+
+> **常見誤區：** Storyboard **「指令」** 管 AI 行為，**不是** Preview 固定第一句。  
+> **「用戶端顯示內容」** 展開後若只有三個開關（隱私權彈窗、建議提問、後續提問）→ **都不是** Greeting。
+
+**Greeting 可能位置（依 Dashboard 版本）：**
+
+| 優先 | 位置 |
+|------|------|
+| 1 | 全體設定 → **背景設定** → Greeting / Welcome Message / Opening Message |
+| 2 | 🌐 地球下拉選 **繁體中文** 後，用戶端顯示內容是否多文字框 |
+| 3 | 左側 **面板** → Entry / Welcome / Greeting 面板 |
+
+**建議開場白（貼 Greeting 欄，不是指令 DO）：**
+
+```
+嗨，我是小boson，Boson 作品集的 3D 導覽。GPU Lab matmul 521×、ML 94.7% 都在站上——想先看哪塊？
+```
+
+若 Preview 仍出現英文 *personal brand narrative* → Agent 建立時的預設 Greeting 未改；DO 區寫「開場白：…」**通常不會**覆蓋獨立 Greeting 欄。
+
+### 連結對照表（防幻覺 repo · 必入知識庫）
+
+3D 曾幻覺 `https://github.com/boson316/gpu-lab`（**不存在**）。知識庫與 Groq prompt 已加對照表：
+
+| 專案 | 正確 GitHub | 禁止編造 |
+|------|-------------|----------|
+| GPU Lab | https://github.com/boson316/RTX3050-GPU-Mastery | gpu-lab、GPU-Lab |
+| 退休計算機 | https://github.com/boson316/niu | — |
+| 美食地圖 | https://github.com/boson316/food_map_niu_v2 | — |
+| 作品集 | https://github.com/boson316/portfolio | — |
+
+**規則：** 訪客要連結 → 貼**完整 https://**；禁止猜 repo 名。
+
+Storyboard 指令可再加一句：
+
+```
+給 GitHub 連結時只用知識庫連結對照表；GPU Lab 只能是 https://github.com/boson316/RTX3050-GPU-Mastery，禁止 gpu-lab。
+```
+
 ### 精簡 Prompt（知識庫太長時備用）
 
 ```
@@ -835,6 +880,7 @@ Origin: https://live.perxona.ai
 | v11 | 15s 空等太久 | grace **5s**；`preferLiveIframe` 選項 |
 | v12 | native.zip 403 | 同步 hook：`native.zip`→`import.zip` |
 | **v13** | 仍等 SDK + toast | **`preferLiveIframe: true` 預設** · **背景預載 Live** · grace **2s** |
+| **v14** | 1×1 預載被節流 · panel 全白 | **全尺寸預載** · **載入殼** · preconnect · 提早 kickPreload |
 
 **設定（`perxona-config.js`）：**
 
@@ -873,58 +919,109 @@ C 層 CDN        cdn.perxona.ai native.zip  → 無檔案（import.zip 200）  �
 
 ---
 
-## 17. 本次對話總結（2026-08-13 下午）
+## 17. 本次對話總結（2026-08-13）
 
-### 問題與結論一覽
+> 一整天的 Perxona 整合、Dashboard 調教、知識對齊、載入優化與 push 紀錄。
 
-| # | 現象 | 結論 | 處置 |
+### A. 架構結論（不變）
+
+| 層 | 技術 | 狀態 |
+|----|------|------|
+| 前端 | GitHub Pages · 雙 FAB（3D 紫 + 💬 橘） | ✅ |
+| 3D | Perxona **Live iframe**（`preferLiveIframe: true`） | ✅ v14 |
+| 文字 | Groq · `POST /api/chat` · Render `api/` | ✅ |
+| 認證 | apiKey **只在 Render**；前端 session_token + proxy | ✅ |
+| SDK 路徑 | initialize **1002** → 不走 SDK 為預設 | ✅ 繞過 |
+| CDN | `native.zip` 403 · `import.zip` 200 | ❌ Perxona ticket |
+
+### B. 今日問題 → 處置
+
+| # | 現象 | 根因 | 處置 |
 |---|------|------|------|
-| 1 | `perxona-proxy` + initialize | ✅ 已通 | 無需再加 proxy |
-| 2 | `native.zip` 403 | CDN 缺檔；`import.zip` 同 rev 200 | v12 改寫；ticket 給 Perxona |
-| 3 | 等 ~15s 才出 3D | 舊 embed grace 15s + SDK 失敗重試 | **v13 Live 預載** |
-| 4 | toast「服務暫時無法使用」 | SDK motion 403 重試 | v13 略過 SDK |
-| 5 | avatar 要能答網站/專案 | 3D 知識在 **Dashboard 知識庫** | 上傳 `perxona-knowledge-base.txt` |
+| 1 | SDK toast「服務暫時無法使用」 | motion `native.zip` 403 | v13 改 Live iframe 預設 |
+| 2 | 按 3D 等 ~15s | SDK grace + 失敗重試 | v13 預載；v14 全尺寸 + 提早 kick |
+| 3 | 前面空白 ~10s、94% 圈 | Live 頁 3D 資源重；舊 1×1 預載可能被節流 | v14 載入殼 + 全尺寸預載 + preconnect |
+| 4 | 英文 brand narrative 開場 | Dashboard **Greeting** 未改；改「指令」無效 | §13 Greeting 指引 |
+| 5 | 「用戶端顯示內容」無 Greeting | 該區只有三開關，非文字框 | 改全體設定／面板／🌐 語系 |
+| 6 | 3D 答對內容但 **gpu-lab 假連結** | LLM 猜 repo；Dashboard 知識庫未重傳 | 連結對照表 + 重傳 `.txt` |
+| 7 | 💬 與 3D 知識不同步 | 兩套來源 | `SYSTEM_PROMPT` + `knowledge-base.txt` 對齊 |
+| 8 | README 缺 Perxona 說明 | 未更新 | README 雙語 + 連 `PERXONA.md` |
 
-### 雙入口知識對齊
+### C. Git 紀錄（已 push `main`）
 
-| 入口 | 後端 | 知識來源 | 狀態 |
-|------|------|----------|------|
-| 💬 文字 FAB | Groq · `POST /api/chat` | `api/app.py` `SYSTEM_PROMPT` | ✅ repo 內已完整 |
-| 3D FAB | Perxona Live iframe | Dashboard **知識庫** + Storyboard | 📋 上傳 `.txt` |
+| Commit | 內容 |
+|--------|------|
+| `c062366` | README 雙語 · PERXONA.md · 知識庫 · `api/app.py` 連結規則 · proxy · hooks |
+| `4a8a43f` | **perf v14**：全尺寸 Live 預載 · 載入殼 · `styles.css` · `index.html` preconnect |
 
-**知識庫檔案**
+**未納入 portfolio 的本地檔：** 投資書單三檔（維持 untracked）。
 
-| 檔 | 用途 |
-|----|------|
-| `perxona-knowledge-base.txt` | **上傳 Perxona**（支援 DOC/DOCX/CSV/TXT/PDF） |
-| `perxona-knowledge-base.md` | 編輯用；改完同步 .txt |
+**Repo 根目錄 ~30 檔：** 對靜態站 + ML/GPU 互動 + API monorepo 屬正常；JS 分檔為 lazy load，不必為「看起來少」而合併。
 
-**Dashboard 步驟：** 知識庫上傳 `.txt` → Storyboard 三節點（§13）→ **已發布**。
+### D. 雙入口知識對齊
 
-### 403 四層（更新）
+| 入口 | 後端 | 知識來源 | repo | Dashboard |
+|------|------|----------|------|-----------|
+| 💬 橘 FAB | Groq | `api/app.py` `SYSTEM_PROMPT` | ✅ push | Render auto-deploy |
+| 3D 紫 FAB | Perxona Live | 知識庫 + Storyboard | ✅ `.txt` push | **需重傳 + 已發布** |
+
+**同步流程（網站內容變更時）：**
+
+1. 改 `perxona-knowledge-base.md` → 同步 `.txt`
+2. 改 `api/app.py` `SYSTEM_PROMPT`（💬）
+3. push → Render deploy
+4. Dashboard 刪舊知識庫 → 上傳新 `.txt` → Storyboard 三節點 + Greeting → **已發布**
+
+### E. 3D 對話品質（實測 2026-08-13 晚）
+
+| 項目 | 結果 |
+|------|------|
+| 能介紹網站／專案／521×／99% | ✅ 尚可 |
+| 語氣仍偏「數位助理／品牌」 | ⚠️ Storyboard 舊模板 + Greeting 英文 |
+| GPU Lab GitHub | ❌ 曾給 `gpu-lab` → 知識庫已禁；**重傳後再測** |
+| ML 專區 | 站內 #ml-showcase，**無獨立 GitHub repo** |
+
+### F. 403 / CDN 四層（最終）
 
 ```
 A   Flask token     /api/perxona-token           ✅
 A′  proxy           /api/perxona-proxy + CORS    ✅
-B   Perxona API     initialize 1002 → proxy     ✅
-C   CDN motion      native.zip 403 · import 200  → Perxona / v12 改寫 / v13 繞過 SDK
+B   Perxona API     initialize 1002 → 不走 SDK   ✅
+C   CDN motion      native.zip 403 · import 200  → Perxona ticket / v12 改寫
+D   Live 載入       5–15s 3D 資源                → 我們 v14 預載；無法消掉 Perxona 內 % 條
 ```
 
-### 驗證 checklist（push v13 後）
+### G. 驗證 checklist（v14 + 知識庫重傳後）
 
-- [ ] Network：`perxona-embed.js?v=13`、`perxona-config.js?v=5`
-- [ ] 按 3D：應 **Live 預載**，非 SDK「載入中…」+ toast
-- [ ] 首頁停留 20s 再按 3D → 應接近秒開
-- [ ] 💬 問「CUDA 亮點」→ Groq 短答 + #gpu-showcase
-- [ ] 3D 語音問同題 → 需知識庫已上傳才準
-- [ ] Dashboard 知識庫已上傳 `perxona-knowledge-base.txt`
+- [ ] Network：`perxona-embed.js?v=14`、`perxona-config.js?v=5`
+- [ ] `<head>` 有 `preconnect` → `live.perxona.ai`
+- [ ] 進站 10s 再按 3D → 比立刻按更快（預載生效）
+- [ ] 按 3D 立刻見 **載入殼**（非全白 panel）
+- [ ] 💬「GPU Lab 連結」→ `RTX3050-GPU-Mastery` 完整 URL
+- [ ] 3D 同題 → 重傳知識庫 + publish 後一致
+- [ ] Preview 第一句 → 繁中 Greeting（非 brand narrative）
+- [ ] Render health：`https://perxona.onrender.com/api/health`
 
-### 待辦（非 code）
+### H. 待辦（非 code · 人操）
 
-- [ ] Perxona ticket：native.zip 缺檔 / import.zip only
-- [ ] Dashboard 知識庫上傳 + publish
-- [ ] 網站內容更新時：同步 `perxona-knowledge-base.txt` + `SYSTEM_PROMPT`
+- [ ] Dashboard **重傳** `perxona-knowledge-base.txt`（含連結對照表）→ **已發布**
+- [ ] 全體設定 **Greeting** 改繁中開場白（§13）
+- [ ] Storyboard 三節點去「品牌顧問」文案（§13）
+- [ ] Perxona ticket：`native.zip` 缺檔
+- [ ] 內容更新時：`.txt` + `SYSTEM_PROMPT` 雙向同步
+
+### I. 相關檔案索引
+
+| 檔 | 用途 |
+|----|------|
+| `perxona-embed.js` | v14 Live 預載 · 載入殼 · SDK fallback |
+| `perxona-config.js` | `preferLiveIframe: true` · API URL |
+| `perxona-knowledge-base.txt` | **Dashboard 上傳** |
+| `perxona-knowledge-base.md` | 編輯用母檔 |
+| `api/app.py` | Groq `SYSTEM_PROMPT` + 連結規則 |
+| `README.md` / `README.zh-TW.md` | 公開說明（雙語） |
+| `PERXONA.md` | 本文件 |
 
 ---
 
-**文件版本：** 2026-08-13 下午 · embed `?v=13` · 知識庫 `.txt` · §16 native/import · §17 對話總結
+**文件版本：** 2026-08-13 晚 · embed `?v=14` · commits `c062366` + `4a8a43f` · §17 全日總結
