@@ -1084,7 +1084,6 @@ html[lang="en"] .project-brief > div {
   height: 100%;
 }
 .perxona-help {
-  margin: 0;
   padding: 0.75rem 1rem;
   font-size: 0.85rem;
   line-height: 1.5;
@@ -1092,6 +1091,24 @@ html[lang="en"] .project-brief > div {
   background: var(--bg);
   border-top: 1px solid var(--border);
   flex-shrink: 0;
+}
+.perxona-help-list {
+  margin: 0.5rem 0 0.75rem 1.1rem;
+  padding: 0;
+}
+.perxona-help code {
+  font-size: 0.8em;
+  word-break: break-all;
+}
+.perxona-live-link {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(145deg, #6366f1, #8b5cf6);
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 600;
 }
 .perxona-help[hidden] { display: none; }
 

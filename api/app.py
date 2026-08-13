@@ -5,7 +5,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-from perxona_token import create_session_token, origin_allowed, parse_allowed_origins
+from perxona_token import create_session_token, origin_allowed, parse_allowed_origins, perxona_key_hint
 
 load_dotenv()
 
@@ -119,11 +119,16 @@ def get_groq_client():
 
 @app.route("/api/health", methods=["GET"])
 def health():
-    return jsonify({
+    payload: dict[str, object] = {
         "ok": True,
         "groq": bool(GROQ_API_KEY),
         "perxona": bool(PERXONA_API_KEY),
-    })
+    }
+    hint = perxona_key_hint(PERXONA_API_KEY)
+    if hint:
+        payload["perxonaKeyHint"] = hint["hint"]
+        payload["perxonaKeyLen"] = hint["len"]
+    return jsonify(payload)
 
 
 @app.route("/api/perxona-token", methods=["GET"])

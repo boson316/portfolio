@@ -117,19 +117,36 @@
     status.textContent = message || '';
   }
 
-  function renderHelpPanel(reason) {
+  function renderHelpPanel(reason, extraHtml) {
     var help = document.getElementById('perxonaHelp');
     if (!help) return;
-    var domain = getDashboardDomainHint();
     help.hidden = false;
     help.innerHTML =
       '<strong>' + reason + '</strong>' +
+      (extraHtml || '') +
       '<ol class="perxona-help-list">' +
-      '<li>Dashboard → 部署存取控制 → 網域填 <code>' + domain + '</code>（無 https、無 path）</li>' +
-      '<li>Dashboard 嵌入 apiKey → Render <code>PERXONA_API_KEY</code> 逐字相同 → Redeploy</li>' +
+      '<li>Dashboard <strong>Desktop 嵌入 apiKey</strong> → Render <code>PERXONA_API_KEY</code> 逐字貼上 → Save → 等 redeploy</li>' +
+      '<li>比對指紋：<code>curl.exe https://perxona.onrender.com/api/health</code> 的 <code>perxonaKeyHint</code> 前4後4 是否與 Dashboard 相同</li>' +
       '<li>agentProfileId：<code>' + agentProfileId + '</code></li>' +
       '</ol>' +
-      '<a class="perxona-live-link" href="' + liveUrl + '" target="_blank" rel="noopener noreferrer">先開 Live 3D 頁</a>';
+      '<a class="perxona-live-link" href="' + liveUrl + '" target="_blank" rel="noopener noreferrer">Live 3D 頁（已確認正常）</a>';
+  }
+
+  function appendKeyHintToHelp() {
+    var apiBase = getApiBase();
+    if (!apiBase) return;
+    fetch(apiBase + '/api/health', { headers: { Accept: 'application/json' } })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (data) {
+        if (!data || !data.perxonaKeyHint) return;
+        var help = document.getElementById('perxonaHelp');
+        if (!help) return;
+        var el = document.createElement('p');
+        el.className = 'perxona-key-hint';
+        el.innerHTML = 'Render key 指紋：<code>' + data.perxonaKeyHint + '</code>（' + data.perxonaKeyLen + ' 字）';
+        help.appendChild(el);
+      })
+      .catch(function () {});
   }
 
   function applySessionToken(agent) {
@@ -145,7 +162,7 @@
     var failTimer = window.setTimeout(function () {
       if (ready) return;
       setMountStatus('3D 載入逾時', true);
-      renderHelpPanel('3D 載入逾時（常見：Dashboard 網域白名單未填 ' + getDashboardDomainHint() + '）');
+      renderHelpPanel('3D 載入逾時 → Console 紅字；Network All 查 cdn.perxona.ai 與 perxona.ai API');
     }, 25000);
 
     agent.addEventListener('life-status', function (event) {
@@ -165,7 +182,11 @@
       if (status === 'disconnected' && !disconnectNotified) {
         disconnectNotified = true;
         setMountStatus('Perxona 連線失敗', true);
-        renderHelpPanel('Perxona 403／連線失敗');
+        renderHelpPanel(
+          'Perxona API 403（token 200 但 initialize 403）→ JWT 簽章 key 與 Dashboard apiKey 不一致',
+          '<p>Network 若見 <code>initialize</code>、agent id 皆 403，幾乎一定是 Render key 錯。</p>'
+        );
+        appendKeyHintToHelp();
       }
     });
   }
@@ -299,7 +320,7 @@
         return;
       }
       setMountStatus('3D 初始化失敗', true);
-      renderHelpPanel('Live 正常＝Agent OK。嵌入還需 Dashboard 白名單填 boson316.github.io → Console 貼紅字給我');
+      renderHelpPanel('Live 正常＝Agent OK。查 Console 紅字；Network All 篩 cdn.perxona.ai / perxona.ai');
     });
   }
 
