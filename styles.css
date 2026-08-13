@@ -1179,6 +1179,44 @@ html[lang="en"] .project-brief > div {
 }
 .perxona-status.is-error { color: #b45309; }
 .perxona-status[hidden] { display: none; }
+.perxona-loading-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: var(--bg-card);
+  color: var(--text-muted);
+}
+.perxona-loading-shell[hidden] { display: none; }
+.perxona-loading-spinner {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 3px solid var(--border);
+  border-top-color: #8b5cf6;
+  border-radius: 50%;
+  animation: perxona-spin 0.85s linear infinite;
+}
+.perxona-loading-text {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.perxona-loading-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  max-width: 16rem;
+}
+@keyframes perxona-spin {
+  to { transform: rotate(360deg); }
+}
 .perxona-mount sv-agent,
 .perxona-mount iframe.perxona-live-frame {
   display: block;

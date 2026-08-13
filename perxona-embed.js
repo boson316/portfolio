@@ -229,6 +229,36 @@
     status.textContent = message || '';
   }
 
+  function showLoadingShell(message) {
+    var mount = document.getElementById('perxonaMount');
+    if (!mount) return;
+    var shell = mount.querySelector('.perxona-loading-shell');
+    if (!shell) {
+      shell = document.createElement('div');
+      shell.className = 'perxona-loading-shell';
+      shell.setAttribute('role', 'status');
+      shell.innerHTML =
+        '<div class="perxona-loading-spinner" aria-hidden="true"></div>' +
+        '<p class="perxona-loading-text"></p>' +
+        '<p class="perxona-loading-hint">首次約需 5–15 秒載入 3D 資源</p>';
+      mount.appendChild(shell);
+    }
+    var text = shell.querySelector('.perxona-loading-text');
+    if (text) text.textContent = message || '3D 小boson 載入中…';
+    shell.hidden = false;
+  }
+
+  function hideLoadingShell() {
+    var mount = document.getElementById('perxonaMount');
+    if (!mount) return;
+    var shell = mount.querySelector('.perxona-loading-shell');
+    if (shell) shell.hidden = true;
+  }
+
+  function preloadFrameStyle() {
+    return 'position:fixed;width:420px;height:min(85vh,720px);left:-9999px;top:0;border:0;opacity:0;pointer-events:none;visibility:hidden;z-index:-1';
+  }
+
   function hideHelpPanel() {
     var help = document.getElementById('perxonaHelp');
     if (!help) return;
@@ -250,6 +280,7 @@
   function finalizeLiveFrame(frame) {
     hideHelpPanel();
     setMountStatus('', false);
+    hideLoadingShell();
     markPerxonaReady();
   }
 
@@ -258,6 +289,7 @@
     frame.dataset.perxonaBound = '1';
     frame.onload = function () {
       liveFrameLoaded = true;
+      hideLoadingShell();
       if (liveFallbackMounted && frame.parentNode) finalizeLiveFrame(frame);
     };
   }
@@ -271,9 +303,14 @@
     liveFramePreload.allow = 'microphone; camera; autoplay; clipboard-write';
     liveFramePreload.setAttribute('allowfullscreen', '');
     liveFramePreload.setAttribute('aria-hidden', 'true');
-    liveFramePreload.style.cssText = 'position:fixed;width:1px;height:1px;left:-9999px;top:0;border:0;opacity:0;pointer-events:none';
+    liveFramePreload.setAttribute('loading', 'eager');
+    liveFramePreload.style.cssText = preloadFrameStyle();
     bindLiveFrameLoad(liveFramePreload);
     document.body.appendChild(liveFramePreload);
+  }
+
+  function kickPreload() {
+    if (preferLiveIframe && liveUrl && hasAgent()) preloadLiveIframe();
   }
 
   function mountLiveIframe() {
@@ -282,7 +319,7 @@
     liveFallbackMounted = true;
     var agent = mount.querySelector('sv-agent');
     if (agent) agent.remove();
-    setMountStatus(liveFrameLoaded ? '' : 'Live 3D 載入中…', false);
+    showLoadingShell(liveFrameLoaded ? '3D 小boson 準備中…' : 'Live 3D 連線中…');
 
     var frame = liveFramePreload;
     if (frame) {
@@ -294,6 +331,7 @@
       frame.title = '3D 小boson';
       frame.allow = 'microphone; camera; autoplay; clipboard-write';
       frame.setAttribute('allowfullscreen', '');
+      frame.setAttribute('loading', 'eager');
       bindLiveFrameLoad(frame);
     }
 
@@ -505,6 +543,8 @@
     var fab = document.getElementById('perxonaFab');
     if (!fab || fab.dataset.bound === '1') return;
     fab.dataset.bound = '1';
+    fab.addEventListener('mouseenter', kickPreload);
+    fab.addEventListener('focus', kickPreload);
     fab.addEventListener('click', function () {
       if (typeof window.closeTextChat === 'function') window.closeTextChat();
       openPerxonaPanel();
@@ -536,7 +576,7 @@
 
     installPerxonaApiProxy(apiBase);
     if (preferLiveIframe) {
-      preloadLiveIframe();
+      kickPreload();
       return;
     }
     // 背景預載 token + SDK；真正 mount 等按 3D 且 panel 已開
@@ -546,6 +586,9 @@
         window.__perxonaEmbed = false;
       });
   }
+
+  if (document.body) kickPreload();
+  else document.addEventListener('DOMContentLoaded', kickPreload);
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
