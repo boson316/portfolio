@@ -10,6 +10,33 @@
 
 資工系大二作品集 — 前端、AI 應用、RTX 3050 GPU/CUDA 優化實驗室。
 
+[![AWS AIWave Hackathon](https://img.shields.io/badge/AWS%20Hackathon-AIWave%202026-orange?style=for-the-badge&logo=amazon-aws)](assets/AIWave_Hackathon_Certificate.png)
+[![AI Workshop](https://img.shields.io/badge/AWS-AI%20Workshop%20May%202026-232F3E?style=for-the-badge&logo=amazon-aws)](assets/AI_Workshop_Certificate.png)
+
+## 認證與戰果
+
+| 證書 | 頒發單位 | 日期 |
+|------|----------|------|
+| **AIWave: Taiwan Generative AI Applications Hackathon** | AWS Taiwan × DIGITIMES | 2026 年 8 月 |
+| **AI Workshop Completion** | AWS Professional Services × 資策會（宜大） | 2026 年 5 月 |
+
+<p align="center">
+  <a href="assets/AIWave_Hackathon_Certificate.png">
+    <img src="assets/AIWave_Hackathon_Certificate.png" alt="AIWave 黑客松證書" width="560"/>
+  </a>
+</p>
+
+> 兩日生成式 AI 黑客松完賽；Agentic AI、FastAPI 整合、模型部署實戰。  
+> 線上展示：[作品集認證專區](https://boson316.github.io/portfolio/#credentials)
+
+<details>
+<summary><b>檢視 AI Workshop 證書</b></summary>
+<br>
+
+![AI Workshop 證書](assets/AI_Workshop_Certificate.png)
+
+</details>
+
 ## 數位名片
 
 一個短網址／QR，方便分享：

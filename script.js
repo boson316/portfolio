@@ -593,4 +593,43 @@
     );
     mlAnimateBlocks.forEach(function (block) { ioVisible.observe(block); });
   }
+
+  // ========== 證書大圖 lightbox ==========
+  var certLightbox = document.getElementById('certLightbox');
+  var certLightboxImg = document.getElementById('certLightboxImg');
+  var certLightboxClose = document.getElementById('certLightboxClose');
+
+  function openCertLightbox(src, alt) {
+    if (!certLightbox || !certLightboxImg) return;
+    certLightboxImg.src = src;
+    certLightboxImg.alt = alt || '';
+    if (typeof certLightbox.showModal === 'function') {
+      certLightbox.showModal();
+    }
+  }
+
+  function closeCertLightbox() {
+    if (!certLightbox) return;
+    if (typeof certLightbox.close === 'function') {
+      certLightbox.close();
+    }
+    if (certLightboxImg) certLightboxImg.src = '';
+  }
+
+  document.querySelectorAll('[data-cert-open]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var img = btn.querySelector('img');
+      if (img) openCertLightbox(img.src, img.alt);
+    });
+  });
+
+  if (certLightboxClose) {
+    certLightboxClose.addEventListener('click', closeCertLightbox);
+  }
+  if (certLightbox) {
+    certLightbox.addEventListener('click', function (e) {
+      if (e.target === certLightbox) closeCertLightbox();
+    });
+    certLightbox.addEventListener('cancel', closeCertLightbox);
+  }
 })();

@@ -957,7 +957,7 @@ html[lang="en"] .project-brief > div {
 /* ========== Credentials ========== */
 .credentials {
   padding: 4rem 0;
-  background: var(--bg-alt, var(--bg));
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-card) 8%, var(--bg) 100%);
 }
 .credentials-intro {
   text-align: center;

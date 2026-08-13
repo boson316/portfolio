@@ -10,6 +10,33 @@
 
 CS sophomore portfolio — frontend, AI applications, and GPU/CUDA optimization on an RTX 3050 laptop.
 
+[![AWS AIWave Hackathon](https://img.shields.io/badge/AWS%20Hackathon-AIWave%202026-orange?style=for-the-badge&logo=amazon-aws)](assets/AIWave_Hackathon_Certificate.png)
+[![AI Workshop](https://img.shields.io/badge/AWS-AI%20Workshop%20May%202026-232F3E?style=for-the-badge&logo=amazon-aws)](assets/AI_Workshop_Certificate.png)
+
+## Achievements & Credentials
+
+| Certificate | Issuer | Date |
+|-------------|--------|------|
+| **AIWave: Taiwan Generative AI Applications Hackathon** | AWS Taiwan × DIGITIMES | Aug 2026 |
+| **AI Workshop Completion** | AWS Professional Services × III @ NIU | May 2026 |
+
+<p align="center">
+  <a href="assets/AIWave_Hackathon_Certificate.png">
+    <img src="assets/AIWave_Hackathon_Certificate.png" alt="AIWave Hackathon Certificate" width="560"/>
+  </a>
+</p>
+
+> 2-day generative AI hackathon — Agentic AI workflows, FastAPI integration, model deployment.  
+> Also on the [live portfolio](https://boson316.github.io/portfolio/en/#credentials).
+
+<details>
+<summary><b>View AI Workshop certificate</b></summary>
+<br>
+
+![AI Workshop Certificate](assets/AI_Workshop_Certificate.png)
+
+</details>
+
 ## Digital card
 
 One short URL / QR for sharing:
