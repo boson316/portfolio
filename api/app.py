@@ -72,18 +72,41 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 已下架：MediaPipe／邊緣人臉管線展示。有人問就說已下架，改推 GPU 與 ML。
 
 【行為】
-- 回覆 ≤120 字。先一句結論，再 1–3 個事實或連結。
+- 回覆 ≤80 字（除非使用者追問細節）。禁止 markdown（*、**、- 列表）、禁止簡體字。
 - 能指頁內錨點就指：#projects #gpu-showcase #ml-showcase #contact #skills
 - 問「你是誰／這網站幹嘛」：一句話說明你是作品集導覽，不是通用 ChatGPT。
 - 問合作／面試：給 email，不要幫 Boson 答應檔期或薪資。
-- 快捷意圖對應：
-  - 介紹專案 → 列 1–5，各一行 + 最相關連結
-  - CUDA／GPU → 只講 Lab 數字與 GitHub，指向 #gpu-showcase
-  - ML 專區 → 只講 KNN 與五張圖，指向 #ml-showcase
-  - 聯絡 → 只給 email
+- 快捷意圖：極短、不展開段落；「介紹專案」只列名稱 + #projects，細節等追問再說。
 - 使用者改用英文就改英文回；其餘繁中。
 - 不談政治、不寫作業、不執行與作品集無關的長推理。偏題一句帶回專案。
 """
+
+
+# 快捷 chip 固定短回覆（不走 LLM，避免冗長）
+QUICK_REPLIES: dict[str, str] = {
+    "介紹專案": (
+        "五大作品：GPU Lab、退休計算機、美食地圖、新聞蒐集、ML 專區（→ #projects）。"
+        "RAG 開發中。想深入哪個？"
+    ),
+    "你的 CUDA 專案有哪些亮點？": (
+        "RTX 3050 Lab：matmul 521×、MNIST 99%。→ #gpu-showcase"
+    ),
+    "你的 ML 專區有哪些內容？": (
+        "KNN（K=9）約 94.7%，五張互動圖。→ #ml-showcase"
+    ),
+    "怎麼聯絡 Boson？": "poboson316@gmail.com，或 #contact。",
+    "Introduce your projects": (
+        "Five projects: GPU Lab, retirement calculator, food map, news scraper, ML (→ #projects). "
+        "RAG in progress. Which one?"
+    ),
+    "CUDA project highlights": "RTX 3050 Lab: matmul 521×, MNIST 99%. → #gpu-showcase",
+    "What is in the ML section?": "Breast cancer KNN ~94.7%, five interactive charts. → #ml-showcase",
+    "How can I contact Boson?": "Email poboson316@gmail.com or #contact.",
+}
+
+
+def get_quick_reply(message: str) -> str | None:
+    return QUICK_REPLIES.get(message.strip())
 
 
 def get_groq_client():
@@ -128,6 +151,10 @@ def chat():
     if not message:
         return jsonify({"error": "請提供 message"}), 400
 
+    quick = get_quick_reply(message)
+    if quick:
+        return jsonify({"reply": quick})
+
     client = get_groq_client()
     if not client:
         return jsonify({
@@ -148,8 +175,8 @@ def chat():
         completion = client.chat.completions.create(
             model=MODEL,
             messages=messages,
-            max_tokens=512,
-            temperature=0.7,
+            max_tokens=120,
+            temperature=0.4,
         )
         reply = (completion.choices[0].message.content or "").strip() or "抱歉，我沒有產生回覆，請再試一次。"
         return jsonify({"reply": reply})
