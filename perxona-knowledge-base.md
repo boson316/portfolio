@@ -90,7 +90,7 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 - **問題**：分散來源新聞難依主題集中瀏覽
 - **實作**：自動爬取與篩選，Web 依主題/來源呈現
 - **技術**：Python · Flask · 爬蟲
-- **連結**：https://news-8zud.onrender.com/（冷啟動可能較慢）
+- **連結**：https://boson-news-app.onrender.com/（cron 每 10 分鐘自動更新 RSS）· GitHub https://github.com/boson316/news
 
 ### 4. 校園美食地圖 v2（宜大）
 - **問題**：宜大校本部步行 500m 內難依評價、距離、預算、營業狀態找店
@@ -138,7 +138,8 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 | 作品集 repo | https://github.com/boson316/portfolio | portfolio-site |
 | GPU 站內展示 | https://boson316.github.io/portfolio/#gpu-showcase | — |
 | ML 站內展示 | https://boson316.github.io/portfolio/#ml-showcase | — |
-| 新聞蒐集 Live | https://news-8zud.onrender.com/ | — |
+| 新聞蒐集 Live | https://boson-news-app.onrender.com/ | — |
+| 新聞蒐集 GitHub | https://github.com/boson316/news | — |
 | 美食地圖 Live | https://food-map-niu-v2.streamlit.app/ | — |
 | 退休 v5 Live | https://boson316.github.io/niu/annual_return_calculator_v5.html | — |
 

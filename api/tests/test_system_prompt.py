@@ -15,7 +15,7 @@ def test_prompt_includes_verifiable_project_facts():
     assert "RTX3050-GPU-Mastery" in PROMPT
     assert "annual_return_calculator_v5.html" in PROMPT
     assert "food-map-niu-v2.streamlit.app" in PROMPT
-    assert "news-8zud.onrender.com" in PROMPT
+    assert "boson-news-app.onrender.com" in PROMPT
     assert "94.7%" in PROMPT
     assert "開發中" in PROMPT
 

@@ -516,7 +516,7 @@ Storyboard 指令可再加一句：
 1. GPU Lab — matmul 521×、MNIST 99% — github.com/boson316/RTX3050-GPU-Mastery
 2. 退休計算機 v5 — boson316.github.io/niu/annual_return_calculator_v5.html
 3. 宜大美食地圖 — food-map-niu-v2.streamlit.app
-4. 新聞蒐集 — news-8zud.onrender.com
+4. 新聞蒐集 — boson-news-app.onrender.com
 5. ML 專區 — KNN ~94.7%
 6. RAG — 開發中
 7. AWS AIWave 黑客松證書 — 2026-08 — 作品集 #credentials
