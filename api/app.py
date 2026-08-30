@@ -64,7 +64,7 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
    - GitHub: https://github.com/boson316/food_map_niu_v2
 
 4. 新聞蒐集系統
-   - Python / Flask / 爬蟲；依主題／來源呈現
+   - Python / Flask / RSS；依主題／來源／關鍵字篩選；預設繁體中文
    - Live: https://boson-news-app.onrender.com/（cron 每 10 分鐘自動更新）
 
 5. ML 專區（大二課程）

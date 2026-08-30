@@ -88,8 +88,8 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 
 ### 3. 新聞蒐集系統
 - **問題**：分散來源新聞難依主題集中瀏覽
-- **實作**：自動爬取與篩選，Web 依主題/來源呈現
-- **技術**：Python · Flask · 爬蟲
+- **實作**：RSS 聚合與篩選；預設繁體中文；cron 每 10 分鐘自動更新
+- **技術**：Python · Flask · SQLite · RSS
 - **連結**：https://boson-news-app.onrender.com/（cron 每 10 分鐘自動更新 RSS）· GitHub https://github.com/boson316/news
 
 ### 4. 校園美食地圖 v2（宜大）
