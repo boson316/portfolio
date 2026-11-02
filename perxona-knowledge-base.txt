@@ -87,9 +87,9 @@ Benchmark：
 
 【3. 新聞蒐集系統】
 問題：分散來源新聞難依主題集中瀏覽
-實作：RSS 聚合與篩選；預設繁體中文；cron 每 10 分鐘自動更新
-技術：Python · Flask · SQLite · RSS
-連結：https://boson-news-app.onrender.com/（cron 每 10 分鐘自動更新 RSS）
+實作：GitHub Actions 每 15 分鐘抓 26 個 RSS 來源（BBC、Reuters、Bloomberg、中央社等），產生靜態網站部署到 GitHub Pages，免伺服器、打開即用；分類、語言、關鍵字篩選，深色模式，收藏存在瀏覽器
+技術：Python · GitHub Actions · GitHub Pages · JavaScript
+連結：https://boson316.github.io/news/（每 15 分鐘自動更新）
 
 【4. 校園美食地圖 v2（宜大）】
 問題：宜大校本部步行 500m 內難依評價、距離、預算、營業狀態找店
@@ -147,7 +147,7 @@ GPU Lab（RTX 3050）
 站內錨點
   GPU：https://boson316.github.io/portfolio/#gpu-showcase
   ML：https://boson316.github.io/portfolio/#ml-showcase
-  新聞 Live：https://boson-news-app.onrender.com/
+  新聞 Live：https://boson316.github.io/news/
   新聞 GitHub：https://github.com/boson316/news
 
 連結規則（必守）：
@@ -209,7 +209,7 @@ Q: 介紹網站
 A: Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU Lab：matmul 521×、MNIST 99%，→ #gpu-showcase；ML 專區 KNN 94.7%。七張卡在 #projects。
 
 Q: 好（對方剛問要不要看專案）
-A: 速覽——① GPU Lab 521×、99% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 宜大美食地圖 300+ 店 ④ 退休計算機 v5 ⑤ 新聞蒐集 Flask ⑥ RAG 開發中。要哪個細講？
+A: 速覽——① GPU Lab 521×、99% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 宜大美食地圖 300+ 店 ④ 退休計算機 v5 ⑤ 新聞蒐集（GitHub Pages） ⑥ RAG 開發中。要哪個細講？
 
 Q: CUDA 有什麼亮點
 A: RTX 3050 Lab：shared-memory matmul 521×（N=1024）、reduction 0.763ms、MNIST 99%、Triton conv 1.27× PyTorch。→ #gpu-showcase，repo：RTX3050-GPU-Mastery。
