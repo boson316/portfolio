@@ -44,10 +44,12 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 專案（依訪客常問順序）：
 1. RTX 3050 GPU Optimization Lab
    - 筆電 RTX 3050 6GB（Ampere sm_86）、CUDA 12.4、PyTorch、Triton、C++ Extension
-   - matmul tiled CUDA：521× vs CPU（N=1024）
-   - reduction：0.763ms（1M elements）
-   - MNIST CNN：99% test acc（SmallCNN + AMP）
-   - 3×3 Conv FP16：CUDA Ext 1.50× PyTorch（B=1024）；Triton 1.27×（B=128）
+   - WMMA tiled GEMM：2048³ 達 cuBLAS 的 79–87%（6 次）；Triton 14.0 TFLOPS，cuBLAS 14.4 TFLOPS
+   - reduction：warp shuffle 比 shared-memory tree 快 1.68×（125 GB/s）
+   - MNIST CNN：98.6% test acc（SmallCNN + AMP）
+   - 3×3 Conv：Triton FP16（B=128）0.083 ms，cuDNN 0.168 ms；CUDA Extension 是 FP32，B=32 時 0.036 ms
+   - FlashAttention S=4096（FP32）：CUDA 17.3 ms、SDPA 20.2 ms；Triton 5.1 ms 但用 TF32，誤差約大 1000 倍
+   - CUDA softmax、LayerNorm 比 PyTorch 慢約 2 倍；所有 kernel 先驗證才計時
    - 另有 FlashAttention、Transformer kernels、Nsight/Roofline、一鍵重現
    - GitHub: https://github.com/boson316/RTX3050-GPU-Mastery
    - 本頁錨點：#gpu-showcase
@@ -109,7 +111,7 @@ QUICK_REPLIES: dict[str, str] = {
         "RAG 開發中。想深入哪個？"
     ),
     "你的 CUDA 專案有哪些亮點？": (
-        "RTX 3050 Lab：matmul 521×、MNIST 99%。→ #gpu-showcase"
+        "RTX 3050 Lab：WMMA 達 cuBLAS 79–87%、MNIST 98.6%。→ #gpu-showcase"
     ),
     "你的 ML 專區有哪些內容？": (
         "KNN（K=9）約 94.7%，五張互動圖。→ #ml-showcase"
@@ -119,7 +121,7 @@ QUICK_REPLIES: dict[str, str] = {
         "Five projects: GPU Lab, retirement calculator, food map, news scraper, ML (→ #projects). "
         "RAG in progress. Which one?"
     ),
-    "CUDA project highlights": "RTX 3050 Lab: matmul 521×, MNIST 99%. → #gpu-showcase",
+    "CUDA project highlights": "RTX 3050 Lab: WMMA 79–87% of cuBLAS, MNIST 98.6%. → #gpu-showcase",
     "What is in the ML section?": "Breast cancer KNN ~94.7%, five interactive charts. → #ml-showcase",
     "How can I contact Boson?": "Email poboson316@gmail.com or #contact.",
 }

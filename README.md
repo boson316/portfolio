@@ -23,7 +23,7 @@ Single-page portfolio (GitHub Pages) with bilingual UI and interactive sections:
 | 3D skills cloud | `#skills` | Six skill categories · Three.js sphere |
 | Projects | `#projects` | Seven project cards |
 | ML showcase | `#ml-showcase` | Wisconsin breast cancer · KNN ~**94.7%** · five Chart.js charts |
-| GPU showcase | `#gpu-showcase` | RTX 3050 benchmarks — matmul **521×**, MNIST **99%** |
+| GPU showcase | `#gpu-showcase` | RTX 3050 benchmarks — WMMA GEMM **79–87 % of cuBLAS**, MNIST **98.6 %** |
 | Credentials | `#credentials` | AWS AIWave + AI Workshop (lightbox) |
 | Contact | `#contact` | Email + AI assistants |
 

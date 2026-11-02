@@ -23,7 +23,7 @@
 | 3D 技能雲 | `#skills` | 六類技能 · Three.js 球體 |
 | 專案精選 | `#projects` | 七張專案卡片 |
 | ML 專區 | `#ml-showcase` | 威斯康辛乳腺癌 · KNN ~**94.7%** · 五張 Chart.js 圖表 |
-| GPU 專區 | `#gpu-showcase` | RTX 3050 benchmark — matmul **521×**、MNIST **99%** |
+| GPU 專區 | `#gpu-showcase` | RTX 3050 benchmark — WMMA GEMM 達 cuBLAS **79–87%**、MNIST **98.6%** |
 | 認證 | `#credentials` | AWS AIWave + AI Workshop（lightbox 放大） |
 | 聯絡 | `#contact` | 信箱 · AI 助手 |
 

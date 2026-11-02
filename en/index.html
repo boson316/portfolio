@@ -115,7 +115,7 @@
               <h3>RTX 3050 GPU Optimization Lab</h3>
               <dl class="project-brief">
                 <div><dt>Problem</dt><dd>Hard to benchmark and reproduce GPU kernels on a laptop GPU.</dd></div>
-                <div><dt>Built</dt><dd>Self-study lab: 521× matmul, 0.76ms reduction, 99% MNIST, CUDA Extension, Triton, FlashAttention.</dd></div>
+                <div><dt>Built</dt><dd>Self-study lab, verified before timing: WMMA GEMM at 79–87% of cuBLAS (2048³), 98.6% MNIST, CUDA Extension, Triton, FlashAttention.</dd></div>
                 <div><dt>Stack</dt><dd>CUDA 12.4 · PyTorch · Triton · C++ Extension</dd></div>
                 <div><dt>Link</dt><dd><a href="#gpu-showcase">GPU section</a> · <a href="https://github.com/boson316/RTX3050-GPU-Mastery" target="_blank" rel="noopener">GitHub</a></dd></div>
               </dl>
@@ -267,7 +267,7 @@
         </p>
         <div class="gpu-stack">
           <span class="gpu-stack-item">CUDA 12.4</span>
-          <span class="gpu-stack-item">PyTorch 2.4 + cuDNN</span>
+          <span class="gpu-stack-item">PyTorch 2.6 + cuDNN</span>
           <span class="gpu-stack-item">C++ / CUDA Extension</span>
           <span class="gpu-stack-item">Triton Kernel</span>
           <span class="gpu-stack-item">FlashAttention</span>
@@ -284,32 +284,47 @@
             <tbody>
               <tr>
                 <td>Matrix Multiplication</td>
-                <td>Pure CUDA (shared memory tiled)</td>
-                <td><strong>521×</strong> CPU speedup (N=1024)</td>
+                <td>WMMA Tensor Core, tiled (2048³, FP16)</td>
+                <td><strong>79–87%</strong> of cuBLAS (6 runs)</td>
+              </tr>
+              <tr>
+                <td>Matrix Multiplication</td>
+                <td>Triton (2048³, FP16)</td>
+                <td><strong>14.0 TFLOPS</strong> (cuBLAS 14.4)</td>
               </tr>
               <tr>
                 <td>Reduction</td>
-                <td>Pure CUDA shared memory</td>
-                <td><strong>0.763ms</strong> (1M elements)</td>
+                <td>Warp shuffle vs shared-memory tree</td>
+                <td><strong>1.68×</strong> (125 GB/s)</td>
               </tr>
               <tr>
                 <td>MNIST CNN</td>
                 <td>PyTorch GPU (SmallCNN + AMP)</td>
-                <td><strong>99%</strong> test accuracy</td>
+                <td><strong>98.6%</strong> test accuracy</td>
               </tr>
               <tr>
-                <td>3×3 Conv FP16</td>
-                <td>CUDA Extension</td>
-                <td><strong>1.50×</strong> PyTorch (B=1024)</td>
+                <td>3×3 Conv</td>
+                <td>Triton (B=128, FP16)</td>
+                <td><strong>0.083 ms</strong> (cuDNN 0.168 ms)</td>
               </tr>
               <tr>
-                <td>3×3 Conv FP16</td>
-                <td>Triton Python kernel</td>
-                <td><strong>1.27×</strong> PyTorch (B=128)</td>
+                <td>3×3 Conv</td>
+                <td>CUDA Extension (B=32, FP32)</td>
+                <td><strong>0.036 ms</strong> (cuDNN FP16: 0.041–0.086 ms)</td>
+              </tr>
+              <tr>
+                <td>FlashAttention S=4096</td>
+                <td>CUDA (FP32)</td>
+                <td><strong>17.3 ms</strong> (SDPA 20.2 ms)</td>
+              </tr>
+              <tr>
+                <td>FlashAttention S=4096</td>
+                <td>Triton (TF32)</td>
+                <td><strong>5.1 ms</strong>, with about 1000× larger error</td>
               </tr>
             </tbody>
           </table>
-          <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86)</p>
+          <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86). Every kernel passes a correctness check before timing; latencies are medians of 3 runs. CUDA softmax and LayerNorm are about 2× slower than PyTorch; full results are on GitHub.</p>
         </div>
         <p class="gpu-reproduce-hint">Reproduce: <code>python tools/performance_dashboard.py</code></p>
         <div class="gpu-actions">

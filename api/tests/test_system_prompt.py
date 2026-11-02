@@ -11,7 +11,9 @@ def test_identity_is_xiaoboson():
 
 
 def test_prompt_includes_verifiable_project_facts():
-    assert "521×" in PROMPT
+    assert "521×" not in PROMPT  # rejected baseline (RTX3050-GPU-Mastery ENGINEERING_LOG #9)
+    assert "79–87%" in PROMPT
+    assert "98.6%" in PROMPT
     assert "RTX3050-GPU-Mastery" in PROMPT
     assert "annual_return_calculator_v5.html" in PROMPT
     assert "food-map-niu-v2.streamlit.app" in PROMPT

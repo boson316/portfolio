@@ -77,7 +77,7 @@
     },
     gpu: {
       title: 'GPU / CUDA / Triton',
-      desc: 'RTX 3050 GPU lab: pure CUDA (521× matmul, reduction), PyTorch Extension, Triton, FlashAttention, Transformer kernels; Nsight/Roofline and one-command reproduction.',
+      desc: 'RTX 3050 GPU lab: pure CUDA (WMMA GEMM at 79–87% of cuBLAS), PyTorch Extension, Triton, FlashAttention, Transformer kernels; Nsight/Roofline and one-command reproduction.',
       image: 'https://placehold.co/320x180/76b900/fff?text=GPU%2FCUDA%2FTriton'
     },
     web: {
@@ -108,7 +108,7 @@
     },
     gpu: {
       title: 'GPU / CUDA / Triton',
-      desc: 'RTX 3050 GPU 優化實驗室：Pure CUDA（521× matmul、reduction）、PyTorch Extension、Triton kernels、FlashAttention、Transformer kernels；含 Nsight 與 Roofline 分析、逐步教學與一鍵重現。',
+      desc: 'RTX 3050 GPU 優化實驗室：Pure CUDA（WMMA GEMM 達 cuBLAS 79–87%）、PyTorch Extension、Triton kernels、FlashAttention、Transformer kernels；含 Nsight 與 Roofline 分析、逐步教學與一鍵重現。',
       image: 'https://placehold.co/320x180/76b900/fff?text=GPU%2FCUDA%2FTriton'
     },
     web: {
@@ -286,7 +286,7 @@
       return 'Use the ☀/🌙 button in the nav to toggle light/dark mode.';
     }
     if (lower.includes('cuda') || lower.includes('gpu') || lower.includes('pytorch')) {
-      return 'See the GPU Optimization Lab — CUDA matmul 521× speedup, MNIST 99%, Triton, FlashAttention. GitHub: https://github.com/boson316/RTX3050-GPU-Mastery';
+      return 'See the GPU Optimization Lab — WMMA GEMM at 79–87% of cuBLAS, MNIST 98.6%, Triton, FlashAttention. GitHub: https://github.com/boson316/RTX3050-GPU-Mastery';
     }
     if (lower.includes('ml') || lower.includes('knn') || lower.includes('confusion') || lower.includes('pca')) {
       return 'ML section: Wisconsin breast cancer KNN (~94.7% acc), confusion matrix, loss/acc curves, feature importance, PCA.';
@@ -343,7 +343,7 @@
     }
 
     if (lower.includes('cuda') || lower.includes('gpu') || lower.includes('pytorch')) {
-      return 'GPU Optimization Lab：matmul 521×、reduction 0.763ms、MNIST 99%。GitHub：https://github.com/boson316/RTX3050-GPU-Mastery — 本頁 #gpu-showcase。';
+      return 'GPU Optimization Lab：WMMA GEMM 達 cuBLAS 79–87%、MNIST 98.6%。GitHub：https://github.com/boson316/RTX3050-GPU-Mastery — 本頁 #gpu-showcase。';
     }
 
     if (
