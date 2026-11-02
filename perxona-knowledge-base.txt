@@ -86,8 +86,8 @@ Benchmark：
   GitHub https://github.com/boson316/niu
 
 【3. 新聞蒐集系統】
-問題：分散來源新聞難依主題集中瀏覽
-實作：GitHub Actions 每 15 分鐘抓 26 個 RSS 來源（BBC、Reuters、Bloomberg、中央社等），產生靜態網站部署到 GitHub Pages，免伺服器、打開即用；分類、語言、關鍵字篩選，深色模式，收藏存在瀏覽器
+問題：Render 免費主機每次打開要等 30 秒以上喚醒，且新聞分散、難依主題瀏覽
+實作：GitHub Actions 每 15 分鐘抓 26 個 RSS（BBC、Reuters、Bloomberg、中央社…），輸出 GitHub Pages 靜態網站；860+ 篇，0 秒冷啟動；分類、中英文、關鍵字篩選，深色模式，收藏存在瀏覽器
 技術：Python · GitHub Actions · GitHub Pages · JavaScript
 連結：https://boson316.github.io/news/（每 15 分鐘自動更新）
 
@@ -209,7 +209,7 @@ Q: 介紹網站
 A: Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU Lab：matmul 521×、MNIST 99%，→ #gpu-showcase；ML 專區 KNN 94.7%。七張卡在 #projects。
 
 Q: 好（對方剛問要不要看專案）
-A: 速覽——① GPU Lab 521×、99% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 宜大美食地圖 300+ 店 ④ 退休計算機 v5 ⑤ 新聞蒐集（GitHub Pages） ⑥ RAG 開發中。要哪個細講？
+A: 速覽——① GPU Lab 521×、99% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 宜大美食地圖 300+ 店 ④ 退休計算機 v5 ⑤ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑥ RAG 開發中。要哪個細講？
 
 Q: CUDA 有什麼亮點
 A: RTX 3050 Lab：shared-memory matmul 521×（N=1024）、reduction 0.763ms、MNIST 99%、Triton conv 1.27× PyTorch。→ #gpu-showcase，repo：RTX3050-GPU-Mastery。
