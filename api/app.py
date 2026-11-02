@@ -64,7 +64,8 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
    - GitHub: https://github.com/boson316/food_map_niu_v2
 
 4. 新聞蒐集系統
-   - Python + GitHub Actions 每 15 分鐘抓 26 個 RSS，部署成 GitHub Pages 靜態網站（免伺服器、秒開）；依分類／語言／來源／關鍵字篩選；預設繁體中文
+   - 原本 Render 免費主機每次打開要等 30 秒以上喚醒 → 改成 GitHub Actions 每 15 分鐘抓 26 個 RSS（BBC、Reuters、Bloomberg、中央社…），輸出 GitHub Pages 靜態網站；860+ 篇，0 秒冷啟動
+   - 依分類／中英文／來源／關鍵字篩選；預設繁體中文
    - Live: https://boson316.github.io/news/
 
 5. ML 專區（大二課程）
