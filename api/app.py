@@ -64,8 +64,8 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
    - GitHub: https://github.com/boson316/food_map_niu_v2
 
 4. 新聞蒐集系統
-   - Python / Flask / RSS；依主題／來源／關鍵字篩選；預設繁體中文
-   - Live: https://boson-news-app.onrender.com/（cron 每 10 分鐘自動更新）
+   - Python + GitHub Actions 每 15 分鐘抓 26 個 RSS，部署成 GitHub Pages 靜態網站（免伺服器、秒開）；依分類／語言／來源／關鍵字篩選；預設繁體中文
+   - Live: https://boson316.github.io/news/
 
 5. ML 專區（大二課程）
    - 威斯康辛乳腺癌 KNN（K=9）：TN=68 TP=40 FP=3 FN=3，約 94.7%
@@ -78,7 +78,7 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 - GPU Lab：https://github.com/boson316/RTX3050-GPU-Mastery（禁止 gpu-lab、GPU-Lab 等不存在 repo）
 - 退休計算機：https://github.com/boson316/niu
 - 美食地圖：https://github.com/boson316/food_map_niu_v2
-- 新聞蒐集：https://github.com/boson316/news · Live https://boson-news-app.onrender.com/
+- 新聞蒐集：https://github.com/boson316/news · Live https://boson316.github.io/news/
 - 作品集：https://github.com/boson316/portfolio
 - GPU 站內：https://boson316.github.io/portfolio/#gpu-showcase
 - ML 站內：https://boson316.github.io/portfolio/#ml-showcase（ML 無獨立 GitHub repo）
