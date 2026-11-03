@@ -333,16 +333,21 @@
               <tr>
                 <td>FlashAttention S=4096</td>
                 <td>CUDA（FP32）</td>
-                <td><strong>17.3 ms</strong>，同為 FP32 下比 SDPA（20.2 ms）快 14%</td>
+                <td><strong>17.6 ms</strong>，同為 FP32 下比 SDPA（20.4 ms）快 14%</td>
               </tr>
               <tr>
                 <td>FlashAttention S=4096</td>
-                <td>Triton（TF32）</td>
-                <td><strong>5.1 ms</strong>（TF32 Tensor Core，誤差約 5e-4，不可與 FP32 直接比）</td>
+                <td>Triton（FP16）</td>
+                <td><strong>2.45 ms</strong>，比 SDPA（3.30 ms）快 26%，誤差相同</td>
+              </tr>
+              <tr>
+                <td>Softmax、LayerNorm</td>
+                <td>CUDA warp-per-row（2048×768，FP16）</td>
+                <td><strong>118 GB/s</strong>，比 PyTorch 快 1–6%（v2.0：57–67 GB/s）</td>
               </tr>
             </tbody>
           </table>
-          <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86)。每個 kernel 都先通過正確性檢查才計時，延遲為 3 輪中位數。CUDA softmax、LayerNorm 比 PyTorch 慢約 2 倍，完整結果見 GitHub。</p>
+          <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86)。每個 kernel 都先通過正確性檢查才計時，延遲為 3 輪中位數。CUDA QKV 仍比 PyTorch 慢 1–10%，完整結果見 GitHub。</p>
         </div>
 
         <p class="gpu-reproduce-hint">一鍵重現：<code>python tools/performance_dashboard.py</code> 跑完所有 benchmarks 並產出效能報告。</p>

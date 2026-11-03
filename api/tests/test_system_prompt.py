@@ -13,6 +13,8 @@ def test_identity_is_xiaoboson():
 def test_prompt_includes_verifiable_project_facts():
     assert "521×" not in PROMPT  # rejected baseline (RTX3050-GPU-Mastery ENGINEERING_LOG #9)
     assert "79–87%" in PROMPT
+    assert "慢約 2 倍" not in PROMPT  # true of v2.0 only; RTX3050-GPU-Mastery results/v2_1
+    assert "118 GB/s" in PROMPT
     assert "98.6%" in PROMPT
     assert "RTX3050-GPU-Mastery" in PROMPT
     assert "annual_return_calculator_v5.html" in PROMPT

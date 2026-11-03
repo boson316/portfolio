@@ -315,16 +315,21 @@
               <tr>
                 <td>FlashAttention S=4096</td>
                 <td>CUDA (FP32)</td>
-                <td><strong>17.3 ms</strong>, 14% faster than SDPA in FP32 (20.2 ms)</td>
+                <td><strong>17.6 ms</strong>, 14% faster than SDPA in FP32 (20.4 ms)</td>
               </tr>
               <tr>
                 <td>FlashAttention S=4096</td>
-                <td>Triton (TF32)</td>
-                <td><strong>5.1 ms</strong> on TF32 Tensor Cores (error ~5e-4; not comparable to FP32)</td>
+                <td>Triton (FP16)</td>
+                <td><strong>2.45 ms</strong>, 26% faster than SDPA (3.30 ms) at the same error</td>
+              </tr>
+              <tr>
+                <td>Softmax, LayerNorm</td>
+                <td>CUDA warp-per-row (2048×768, FP16)</td>
+                <td><strong>118 GB/s</strong>, 1–6% faster than PyTorch (v2.0: 57–67 GB/s)</td>
               </tr>
             </tbody>
           </table>
-          <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86). Every kernel passes a correctness check before timing; latencies are medians of 3 runs. CUDA softmax and LayerNorm are about 2× slower than PyTorch; full results are on GitHub.</p>
+          <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86). Every kernel passes a correctness check before timing; latencies are medians of 3 runs. CUDA QKV is still 1–10% slower than PyTorch; full results are on GitHub.</p>
         </div>
         <p class="gpu-reproduce-hint">Reproduce: <code>python tools/performance_dashboard.py</code></p>
         <div class="gpu-actions">
