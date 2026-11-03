@@ -259,6 +259,15 @@ body {
 html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
 .project-brief dt { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; color: var(--text-faint); text-transform: none; padding-top: 0.12rem; }
 .project-brief dd { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+/* 挑戰 → 解法 → 成果：用左側細線串起來，成果數字用卡片色 */
+.project-brief > .pb-ch, .project-brief > .pb-fx, .project-brief > .pb-rs { position: relative; }
+.project-brief > .pb-ch dd, .project-brief > .pb-fx dd, .project-brief > .pb-rs dd { padding-left: 0.7rem; border-left: 2px solid var(--border-strong); }
+.project-brief > .pb-fx dd { border-left-color: color-mix(in srgb, var(--card-accent, var(--accent)) 55%, transparent); }
+.project-brief > .pb-rs dd { border-left-color: var(--card-accent, var(--accent)); color: var(--text); }
+.project-brief > .pb-ch dt { color: var(--text-faint); }
+.project-brief > .pb-fx dt, .project-brief > .pb-rs dt { color: var(--card-accent, var(--accent)); }
+.project-brief dd strong { font-family: var(--font-mono); font-weight: 600; color: var(--card-accent, var(--accent)); }
+.project-brief > div:not([class]) dd { color: var(--text); }
 .card .chips { margin: 0; }
 .card-links { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--border-strong); }
 .card-btn {

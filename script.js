@@ -68,7 +68,7 @@
     });
   }
 
-  // ========== 3D 技能雲：點擊顯示介紹（名稱 + 圖片 + 說明）==========
+  // ========== 技能清單：點擊顯示介紹（名稱 + 圖片 + 說明）==========
   var skillData = isEn ? {
     ai: {
       title: 'AI / RAG / LLM',
@@ -97,8 +97,8 @@
     },
     tools: {
       title: 'Tooling',
-      desc: 'Annual return calculator, Chart.js visualizations, Three.js demos, and portfolio tooling.',
-      stack: ['Chart.js', 'Three.js', 'SVG charts', 'PWA']
+      desc: 'Annual return calculator, Chart.js visualizations, Canvas skill visualizations, and portfolio tooling.',
+      stack: ['Chart.js', 'Canvas', 'SVG charts', 'PWA']
     }
   } : {
     ai: {
@@ -128,8 +128,8 @@
     },
     tools: {
       title: '工具開發',
-      desc: '年化報酬率計算機、圖表視覺化（Chart.js）、3D 展示（Three.js）等工具與 demo 開發。',
-      stack: ['Chart.js', 'Three.js', 'SVG charts', 'PWA']
+      desc: '年化報酬率計算機、圖表視覺化（Chart.js）、Canvas 技能視覺化等工具與 demo 開發。',
+      stack: ['Chart.js', 'Canvas', 'SVG charts', 'PWA']
     }
   };
 
