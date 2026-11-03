@@ -446,7 +446,7 @@
     });
   }
 
-  // ========== Bundle 優化：延遲載入 Three.js + skills-3d（僅在技能區進入視窗時載入）==========
+  // ========== 延遲載入外部腳本（Chart.js 等）==========
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
       var s = document.createElement('script');
@@ -457,52 +457,6 @@
       document.body.appendChild(s);
     });
   }
-
-  function loadSkills3d() {
-    if (window.__skills3dLoaded) return;
-    var skillsCanvas = document.getElementById('skillsCanvas');
-    if (skillsCanvas && skillsCanvas.dataset.skills3dReady === '1') {
-      window.__skills3dLoaded = true;
-      return;
-    }
-    window.__skills3dLoaded = true;
-    function runSkills3d() {
-      if (typeof THREE === 'undefined') return Promise.reject(new Error('THREE not loaded'));
-      return loadScript(assetUrl('skills-3d.js'));
-    }
-    if (typeof THREE !== 'undefined') {
-      runSkills3d().catch(function () {});
-      return;
-    }
-    loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js')
-      .then(runSkills3d)
-      .catch(function () {});
-  }
-
-  function tryLoadSkills3dIfVisible() {
-    var sec = document.getElementById('skills');
-    if (!sec || !document.getElementById('skillsCanvas')) return;
-    var r = sec.getBoundingClientRect();
-    if (r.bottom > 0 && r.top < window.innerHeight + 200) loadSkills3d();
-  }
-
-  var skillsSection = document.getElementById('skills');
-  if (skillsSection && typeof IntersectionObserver !== 'undefined') {
-    var io = new IntersectionObserver(
-      function (entries) {
-        if (entries[0].isIntersecting) {
-          loadSkills3d();
-          io.disconnect();
-        }
-      },
-      { rootMargin: '100px', threshold: 0 }
-    );
-    io.observe(skillsSection);
-  } else if (document.getElementById('skillsCanvas')) {
-    loadSkills3d();
-  }
-  document.addEventListener('DOMContentLoaded', tryLoadSkills3dIfVisible);
-  window.addEventListener('load', tryLoadSkills3dIfVisible);
 
   // ========== Chart.js：PyTorch 訓練曲線（延遲載入）==========
   function loadPytorchChart() {

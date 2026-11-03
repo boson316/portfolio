@@ -20,14 +20,14 @@ Single-page portfolio (GitHub Pages) with bilingual UI and interactive sections:
 | Section | Anchor | Highlights |
 |---------|--------|------------|
 | Hero | `#hero` | Intro + **Chat with AI** CTA |
-| 3D skills cloud | `#skills` | Six skill categories · Three.js sphere |
+| Skills | `#skills` | Six skill categories · Canvas visualizations (skill × project graph, CUDA grid, tag sphere, neural net) that filter the project cards |
 | Projects | `#projects` | Seven project cards |
 | ML showcase | `#ml-showcase` | Wisconsin breast cancer · KNN ~**94.7%** · five Chart.js charts |
 | GPU showcase | `#gpu-showcase` | RTX 3050 benchmarks — WMMA GEMM **79–87 % of cuBLAS**, MNIST **98.6 %** |
 | Credentials | `#credentials` | AWS AIWave + AI Workshop (lightbox) |
 | Contact | `#contact` | Email + AI assistants |
 
-Also: **dark mode** (nav toggle), lazy-loaded Chart.js / Three.js, responsive layout.
+Also: **dark mode** (nav toggle), lazy-loaded Chart.js, responsive layout.
 
 ## AI assistants (dual FAB)
 

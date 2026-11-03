@@ -20,14 +20,14 @@
 | 區塊 | 錨點 | 重點 |
 |------|------|------|
 | 首頁 | `#hero` | 自我介紹 · **和 AI 聊聊** 按鈕 |
-| 3D 技能雲 | `#skills` | 六類技能 · Three.js 球體 |
+| 技能 | `#skills` | 六類技能 · Canvas 視覺化（技能 × 專案關係圖、CUDA 網格、標籤球、神經網路），可篩選專案卡片 |
 | 專案精選 | `#projects` | 七張專案卡片 |
 | ML 專區 | `#ml-showcase` | 威斯康辛乳腺癌 · KNN ~**94.7%** · 五張 Chart.js 圖表 |
 | GPU 專區 | `#gpu-showcase` | RTX 3050 benchmark — WMMA GEMM 達 cuBLAS **79–87%**、MNIST **98.6%** |
 | 認證 | `#credentials` | AWS AIWave + AI Workshop（lightbox 放大） |
 | 聯絡 | `#contact` | 信箱 · AI 助手 |
 
-另有：**暗黑模式**（導覽列切換）、Chart.js / Three.js 延遲載入、RWD 排版。
+另有：**暗黑模式**（導覽列切換）、Chart.js 延遲載入、RWD 排版。
 
 ## AI 助手（雙 FAB）
 
