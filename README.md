@@ -8,7 +8,7 @@
 
 ---
 
-CS sophomore portfolio — frontend, AI applications, and GPU/CUDA optimization on an RTX 3050 laptop.
+CS junior portfolio — frontend, AI applications, and GPU/CUDA optimization on an RTX 3050 laptop.
 
 [![AWS AIWave Hackathon](https://img.shields.io/badge/AWS%20Hackathon-AIWave%202026-orange?style=for-the-badge&logo=amazon-aws)](assets/AIWave_Hackathon_Certificate.png)
 [![AI Workshop](https://img.shields.io/badge/AWS-AI%20Workshop%20May%202026-232F3E?style=for-the-badge&logo=amazon-aws)](assets/AI_Workshop_Certificate.png)

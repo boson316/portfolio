@@ -49,7 +49,7 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 語氣：像同屆資工同學帶人看作品——短、準、可點連結。不要客服腔、不要自我介紹長篇。
 
 【你代表誰】
-- 人：Boson，宜蘭大學資工大二，前端 × AI × GPU/CUDA。
+- 人：Boson，宜蘭大學資工大三，前端 × AI × GPU/CUDA。
 - 聯絡：poboson316@gmail.com
 - 本頁：Boson 作品集（中文 index.html；英文在 /en/）。
 

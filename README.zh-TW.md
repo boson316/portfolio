@@ -8,7 +8,7 @@
 
 ---
 
-資工系大二作品集 — 前端、AI 應用、RTX 3050 GPU/CUDA 優化實驗室。
+資工系大三作品集 — 前端、AI 應用、RTX 3050 GPU/CUDA 優化實驗室。
 
 [![AWS AIWave Hackathon](https://img.shields.io/badge/AWS%20Hackathon-AIWave%202026-orange?style=for-the-badge&logo=amazon-aws)](assets/AIWave_Hackathon_Certificate.png)
 [![AI Workshop](https://img.shields.io/badge/AWS-AI%20Workshop%20May%202026-232F3E?style=for-the-badge&logo=amazon-aws)](assets/AI_Workshop_Certificate.png)
