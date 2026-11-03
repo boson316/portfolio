@@ -28,7 +28,7 @@ GitHub：https://github.com/boson316
 
 首頁 #hero — 自我介紹、和 AI 聊聊
 技能視覺化 #skills — 四種 Canvas 視覺化 + 六類技能，點技能會篩選專案
-專案精選 #projects — 七張專案卡片（每張寫摘要、挑戰、解法、成果）
+專案精選 #projects — 六張專案卡片（每張寫摘要、挑戰、解法、成果）
 ML 專區 #ml-showcase — KNN 乳腺癌互動圖表（大二課程）
 GPU 專區 #gpu-showcase — RTX 3050 CUDA 實驗室 benchmark
 認證 #credentials — AWS 黑客松、AI Workshop 證書
@@ -109,11 +109,7 @@ Benchmark：
 技術：PyTorch · Chart.js · scikit-learn 流程
 連結：站內 #ml-showcase
 
-【6. Stable Diffusion 試用】
-串接 Hugging Face Spaces 公開 demo 體驗文字轉圖
-連結：https://huggingface.co/spaces?search=stable+diffusion
-
-【7. RAG 知識庫聊天（開發中）】
+【6. RAG 知識庫聊天（開發中）】
 問題：通用 LLM 無法穩定引用私有文件
 實作：Gemini + Chroma 向量檢索（進行中，尚無 live demo）
 禁止：不要假裝已上線
@@ -212,7 +208,7 @@ A: 不行。可介紹 Boson 作品與技術棧；合作/面試請寄信，不代
 ================================================================================
 
 Q: 介紹網站
-A: Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU Lab：WMMA 達 cuBLAS 79–87%、MNIST 98.6%，→ #gpu-showcase；ML 專區 KNN 94.7%。七張卡在 #projects。
+A: Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU Lab：WMMA 達 cuBLAS 79–87%、MNIST 98.6%，→ #gpu-showcase；ML 專區 KNN 94.7%。六張卡在 #projects。
 
 Q: 好（對方剛問要不要看專案）
 A: 速覽——① GPU Lab WMMA 達 cuBLAS 79–87%、MNIST 98.6% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 校園美食地圖 4 校 2,200+ 店、0 秒冷啟動 ④ 複利／退休計算機 v6 ⑤ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑥ RAG 開發中。要哪個細講？

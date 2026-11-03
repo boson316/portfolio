@@ -37,12 +37,11 @@
     { id: 'news', label: isEn ? 'News' : '新聞蒐集' },
     { id: 'food', label: isEn ? 'Food Map' : '美食地圖' },
     { id: 'ml', label: 'ML Demo' },
-    { id: 'sd', label: isEn ? 'Stable Diff.' : 'SD 試用' },
     { id: 'rag', label: isEn ? 'RAG Chat' : 'RAG 聊天' }
   ];
   // 技能實際用在哪些專案（依各專案卡片的技術堆疊）
   var USES = {
-    ai: ['rag', 'sd', 'ml'],
+    ai: ['rag', 'ml'],
     gpu: ['gpu-lab', 'ml'],
     web: ['calc', 'news', 'food', 'ml'],
     python: ['gpu-lab', 'news', 'food', 'rag', 'ml'],
