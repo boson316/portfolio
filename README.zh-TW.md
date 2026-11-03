@@ -77,7 +77,7 @@
 | 名片頁 | <https://boson316.github.io/portfolio/card/> |
 | 作品集 | <https://boson316.github.io/portfolio/> |
 | GitHub Profile | <https://github.com/boson316> |
-| FinTools（年化／退休計算機） | <https://boson316.github.io/niu/annual_return_calculator_v5.html> |
+| FinTools（年化／退休計算機） | <https://boson316.github.io/niu/annual_return_calculator_v6.html> |
 | Facebook | <https://www.facebook.com/boson.huang.960102> |
 | Instagram | <https://www.instagram.com/boson_0727/> |
 | LinkedIn | <https://www.linkedin.com/in/boson-huang-334b03303/> |
@@ -93,7 +93,7 @@
 | 專案 | 連結 |
 |------|------|
 | GPU Optimization Lab | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU 專區](https://boson316.github.io/portfolio/#gpu-showcase) |
-| 年化報酬率／退休規劃計算機 | [退休 v5](https://boson316.github.io/niu/annual_return_calculator_v5.html) · [年化 v4](https://boson316.github.io/niu/annual_return_calculator_v4.html) · [GitHub](https://github.com/boson316/niu) |
+| 年化報酬率／退休規劃計算機 | [計算機 v6](https://boson316.github.io/niu/annual_return_calculator_v6.html) · [退休規劃](https://boson316.github.io/niu/annual_return_calculator_v6.html#retire) · [GitHub](https://github.com/boson316/niu) |
 | 新聞蒐集系統 | [Live](https://boson316.github.io/news/) · [GitHub](https://github.com/boson316/news) |
 | 校園美食地圖 v2（宜大） | [Live](https://food-map-niu-v2.streamlit.app/) · [GitHub](https://github.com/boson316/food_map_niu_v2) |
 | 人工智慧 × 資料科學互動圖表 | [ML 專區](https://boson316.github.io/portfolio/#ml-showcase) |
