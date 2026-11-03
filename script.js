@@ -607,4 +607,60 @@
     });
     certLightbox.addEventListener('cancel', closeCertLightbox);
   }
+  // Email 按鈕：mailto 在沒設定預設郵件程式的電腦上點了沒反應，改成跳出選單（Gmail／預設程式／複製）
+  (function () {
+    var triggers = document.querySelectorAll('[data-email-menu]');
+    if (!triggers.length) return;
+    var zh = (document.documentElement.lang || '').toLowerCase().indexOf('zh') === 0;
+    var L = zh
+      ? { gmail: '用 Gmail 寫信', app: '用預設郵件程式', copy: '複製地址', copied: '已複製 ✓' }
+      : { gmail: 'Write in Gmail', app: 'Open mail app', copy: 'Copy address', copied: 'Copied ✓' };
+    var openMenu = null;
+    function close() {
+      if (!openMenu) return;
+      openMenu.menu.hidden = true;
+      openMenu.btn.setAttribute('aria-expanded', 'false');
+      openMenu = null;
+    }
+    triggers.forEach(function (btn) {
+      var email = btn.getAttribute('data-email-menu');
+      var wrap = document.createElement('span');
+      wrap.className = 'email-menu-wrap';
+      btn.parentNode.insertBefore(wrap, btn);
+      wrap.appendChild(btn);
+      var menu = document.createElement('div');
+      menu.className = 'email-menu';
+      menu.hidden = true;
+      menu.setAttribute('role', 'menu');
+      menu.innerHTML =
+        '<p class="email-menu-addr">' + email + '</p>' +
+        '<a role="menuitem" target="_blank" rel="noopener" href="https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(email) + '">' + L.gmail + '</a>' +
+        '<a role="menuitem" href="mailto:' + email + '">' + L.app + '</a>' +
+        '<button type="button" role="menuitem" data-copy>' + L.copy + '</button>';
+      wrap.appendChild(menu);
+      var copyBtn = menu.querySelector('[data-copy]');
+      copyBtn.addEventListener('click', function () {
+        function done() { copyBtn.textContent = L.copied; setTimeout(function () { copyBtn.textContent = L.copy; }, 1500); }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email).then(done, function () { window.prompt(L.copy, email); });
+        } else { window.prompt(L.copy, email); }
+      });
+      menu.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (e.target.tagName === 'A') close();
+      });
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var wasOpen = openMenu && openMenu.btn === btn;
+        close();
+        if (wasOpen) return;
+        menu.hidden = false;
+        btn.setAttribute('aria-expanded', 'true');
+        openMenu = { btn: btn, menu: menu };
+      });
+    });
+    document.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
 })();

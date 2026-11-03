@@ -409,3 +409,24 @@ html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
 /* ---------- Chat links ---------- */
 .msg p a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; }
 .msg p a:hover { color: var(--accent-strong); }
+
+/* ---------- Email 選單（取代單純 mailto） ---------- */
+.email-menu-wrap { position: relative; display: inline-flex; }
+.email-menu {
+  position: absolute; top: calc(100% + 0.5rem); left: 0; z-index: 30; min-width: 220px;
+  display: flex; flex-direction: column; gap: 0.15rem; padding: 0.5rem;
+  background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+}
+.email-menu[hidden] { display: none; }
+.email-menu-addr {
+  margin: 0 0 0.25rem; padding: 0.3rem 0.6rem 0.5rem; border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); word-break: break-all;
+}
+.email-menu a, .email-menu button {
+  display: block; width: 100%; text-align: left; padding: 0.5rem 0.6rem; border: 0; border-radius: 7px;
+  background: none; color: var(--text); font: inherit; font-size: 0.9rem; text-decoration: none; cursor: pointer;
+}
+.email-menu a:hover, .email-menu button:hover, .email-menu a:focus-visible, .email-menu button:focus-visible {
+  background: var(--accent-soft); color: var(--accent); text-decoration: none;
+}
