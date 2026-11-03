@@ -75,7 +75,7 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
   - MNIST CNN（SmallCNN + AMP）：98.6% test accuracy
   - 3×3 Conv Triton（FP16，B=128）：0.083 ms（cuDNN 0.168 ms）
   - 3×3 Conv CUDA Extension（FP32，B=32）：0.036 ms（cuDNN FP16 為 0.041–0.086 ms）
-  - FlashAttention S=4096（FP32）：CUDA 17.3 ms、SDPA 20.2 ms；Triton 5.1 ms 但用 TF32，誤差約大 1000 倍
+  - FlashAttention S=4096（IEEE FP32）：自寫 CUDA 17.3 ms，比 SDPA 的 FP32 路徑（20.2 ms）快 14%；Triton 走 TF32 Tensor Core 只要 5.1 ms，誤差約 5e-4（TF32 的正常精度），所以不能和 FP32 直接比
   - 誠實揭露：CUDA softmax、LayerNorm 比 PyTorch 慢約 2 倍；所有 kernel 先驗證才計時
 - **重現**：`python tools/performance_dashboard.py`
 - **連結**：GitHub https://github.com/boson316/RTX3050-GPU-Mastery · 站內 #gpu-showcase
@@ -207,7 +207,7 @@ A：Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU Lab
 A：速覽——① GPU Lab WMMA 達 cuBLAS 79–87%、MNIST 98.6% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 宜大美食地圖 300+ 店 ④ 退休計算機 v5 ⑤ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑥ RAG 開發中。要哪個細講？
 
 **Q：CUDA 有什麼亮點**  
-A：RTX 3050 Lab：WMMA GEMM 在 2048³ 達 cuBLAS 的 79–87%、MNIST 98.6%、Triton conv（B=128）0.083 ms（cuDNN 0.168 ms）、CUDA FlashAttention S=4096 為 17.3 ms（SDPA 20.2 ms）。→ #gpu-showcase，repo：RTX3050-GPU-Mastery。
+A：RTX 3050 Lab：WMMA GEMM 在 2048³ 達 cuBLAS 的 79–87%、MNIST 98.6%、Triton conv（B=128）0.083 ms（cuDNN 0.168 ms）、CUDA FlashAttention S=4096（FP32）為 17.3 ms，比 SDPA 的 FP32 路徑（20.2 ms）快 14%。→ #gpu-showcase，repo：RTX3050-GPU-Mastery。
 
 **Q：https://boson316.github.io/portfolio/#projects**  
 A：你已在 #projects。建議先看 GPU Lab（WMMA 達 cuBLAS 79–87%）和 ML 專區（94.7%）；卡片可點 GitHub 或 live demo。

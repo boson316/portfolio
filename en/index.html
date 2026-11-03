@@ -315,12 +315,12 @@
               <tr>
                 <td>FlashAttention S=4096</td>
                 <td>CUDA (FP32)</td>
-                <td><strong>17.3 ms</strong> (SDPA 20.2 ms)</td>
+                <td><strong>17.3 ms</strong>, 14% faster than SDPA in FP32 (20.2 ms)</td>
               </tr>
               <tr>
                 <td>FlashAttention S=4096</td>
                 <td>Triton (TF32)</td>
-                <td><strong>5.1 ms</strong>, with about 1000× larger error</td>
+                <td><strong>5.1 ms</strong> on TF32 Tensor Cores (error ~5e-4; not comparable to FP32)</td>
               </tr>
             </tbody>
           </table>

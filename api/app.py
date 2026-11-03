@@ -48,7 +48,7 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
    - reduction：warp shuffle 比 shared-memory tree 快 1.68×（125 GB/s）
    - MNIST CNN：98.6% test acc（SmallCNN + AMP）
    - 3×3 Conv：Triton FP16（B=128）0.083 ms，cuDNN 0.168 ms；CUDA Extension 是 FP32，B=32 時 0.036 ms
-   - FlashAttention S=4096（FP32）：CUDA 17.3 ms、SDPA 20.2 ms；Triton 5.1 ms 但用 TF32，誤差約大 1000 倍
+   - FlashAttention S=4096（IEEE FP32）：自寫 CUDA 17.3 ms，比 SDPA 的 FP32 路徑（20.2 ms）快 14%；Triton 走 TF32 Tensor Core 只要 5.1 ms，誤差約 5e-4（TF32 的正常精度），所以不能和 FP32 直接比
    - CUDA softmax、LayerNorm 比 PyTorch 慢約 2 倍；所有 kernel 先驗證才計時
    - 另有 FlashAttention、Transformer kernels、Nsight/Roofline、一鍵重現
    - GitHub: https://github.com/boson316/RTX3050-GPU-Mastery
