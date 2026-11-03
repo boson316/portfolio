@@ -234,6 +234,38 @@
   var chatHistory = [];
   var isSending = false;
 
+  // 把回覆裡的網址與站內錨點（#projects 等）變成可點的連結；只建立 DOM 節點，不用 innerHTML
+  var LINK_RE = /(https?:\/\/[^\s<>"'，。、；！？（）「」【】]+)|(^|[\s（(：:，、])#([a-z][\w-]*)/gi;
+  function renderWithLinks(el, text) {
+    var last = 0;
+    var m;
+    LINK_RE.lastIndex = 0;
+    while ((m = LINK_RE.exec(text))) {
+      if (m[1]) {
+        var url = m[1].replace(/[.,;:!?)\]]+$/, '');
+        el.appendChild(document.createTextNode(text.slice(last, m.index)));
+        var a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = url;
+        el.appendChild(a);
+        last = m.index + url.length;
+        LINK_RE.lastIndex = last;
+      } else if (document.getElementById(m[3])) {
+        var start = m.index + m[2].length;
+        el.appendChild(document.createTextNode(text.slice(last, start)));
+        var anchor = document.createElement('a');
+        anchor.href = '#' + m[3];
+        anchor.textContent = '#' + m[3];
+        anchor.addEventListener('click', function () { closeChat(); });
+        el.appendChild(anchor);
+        last = start + 1 + m[3].length;
+      }
+    }
+    el.appendChild(document.createTextNode(text.slice(last)));
+  }
+
   function appendMessage(role, text, options) {
     if (!chatMessages) return;
     var wrap = document.createElement('div');
@@ -242,7 +274,8 @@
     avatar.className = 'msg-avatar';
     avatar.textContent = role === 'user' ? (isEn ? 'You' : '你') : '小B';
     var p = document.createElement('p');
-    p.textContent = text;
+    if (role === 'bot' && !(options && options.typing)) renderWithLinks(p, text);
+    else p.textContent = text;
     wrap.appendChild(avatar);
     wrap.appendChild(p);
     chatMessages.appendChild(wrap);

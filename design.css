@@ -405,3 +405,7 @@ html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
   25% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--card-accent, var(--accent)) 35%, transparent); }
 }
 @media (prefers-reduced-motion: reduce) { .card.is-flash { animation: none; } }
+
+/* ---------- Chat links ---------- */
+.msg p a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; }
+.msg p a:hover { color: var(--accent-strong); }
