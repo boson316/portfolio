@@ -18,6 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="tailwind.css">
+  <link rel="stylesheet" href="design.css">
   <!-- 暗黑模式：localStorage + prefers-color-scheme，避免首屏閃爍 -->
   <script>
     (function() {
@@ -31,7 +32,7 @@
 <body>
   <header class="header">
     <nav class="nav container tw-px-responsive" role="navigation" aria-label="主選單">
-      <a href="#" class="logo">Boson的作品集</a>
+      <a href="#" class="logo" aria-label="Boson 作品集首頁"><span class="logo-mark" aria-hidden="true">b/</span><span class="logo-text">Boson</span><span class="logo-sub">/ 作品集</span></a>
       <ul class="nav-links">
         <li><a href="#hero">首頁</a></li>
         <li><a href="#skills">技能</a></li>
@@ -40,6 +41,7 @@
         <li><a href="#gpu-showcase">GPU 專區</a></li>
         <li><a href="#credentials">認證</a></li>
         <li><a href="#contact">聯絡</a></li>
+        <li><a class="icon-link" href="https://github.com/boson316" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></li>
         <li class="lang-switch" aria-label="語言">
           <a href="en/" hreflang="en">EN</a>
           <span class="sep">|</span>
@@ -61,31 +63,44 @@
   <main>
     <section id="hero" class="hero">
       <div class="hero-bg" id="heroCanvas" aria-hidden="true"></div>
-      <div class="container tw-px-responsive hero-content">
-        <h1>你好，我是<span class="accent">Boson</span></h1>
-        <p class="hero-desc">專注於前端與 AI 應用，打造流暢的使用體驗。</p>
-        <div class="hero-btns">
-          <a href="#projects" class="btn btn-primary">看專案</a>
-          <button type="button" class="btn btn-secondary" id="heroChatBtn">和 AI 聊聊</button>
+      <div class="container tw-px-responsive hero-content hero-grid">
+        <div class="hero-main">
+          <p class="hero-eyebrow"><span class="dot" aria-hidden="true"></span>資工系大二 · 國立宜蘭大學</p>
+          <h1>你好，我是<span class="accent">Boson</span></h1>
+          <p class="hero-role">前端 <span>×</span> AI 應用 <span>×</span> GPU / CUDA 最佳化</p>
+          <p class="hero-desc">專注於前端與 AI 應用，打造流暢的使用體驗。寫程式習慣先驗證、再量測——從使用者介面到 CUDA kernel 都一樣。</p>
+          <div class="hero-btns">
+            <a href="#projects" class="btn btn-primary">看專案<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+            <button type="button" class="btn btn-secondary" id="heroChatBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>和 AI 聊聊</button>
+            <a href="https://github.com/boson316" class="btn btn-ghost" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
+          </div>
+          <dl class="hero-stats">
+            <div><dt>WMMA GEMM 對 cuBLAS</dt><dd>79–87%</dd></div><div><dt>MNIST 測試準確率</dt><dd>98.6%</dd></div><div><dt>精選專案</dt><dd>7</dd></div><div><dt>生成式 AI 黑客松完賽</dt><dd>AWS</dd></div>
+          </dl>
+        </div>
+        <div class="terminal" role="img" aria-label="終端機風格的自我介紹">
+          <div class="term-bar"><i></i><i></i><i></i><span>boson@portfolio: ~</span></div>
+<pre class="term-body"><span class="l"><span class="p">$</span>whoami</span><span class="l o">boson316 · 資工系大二 @ 宜蘭大學</span><span class="l"><span class="p">$</span>cat stack.txt</span><span class="l o">JavaScript · Python · CUDA C++ · PyTorch · Triton</span><span class="l"><span class="p">$</span>./bench gemm --size 2048 --fp16</span><span class="l o">WMMA <span class="bar">████████████████▌░░░</span> <span class="hl">79–87%</span> of cuBLAS</span><span class="l"><span class="p">$</span>ls ~/projects</span><span class="l o">RTX3050-GPU-Mastery/  niu/  news/  food_map_niu_v2/  portfolio/</span><span class="l"><span class="p">$</span><span class="cur"></span></span></pre>
         </div>
       </div>
     </section>
 
     <section id="skills" class="skills">
       <div class="container tw-px-responsive">
-        <h2 class="section-title">3D 技能雲</h2>
-        <p class="skills-hint">點擊下方技能可看介紹</p>
+        <p class="section-eyebrow">01 / skills</p>
+        <h2 class="section-title">技能與工具</h2>
+        <p class="section-sub">點擊項目看介紹；左邊是用 Three.js 做的 3D 技能球。</p>
         <div class="skills-wrap tw-grid-skills">
           <div class="skills-canvas-wrap">
             <canvas id="skillsCanvas" title="Three.js 技能球體"></canvas>
           </div>
           <ul class="skills-list" id="skillsList" role="list">
-            <li data-skill="ai" tabindex="0">AI / RAG / LLM</li>
-            <li data-skill="gpu" tabindex="0">GPU / CUDA / Triton</li>
-            <li data-skill="web" tabindex="0">前端 / RWD</li>
-            <li data-skill="python" tabindex="0">Python / Flask</li>
-            <li data-skill="data" tabindex="0">資料處理 / 爬蟲</li>
-            <li data-skill="tools" tabindex="0">工具開發</li>
+            <li data-skill="ai" tabindex="0"><span class="skill-name">AI / RAG / LLM</span><span class="skill-meta">Gemini · Groq · Chroma</span></li>
+            <li data-skill="gpu" tabindex="0"><span class="skill-name">GPU / CUDA / Triton</span><span class="skill-meta">WMMA · FlashAttention · Nsight</span></li>
+            <li data-skill="web" tabindex="0"><span class="skill-name">前端 / RWD</span><span class="skill-meta">HTML · CSS · JS · PWA</span></li>
+            <li data-skill="python" tabindex="0"><span class="skill-name">Python / Flask</span><span class="skill-meta">Flask · Streamlit · pytest</span></li>
+            <li data-skill="data" tabindex="0"><span class="skill-name">資料處理 / 爬蟲</span><span class="skill-meta">RSS · GitHub Actions · APIs</span></li>
+            <li data-skill="tools" tabindex="0"><span class="skill-name">工具開發</span><span class="skill-meta">Chart.js · Three.js · SVG</span></li>
           </ul>
         </div>
       </div>
@@ -95,9 +110,7 @@
         <div class="skill-modal-content">
           <button type="button" class="skill-modal-close" id="skillModalClose" aria-label="關閉">×</button>
           <h3 class="skill-modal-title" id="skillModalTitle"></h3>
-          <div class="skill-modal-image-wrap">
-            <img id="skillModalImage" src="" alt="" loading="lazy" width="320" height="180">
-          </div>
+          <ul class="skill-modal-stack" id="skillModalStack"></ul>
           <p class="skill-modal-desc" id="skillModalDesc"></p>
         </div>
       </div>
@@ -105,102 +118,73 @@
 
     <section id="projects" class="projects">
       <div class="container tw-px-responsive">
+        <p class="section-eyebrow">02 / projects</p>
         <h2 class="section-title">專案精選</h2>
+        <p class="section-sub">每個專案都寫清楚要解決的問題、怎麼做，以及可以驗證的數字。</p>
         <div class="cards tw-grid-cards" id="projectCards">
-          <!-- 1. CUDA 放第一個 -->
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #76b900;">
-              <img src="https://placehold.co/600x240/1a1a1a/76b900?text=CUDA+%2F+PyTorch+GPU" alt="RTX 3050 GPU 專案預覽" loading="lazy" width="600" height="240" fetchpriority="low">
-            </div>
+          <article class="card card-featured" style="--card-accent: #76b900;">
             <div class="card-body">
-              <h3>RTX 3050 GPU Optimization Lab</h3>
-              <dl class="project-brief">
-                <div><dt>問題</dt><dd>筆電 GPU 效能與 kernel 實作難以系統化驗證與重現。</dd></div>
-                <div><dt>實作</dt><dd>8 週自學路線，先驗證才計時：WMMA GEMM 達 cuBLAS 79–87%（2048³）、MNIST 98.6%、CUDA Extension／Triton、FlashAttention。</dd></div>
-                <div><dt>技術</dt><dd>CUDA 12.4 · PyTorch · Triton · C++ Extension</dd></div>
-                <div><dt>連結</dt><dd><a href="#gpu-showcase">GPU 專區</a> · <a href="https://github.com/boson316/RTX3050-GPU-Mastery" target="_blank" rel="noopener">GitHub</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span><span class="card-kicker">GPU · CUDA</span><span class="badge badge-open">開源</span></div><h3>RTX 3050 GPU Optimization Lab</h3><p class="card-metric"><strong>79–87%</strong> cuBLAS · MNIST <strong>98.6%</strong> · 先驗證才計時</p>
+              <div class="feature-split"><div><dl class="project-brief"><div><dt>問題</dt><dd>筆電 GPU 效能與 kernel 實作難以系統化驗證與重現。</dd></div><div><dt>實作</dt><dd>8 週自學路線，先驗證才計時：WMMA GEMM 達 cuBLAS 79–87%（2048³）、MNIST 98.6%、CUDA Extension／Triton、FlashAttention。</dd></div></dl><ul class="chips" aria-label="stack"><li>CUDA 12.4</li><li>PyTorch</li><li>Triton</li><li>C++ Extension</li></ul></div><div class="mini-bench" aria-label="GEMM 2048³ FP16 · 相對 cuBLAS 吞吐量">
+                <p>GEMM 2048³ FP16 · 相對 cuBLAS 吞吐量</p>
+                <div class="mb-row"><span>cuBLAS</span><span class="mb-track"><i style="width:100%"></i></span><b>100%</b></div>
+                <div class="mb-row"><span>Triton</span><span class="mb-track"><i style="width:97%"></i></span><b>97%</b></div>
+                <div class="mb-row"><span>WMMA</span><span class="mb-track"><i style="width:83%"></i></span><b>79–87%</b></div>
+              </div></div>
+              <div class="card-links"><a class="card-btn" href="#gpu-showcase">GPU 專區<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a><a class="card-btn" href="https://github.com/boson316/RTX3050-GPU-Mastery" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></div>
             </div>
           </article>
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #10b981;"></div>
+          <article class="card" style="--card-accent: #10b981;">
             <div class="card-body">
-              <h3>年化報酬率／退休規劃計算機</h3>
-              <dl class="project-brief">
-                <div><dt>問題</dt><dd>多階段複利、CAGR／IRR 與退休目標（4% 法則、買房、通膨）難快速試算。</dd></div>
-                <div><dt>實作</dt><dd>v6 App 式單頁：反推金額／報酬率／定額／本金／時間；多階段現金流與整體 IRR；退休規劃含通膨與提領模擬；互動圖表，可安裝到手機。</dd></div>
-                <div><dt>技術</dt><dd>HTML · CSS · JavaScript（純前端）· SVG 圖表 · PWA</dd></div>
-                <div><dt>連結</dt><dd><a href="https://boson316.github.io/niu/annual_return_calculator_v6.html" target="_blank" rel="noopener">計算機 v6</a> · <a href="https://boson316.github.io/niu/annual_return_calculator_v6.html#retire" target="_blank" rel="noopener">退休規劃</a> · <a href="https://github.com/boson316/niu" target="_blank" rel="noopener">GitHub</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><span class="card-kicker">FinTools · PWA</span><span class="badge badge-live">Live</span></div><h3>年化報酬率／退休規劃計算機</h3><p class="card-metric"><strong>5</strong> 種反推 · 通膨調整 · 可離線</p>
+              <dl class="project-brief"><div><dt>問題</dt><dd>多階段複利、CAGR／IRR 與退休目標（4% 法則、買房、通膨）難快速試算。</dd></div><div><dt>實作</dt><dd>v6 App 式單頁：反推金額／報酬率／定額／本金／時間；多階段現金流與整體 IRR；退休規劃含通膨與提領模擬；互動圖表，可安裝到手機。</dd></div></dl><ul class="chips" aria-label="stack"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>SVG</li><li>PWA</li></ul>
+              <div class="card-links"><a class="card-btn" href="https://boson316.github.io/niu/annual_return_calculator_v6.html#calc" target="_blank" rel="noopener">計算機 v6<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a><a class="card-btn" href="https://boson316.github.io/niu/annual_return_calculator_v6.html#retire" target="_blank" rel="noopener">退休規劃<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a><a class="card-btn" href="https://github.com/boson316/niu" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></div>
             </div>
           </article>
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #0ea5e9;"></div>
+          <article class="card" style="--card-accent: #0ea5e9;">
             <div class="card-body">
-              <h3>新聞蒐集系統</h3>
-              <dl class="project-brief">
-                <div><dt>問題</dt><dd>Render 免費主機每次打開要等 30 秒以上喚醒，且新聞分散、難依主題瀏覽。</dd></div>
-                <div><dt>實作</dt><dd>GitHub Actions 每 15 分鐘抓 26 個 RSS（BBC、Reuters、Bloomberg、中央社…），輸出靜態網站；860+ 篇，0 秒冷啟動；分類、中英文、關鍵字篩選。</dd></div>
-                <div><dt>技術</dt><dd>Python · GitHub Actions · GitHub Pages · JavaScript</dd></div>
-                <div><dt>連結</dt><dd><a href="https://boson316.github.io/news/" target="_blank" rel="noopener">Live</a> · <a href="https://github.com/boson316/news" target="_blank" rel="noopener">GitHub</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></span><span class="card-kicker">Data · Automation</span><span class="badge badge-live">Live</span></div><h3>新聞蒐集系統</h3><p class="card-metric"><strong>26</strong> 個 RSS · 每 15 分鐘 · <strong>0</strong> 秒冷啟動</p>
+              <dl class="project-brief"><div><dt>問題</dt><dd>Render 免費主機每次打開要等 30 秒以上喚醒，且新聞分散、難依主題瀏覽。</dd></div><div><dt>實作</dt><dd>GitHub Actions 每 15 分鐘抓 26 個 RSS（BBC、Reuters、Bloomberg、中央社…），輸出靜態網站；860+ 篇，0 秒冷啟動；分類、中英文、關鍵字篩選。</dd></div></dl><ul class="chips" aria-label="stack"><li>Python</li><li>GitHub Actions</li><li>GitHub Pages</li><li>JavaScript</li></ul>
+              <div class="card-links"><a class="card-btn" href="https://boson316.github.io/news/" target="_blank" rel="noopener">Live<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a><a class="card-btn" href="https://github.com/boson316/news" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></div>
             </div>
           </article>
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #f97316;">
-              <img src="https://placehold.co/600x240/f97316/ffffff?text=NIU+Food+Map" alt="宜大校園美食地圖預覽" loading="lazy" width="600" height="240" fetchpriority="low">
-            </div>
+          <article class="card" style="--card-accent: #f97316;">
             <div class="card-body">
-              <h3>校園美食地圖 v2（宜大）</h3>
-              <dl class="project-brief">
-                <div><dt>問題</dt><dd>宜大校本部步行 500 m 內難依評價、距離、預算與營業狀態快速找店。</dd></div>
-                <div><dt>實作</dt><dd>Streamlit 地圖＋轉盤（Top 40）；黃氏星等×距離排序；15 類篩選；Google Places 離線快取 300+ 家。</dd></div>
-                <div><dt>技術</dt><dd>Python · Streamlit · pytest · Google Places API</dd></div>
-                <div><dt>連結</dt><dd><a href="https://food-map-niu-v2.streamlit.app/" target="_blank" rel="noopener">Live</a> · <a href="https://github.com/boson316/food_map_niu_v2" target="_blank" rel="noopener">GitHub</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="card-kicker">Maps · Streamlit</span><span class="badge badge-live">Live</span></div><h3>校園美食地圖 v2（宜大）</h3><p class="card-metric"><strong>300+</strong> 店家 · 步行 500 m · 15 類篩選</p>
+              <dl class="project-brief"><div><dt>問題</dt><dd>宜大校本部步行 500 m 內難依評價、距離、預算與營業狀態快速找店。</dd></div><div><dt>實作</dt><dd>Streamlit 地圖＋轉盤（Top 40）；黃氏星等×距離排序；15 類篩選；Google Places 離線快取 300+ 家。</dd></div></dl><ul class="chips" aria-label="stack"><li>Python</li><li>Streamlit</li><li>pytest</li><li>Google Places API</li></ul>
+              <div class="card-links"><a class="card-btn" href="https://food-map-niu-v2.streamlit.app/" target="_blank" rel="noopener">Live<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a><a class="card-btn" href="https://github.com/boson316/food_map_niu_v2" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></div>
             </div>
           </article>
-          <article class="card card-chart" data-tilt>
-            <div class="card-image card-chart-wrap" style="--accent: #ee4c2c;">
-              <canvas id="pytorchChart" width="600" height="220" aria-label="PyTorch 訓練 Loss 曲線"></canvas>
+          <article class="card card-chart" style="--card-accent: #ee4c2c;">
+            <div class="card-image card-chart-wrap">
+              <canvas id="pytorchChart" width="450" height="210" aria-label="PyTorch 訓練 Loss 曲線"></canvas>
             </div>
             <div class="card-body">
-              <h3>PyTorch / ML Demo</h3>
-              <dl class="project-brief">
-                <div><dt>問題</dt><dd>課程模型結果分散在報告，不利互動理解。</dd></div>
-                <div><dt>實作</dt><dd>KNN 乳腺癌分類：混淆矩陣、Loss/Acc、特徵重要性、PCA 一頁呈現。</dd></div>
-                <div><dt>技術</dt><dd>PyTorch · Chart.js · scikit-learn 流程</dd></div>
-                <div><dt>連結</dt><dd><a href="#ml-showcase">ML 專區</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span><span class="card-kicker">ML · Visualization</span><span class="badge badge-open">互動圖表</span></div><h3>PyTorch / ML Demo</h3><p class="card-metric">KNN 準確率 <strong>94.7%</strong> · 5 張互動圖</p>
+              <dl class="project-brief"><div><dt>問題</dt><dd>課程模型結果分散在報告，不利互動理解。</dd></div><div><dt>實作</dt><dd>KNN 乳腺癌分類：混淆矩陣、Loss/Acc、特徵重要性、PCA 一頁呈現。</dd></div></dl><ul class="chips" aria-label="stack"><li>PyTorch</li><li>Chart.js</li><li>scikit-learn</li></ul>
+              <div class="card-links"><a class="card-btn" href="#ml-showcase">ML 專區<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a></div>
             </div>
           </article>
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #8b5cf6;"></div>
+          <article class="card" style="--card-accent: #8b5cf6;">
             <div class="card-body">
-              <h3>Stable Diffusion 試用</h3>
-              <dl class="project-brief">
-                <div><dt>問題</dt><dd>需快速體驗文字轉圖像生成流程。</dd></div>
-                <div><dt>實作</dt><dd>串接 Hugging Face Spaces 公開 demo 試用。</dd></div>
-                <div><dt>技術</dt><dd>Stable Diffusion · HF Spaces</dd></div>
-                <div><dt>連結</dt><dd><a href="https://huggingface.co/spaces?search=stable+diffusion" target="_blank" rel="noopener">HF Spaces</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></span><span class="card-kicker">GenAI</span><span class="badge badge-open">Demo</span></div><h3>Stable Diffusion 試用</h3><p class="card-metric">文字 → 圖像 · 線上試用</p>
+              <dl class="project-brief"><div><dt>問題</dt><dd>需快速體驗文字轉圖像生成流程。</dd></div><div><dt>實作</dt><dd>串接 Hugging Face Spaces 公開 demo 試用。</dd></div></dl><ul class="chips" aria-label="stack"><li>Stable Diffusion</li><li>HF Spaces</li></ul>
+              <div class="card-links"><a class="card-btn" href="https://huggingface.co/spaces?search=stable+diffusion" target="_blank" rel="noopener">HF Spaces<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
             </div>
           </article>
-          <!-- RAG 放最後一個 -->
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #6366f1;">
-              <img src="https://placehold.co/600x240/6366f1/fff?text=RAG" alt="RAG 專案預覽" loading="lazy" width="600" height="240" fetchpriority="low">
-            </div>
+          <article class="card" style="--card-accent: #6366f1;">
             <div class="card-body">
-              <h3>RAG 知識庫聊天（開發中）</h3>
-              <dl class="project-brief">
-                <div><dt>問題</dt><dd>通用 LLM 無法穩定引用私有文件作答。</dd></div>
-                <div><dt>實作</dt><dd>Gemini + Chroma 向量檢索，自訂知識庫問答（進行中）。</dd></div>
-                <div><dt>技術</dt><dd>Python · Gemini API · Chroma · RAG</dd></div>
-                <div><dt>連結</dt><dd>開發中 — 見作品集更新</dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></span><span class="card-kicker">LLM · RAG</span><span class="badge badge-wip">開發中</span></div><h3>RAG 知識庫聊天</h3><p class="card-metric">Gemini + Chroma · 引用私有文件</p>
+              <dl class="project-brief"><div><dt>問題</dt><dd>通用 LLM 無法穩定引用私有文件作答。</dd></div><div><dt>實作</dt><dd>Gemini + Chroma 向量檢索，自訂知識庫問答（進行中）。</dd></div></dl><ul class="chips" aria-label="stack"><li>Python</li><li>Gemini API</li><li>Chroma</li><li>RAG</li></ul>
+              <div class="card-links"><span class="card-btn is-muted">開發中 — 見作品集更新</span></div>
             </div>
           </article>
+          <a class="card card-more" href="https://github.com/boson316" target="_blank" rel="noopener">
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></span>
+            <h3>更多在 GitHub</h3>
+            <p>原始碼、實驗紀錄與 benchmark 腳本都公開，可以直接重現。</p>
+            <span class="card-btn">github.com/boson316<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+          </a>
         </div>
       </div>
     </section>
@@ -208,6 +192,7 @@
     <!-- ML 專區：課程報告圖表互動版（KNN 乳腺癌、Loss/Acc、Feature Importance、PCA）-->
     <section id="ml-showcase" class="ml-showcase" aria-labelledby="ml-showcase-title">
       <div class="container tw-px-responsive">
+        <p class="section-eyebrow">03 / machine-learning</p>
         <h2 id="ml-showcase-title" class="section-title ml-showcase-title">
           <span class="ml-showcase-badge">大二課程專案</span>
           人工智慧 × 資料科學 — 互動圖表
@@ -274,6 +259,7 @@
     <!-- GPU 專區：CUDA 學習 + RTX 3050 作品集 -->
     <section id="gpu-showcase" class="gpu-showcase" aria-labelledby="gpu-showcase-title">
       <div class="container tw-px-responsive">
+        <p class="section-eyebrow">04 / gpu-lab</p>
         <h2 id="gpu-showcase-title" class="section-title gpu-showcase-title">
           <span class="gpu-showcase-badge">自學作品集</span>
           GPU Optimization Lab — RTX 3050 實作
@@ -360,7 +346,8 @@
 
     <section id="credentials" class="credentials" aria-labelledby="credentials-title">
       <div class="container tw-px-responsive">
-        <h2 id="credentials-title" class="section-title">🏆 認證與戰果</h2>
+        <p class="section-eyebrow">05 / credentials</p>
+        <h2 id="credentials-title" class="section-title">認證與戰果</h2>
         <p class="credentials-intro">AWS 與業界聯合頒發，驗證生成式 AI 實戰與工作坊完訓。</p>
         <div class="cert-grid">
           <article class="cert-card">
@@ -393,10 +380,18 @@
 
     <section id="contact" class="contact">
       <div class="container tw-px-responsive">
-        <h2 class="section-title">聯絡我</h2>
-        <p class="contact-desc">
-          歡迎透過下方小boson提問，或寄信到 poboson316@gmail.com 與我聯繫。
-        </p>
+        <div class="contact-card">
+          <div>
+            <p class="section-eyebrow">06 / contact</p>
+            <h2 class="section-title">聯絡我</h2>
+            <p class="contact-desc">歡迎透過右下角的小boson提問，或寄信到 <a href="mailto:poboson316@gmail.com">poboson316@gmail.com</a> 與我聯繫。</p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="mailto:poboson316@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>寄信給我</a>
+            <a class="btn btn-secondary" href="https://github.com/boson316" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
+            <a class="btn btn-ghost" href="card/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2"/><path d="M14 10h4M14 14h3"/></svg>數位名片</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -447,8 +442,9 @@
   </aside>
 
   <footer class="footer">
-    <div class="container tw-px-responsive">
-      <p>© 2026 作品集. GPU 專案 · 年化報酬率計算機 · AI 助手 · 暗黑模式 · <a href="card/">數位名片</a></p>
+    <div class="container tw-px-responsive footer-inner">
+      <p>© 2026 Boson · <span class="mono">手寫 HTML / CSS / JS · 部署於 GitHub Pages</span></p>
+      <p class="footer-links"><a href="card/">數位名片</a><a href="https://github.com/boson316/portfolio" target="_blank" rel="noopener">原始碼</a><a href="en/">English</a></p>
     </div>
   </footer>
 

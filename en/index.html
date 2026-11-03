@@ -20,6 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../tailwind.css">
+  <link rel="stylesheet" href="../design.css">
   <script>
     (function() {
       var theme = localStorage.getItem('portfolio-theme');
@@ -32,7 +33,7 @@
 <body>
   <header class="header">
     <nav class="nav container tw-px-responsive" role="navigation" aria-label="Main menu">
-      <a href="#" class="logo">Boson · Portfolio</a>
+      <a href="#" class="logo" aria-label="Boson portfolio home"><span class="logo-mark" aria-hidden="true">b/</span><span class="logo-text">Boson</span><span class="logo-sub">/ portfolio</span></a>
       <ul class="nav-links">
         <li><a href="#hero">Home</a></li>
         <li><a href="#skills">Skills</a></li>
@@ -41,6 +42,7 @@
         <li><a href="#gpu-showcase">GPU</a></li>
         <li><a href="#credentials">Credentials</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a class="icon-link" href="https://github.com/boson316" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></li>
         <li class="lang-switch" aria-label="Language">
           <a href="index.html" class="is-active" hreflang="en" aria-current="page">EN</a>
           <span class="sep">|</span>
@@ -62,31 +64,44 @@
   <main>
     <section id="hero" class="hero">
       <div class="hero-bg" id="heroCanvas" aria-hidden="true"></div>
-      <div class="container tw-px-responsive hero-content">
-        <h1>Hi, I'm <span class="accent">Boson</span></h1>
-        <p class="hero-desc">CS sophomore building frontend, AI apps, and GPU-accelerated tools.</p>
-        <div class="hero-btns">
-          <a href="#projects" class="btn btn-primary">View projects</a>
-          <button type="button" class="btn btn-secondary" id="heroChatBtn">Chat with AI</button>
+      <div class="container tw-px-responsive hero-content hero-grid">
+        <div class="hero-main">
+          <p class="hero-eyebrow"><span class="dot" aria-hidden="true"></span>CS sophomore · National Ilan University</p>
+          <h1>Hi, I'm <span class="accent">Boson</span></h1>
+          <p class="hero-role">Frontend <span>×</span> AI apps <span>×</span> GPU / CUDA optimization</p>
+          <p class="hero-desc">CS sophomore building frontend, AI apps, and GPU-accelerated tools. I verify first, then measure — from the UI down to CUDA kernels.</p>
+          <div class="hero-btns">
+            <a href="#projects" class="btn btn-primary">View projects<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+            <button type="button" class="btn btn-secondary" id="heroChatBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>Chat with AI</button>
+            <a href="https://github.com/boson316" class="btn btn-ghost" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
+          </div>
+          <dl class="hero-stats">
+            <div><dt>WMMA GEMM vs cuBLAS</dt><dd>79–87%</dd></div><div><dt>MNIST test accuracy</dt><dd>98.6%</dd></div><div><dt>featured projects</dt><dd>7</dd></div><div><dt>GenAI hackathon finisher</dt><dd>AWS</dd></div>
+          </dl>
+        </div>
+        <div class="terminal" role="img" aria-label="Terminal-style introduction">
+          <div class="term-bar"><i></i><i></i><i></i><span>boson@portfolio: ~</span></div>
+<pre class="term-body"><span class="l"><span class="p">$</span>whoami</span><span class="l o">boson316 · CS undergrad @ NIU</span><span class="l"><span class="p">$</span>cat stack.txt</span><span class="l o">JavaScript · Python · CUDA C++ · PyTorch · Triton</span><span class="l"><span class="p">$</span>./bench gemm --size 2048 --fp16</span><span class="l o">WMMA <span class="bar">████████████████▌░░░</span> <span class="hl">79–87%</span> of cuBLAS</span><span class="l"><span class="p">$</span>ls ~/projects</span><span class="l o">RTX3050-GPU-Mastery/  niu/  news/  food_map_niu_v2/  portfolio/</span><span class="l"><span class="p">$</span><span class="cur"></span></span></pre>
         </div>
       </div>
     </section>
 
     <section id="skills" class="skills">
       <div class="container tw-px-responsive">
-        <h2 class="section-title">3D Skill Cloud</h2>
-        <p class="skills-hint">Click a skill below for details</p>
+        <p class="section-eyebrow">01 / skills</p>
+        <h2 class="section-title">Skills &amp; tools</h2>
+        <p class="section-sub">Click a skill for details — the sphere on the left is built with Three.js.</p>
         <div class="skills-wrap tw-grid-skills">
           <div class="skills-canvas-wrap">
             <canvas id="skillsCanvas" title="Three.js skills sphere"></canvas>
           </div>
           <ul class="skills-list" id="skillsList" role="list">
-            <li data-skill="ai" tabindex="0">AI / RAG / LLM</li>
-            <li data-skill="gpu" tabindex="0">GPU / CUDA / Triton</li>
-            <li data-skill="web" tabindex="0">Frontend / RWD</li>
-            <li data-skill="python" tabindex="0">Python / Flask</li>
-            <li data-skill="data" tabindex="0">Data / Scraping</li>
-            <li data-skill="tools" tabindex="0">Tooling</li>
+            <li data-skill="ai" tabindex="0"><span class="skill-name">AI / RAG / LLM</span><span class="skill-meta">Gemini · Groq · Chroma</span></li>
+            <li data-skill="gpu" tabindex="0"><span class="skill-name">GPU / CUDA / Triton</span><span class="skill-meta">WMMA · FlashAttention · Nsight</span></li>
+            <li data-skill="web" tabindex="0"><span class="skill-name">Frontend / RWD</span><span class="skill-meta">HTML · CSS · JS · PWA</span></li>
+            <li data-skill="python" tabindex="0"><span class="skill-name">Python / Flask</span><span class="skill-meta">Flask · Streamlit · pytest</span></li>
+            <li data-skill="data" tabindex="0"><span class="skill-name">Data / Scraping</span><span class="skill-meta">RSS · GitHub Actions · APIs</span></li>
+            <li data-skill="tools" tabindex="0"><span class="skill-name">Tooling</span><span class="skill-meta">Chart.js · Three.js · SVG</span></li>
           </ul>
         </div>
       </div>
@@ -95,9 +110,7 @@
         <div class="skill-modal-content">
           <button type="button" class="skill-modal-close" id="skillModalClose" aria-label="Close">×</button>
           <h3 class="skill-modal-title" id="skillModalTitle"></h3>
-          <div class="skill-modal-image-wrap">
-            <img id="skillModalImage" src="" alt="" loading="lazy" width="320" height="180">
-          </div>
+          <ul class="skill-modal-stack" id="skillModalStack"></ul>
           <p class="skill-modal-desc" id="skillModalDesc"></p>
         </div>
       </div>
@@ -105,106 +118,80 @@
 
     <section id="projects" class="projects">
       <div class="container tw-px-responsive">
+        <p class="section-eyebrow">02 / projects</p>
         <h2 class="section-title">Selected projects</h2>
+        <p class="section-sub">Each project states the problem, the approach, and numbers you can verify.</p>
         <div class="cards tw-grid-cards" id="projectCards">
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #76b900;">
-              <img src="https://placehold.co/600x240/1a1a1a/76b900?text=CUDA+%2F+PyTorch+GPU" alt="RTX 3050 GPU project preview" loading="lazy" width="600" height="240">
-            </div>
+          <article class="card card-featured" style="--card-accent: #76b900;">
             <div class="card-body">
-              <h3>RTX 3050 GPU Optimization Lab</h3>
-              <dl class="project-brief">
-                <div><dt>Problem</dt><dd>Hard to benchmark and reproduce GPU kernels on a laptop GPU.</dd></div>
-                <div><dt>Built</dt><dd>Self-study lab, verified before timing: WMMA GEMM at 79–87% of cuBLAS (2048³), 98.6% MNIST, CUDA Extension, Triton, FlashAttention.</dd></div>
-                <div><dt>Stack</dt><dd>CUDA 12.4 · PyTorch · Triton · C++ Extension</dd></div>
-                <div><dt>Link</dt><dd><a href="#gpu-showcase">GPU section</a> · <a href="https://github.com/boson316/RTX3050-GPU-Mastery" target="_blank" rel="noopener">GitHub</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span><span class="card-kicker">GPU · CUDA</span><span class="badge badge-open">Open source</span></div><h3>RTX 3050 GPU Optimization Lab</h3><p class="card-metric"><strong>79–87%</strong> of cuBLAS · MNIST <strong>98.6%</strong> · verified before timed</p>
+              <div class="feature-split"><div><dl class="project-brief"><div><dt>Problem</dt><dd>Hard to benchmark and reproduce GPU kernels on a laptop GPU.</dd></div><div><dt>Built</dt><dd>Self-study lab, verified before timing: WMMA GEMM at 79–87% of cuBLAS (2048³), 98.6% MNIST, CUDA Extension, Triton, FlashAttention.</dd></div></dl><ul class="chips" aria-label="stack"><li>CUDA 12.4</li><li>PyTorch</li><li>Triton</li><li>C++ Extension</li></ul></div><div class="mini-bench" aria-label="GEMM 2048³ FP16 · throughput vs cuBLAS">
+                <p>GEMM 2048³ FP16 · throughput vs cuBLAS</p>
+                <div class="mb-row"><span>cuBLAS</span><span class="mb-track"><i style="width:100%"></i></span><b>100%</b></div>
+                <div class="mb-row"><span>Triton</span><span class="mb-track"><i style="width:97%"></i></span><b>97%</b></div>
+                <div class="mb-row"><span>WMMA</span><span class="mb-track"><i style="width:83%"></i></span><b>79–87%</b></div>
+              </div></div>
+              <div class="card-links"><a class="card-btn" href="#gpu-showcase">GPU section<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a><a class="card-btn" href="https://github.com/boson316/RTX3050-GPU-Mastery" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></div>
             </div>
           </article>
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #10b981;"></div>
+          <article class="card" style="--card-accent: #10b981;">
             <div class="card-body">
-              <h3>Annual Return &amp; Retirement Calculator</h3>
-              <dl class="project-brief">
-                <div><dt>Problem</dt><dd>Multi-stage cash flows, CAGR/IRR, and retirement targets (4% rule, housing, inflation) are tedious to model by hand.</dd></div>
-                <div><dt>Built</dt><dd>v6 app-style single page: solve for value / return / payment / principal / time; multi-stage cash flows with overall IRR; retirement planner with inflation and drawdown simulation; interactive charts, installable PWA.</dd></div>
-                <div><dt>Stack</dt><dd>HTML · CSS · JavaScript (client-side) · SVG charts · PWA</dd></div>
-                <div><dt>Link</dt><dd><a href="https://boson316.github.io/niu/annual_return_calculator_v6.html" target="_blank" rel="noopener">Calculator v6 (zh)</a> · <a href="https://boson316.github.io/niu/annual_return_calculator_v6.html#retire" target="_blank" rel="noopener">Retirement (zh)</a> · <a href="https://boson316.github.io/niu/annual_return_calculator_en_v1.html" target="_blank" rel="noopener">EN v1</a> · <a href="https://github.com/boson316/niu" target="_blank" rel="noopener">GitHub</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><span class="card-kicker">FinTools · PWA</span><span class="badge badge-live">Live</span></div><h3>Annual Return &amp; Retirement Calculator</h3><p class="card-metric"><strong>5</strong> solve modes · inflation-aware · offline</p>
+              <dl class="project-brief"><div><dt>Problem</dt><dd>Multi-stage cash flows, CAGR/IRR, and retirement targets (4% rule, housing, inflation) are tedious to model by hand.</dd></div><div><dt>Built</dt><dd>v6 app-style single page: solve for value / return / payment / principal / time; multi-stage cash flows with overall IRR; retirement planner with inflation and drawdown simulation; interactive charts, installable PWA.</dd></div></dl><ul class="chips" aria-label="stack"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>SVG</li><li>PWA</li></ul>
+              <div class="card-links"><a class="card-btn" href="https://boson316.github.io/niu/annual_return_calculator_v6.html#calc" target="_blank" rel="noopener">Calculator v6 (zh)<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a><a class="card-btn" href="https://boson316.github.io/niu/annual_return_calculator_v6.html#retire" target="_blank" rel="noopener">Retirement (zh)<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a><a class="card-btn" href="https://boson316.github.io/niu/annual_return_calculator_en_v1.html" target="_blank" rel="noopener">EN v1<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a><a class="card-btn" href="https://github.com/boson316/niu" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></div>
             </div>
           </article>
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #0ea5e9;"></div>
+          <article class="card" style="--card-accent: #0ea5e9;">
             <div class="card-body">
-              <h3>News Aggregator</h3>
-              <dl class="project-brief">
-                <div><dt>Problem</dt><dd>The free Render host took 30+ seconds to wake on every visit, and news was scattered and hard to browse by topic.</dd></div>
-                <div><dt>Built</dt><dd>GitHub Actions fetches 26 RSS feeds (BBC, Reuters, Bloomberg, CNA…) every 15 minutes into a static site; 860+ articles, zero cold start; section, Chinese/English and keyword filters.</dd></div>
-                <div><dt>Stack</dt><dd>Python · GitHub Actions · GitHub Pages · JavaScript</dd></div>
-                <div><dt>Link</dt><dd><a href="https://boson316.github.io/news/" target="_blank" rel="noopener">Live</a> · <a href="https://github.com/boson316/news" target="_blank" rel="noopener">GitHub</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></span><span class="card-kicker">Data · Automation</span><span class="badge badge-live">Live</span></div><h3>News Aggregator</h3><p class="card-metric"><strong>26</strong> RSS feeds · every 15 min · <strong>0 s</strong> cold start</p>
+              <dl class="project-brief"><div><dt>Problem</dt><dd>The free Render host took 30+ seconds to wake on every visit, and news was scattered and hard to browse by topic.</dd></div><div><dt>Built</dt><dd>GitHub Actions fetches 26 RSS feeds (BBC, Reuters, Bloomberg, CNA…) every 15 minutes into a static site; 860+ articles, zero cold start; section, Chinese/English and keyword filters.</dd></div></dl><ul class="chips" aria-label="stack"><li>Python</li><li>GitHub Actions</li><li>GitHub Pages</li><li>JavaScript</li></ul>
+              <div class="card-links"><a class="card-btn" href="https://boson316.github.io/news/" target="_blank" rel="noopener">Live<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a><a class="card-btn" href="https://github.com/boson316/news" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></div>
             </div>
           </article>
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #f97316;">
-              <img src="https://placehold.co/600x240/f97316/ffffff?text=NIU+Food+Map" alt="NIU campus food map preview" loading="lazy" width="600" height="240">
-            </div>
+          <article class="card" style="--card-accent: #f97316;">
             <div class="card-body">
-              <h3>NIU Campus Food Map v2</h3>
-              <dl class="project-brief">
-                <div><dt>Problem</dt><dd>Hard to pick eateries within 500 m of NIU by rating, distance, budget, and open hours.</dd></div>
-                <div><dt>Built</dt><dd>Streamlit map + wheel (Top 40); Huang rating × distance ranking; 15 categories; 300+ cached Google Places.</dd></div>
-                <div><dt>Stack</dt><dd>Python · Streamlit · pytest · Google Places API</dd></div>
-                <div><dt>Link</dt><dd><a href="https://food-map-niu-v2.streamlit.app/" target="_blank" rel="noopener">Live</a> · <a href="https://github.com/boson316/food_map_niu_v2" target="_blank" rel="noopener">GitHub</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="card-kicker">Maps · Streamlit</span><span class="badge badge-live">Live</span></div><h3>NIU Campus Food Map v2</h3><p class="card-metric"><strong>300+</strong> places · 500 m walk · 15 categories</p>
+              <dl class="project-brief"><div><dt>Problem</dt><dd>Hard to pick eateries within 500 m of NIU by rating, distance, budget, and open hours.</dd></div><div><dt>Built</dt><dd>Streamlit map + wheel (Top 40); Huang rating × distance ranking; 15 categories; 300+ cached Google Places.</dd></div></dl><ul class="chips" aria-label="stack"><li>Python</li><li>Streamlit</li><li>pytest</li><li>Google Places API</li></ul>
+              <div class="card-links"><a class="card-btn" href="https://food-map-niu-v2.streamlit.app/" target="_blank" rel="noopener">Live<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a><a class="card-btn" href="https://github.com/boson316/food_map_niu_v2" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></div>
             </div>
           </article>
-          <article class="card card-chart" data-tilt>
-            <div class="card-image card-chart-wrap" style="--accent: #ee4c2c;">
-              <canvas id="pytorchChart" width="600" height="220" aria-label="PyTorch training loss curve"></canvas>
+          <article class="card card-chart" style="--card-accent: #ee4c2c;">
+            <div class="card-image card-chart-wrap">
+              <canvas id="pytorchChart" width="450" height="210" aria-label="PyTorch training loss curve"></canvas>
             </div>
             <div class="card-body">
-              <h3>PyTorch / ML Demo</h3>
-              <dl class="project-brief">
-                <div><dt>Problem</dt><dd>Course ML results were static in reports, not interactive.</dd></div>
-                <div><dt>Built</dt><dd>Wisconsin breast cancer KNN: confusion matrix, loss/acc, feature importance, PCA in one page.</dd></div>
-                <div><dt>Stack</dt><dd>PyTorch · Chart.js · scikit-learn workflow</dd></div>
-                <div><dt>Link</dt><dd><a href="#ml-showcase">ML section</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span><span class="card-kicker">ML · Visualization</span><span class="badge badge-open">Interactive</span></div><h3>PyTorch / ML Demo</h3><p class="card-metric">KNN accuracy <strong>94.7%</strong> · 5 interactive charts</p>
+              <dl class="project-brief"><div><dt>Problem</dt><dd>Course ML results were static in reports, not interactive.</dd></div><div><dt>Built</dt><dd>Wisconsin breast cancer KNN: confusion matrix, loss/acc, feature importance, PCA in one page.</dd></div></dl><ul class="chips" aria-label="stack"><li>PyTorch</li><li>Chart.js</li><li>scikit-learn</li></ul>
+              <div class="card-links"><a class="card-btn" href="#ml-showcase">ML section<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a></div>
             </div>
           </article>
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #8b5cf6;"></div>
+          <article class="card" style="--card-accent: #8b5cf6;">
             <div class="card-body">
-              <h3>Stable Diffusion Playground</h3>
-              <dl class="project-brief">
-                <div><dt>Problem</dt><dd>Need a quick way to try text-to-image generation.</dd></div>
-                <div><dt>Built</dt><dd>Linked to public Hugging Face Spaces demos.</dd></div>
-                <div><dt>Stack</dt><dd>Stable Diffusion · HF Spaces</dd></div>
-                <div><dt>Link</dt><dd><a href="https://huggingface.co/spaces?search=stable+diffusion" target="_blank" rel="noopener">HF Spaces</a></dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></span><span class="card-kicker">GenAI</span><span class="badge badge-open">Demo</span></div><h3>Stable Diffusion Playground</h3><p class="card-metric">text → image · try it online</p>
+              <dl class="project-brief"><div><dt>Problem</dt><dd>Need a quick way to try text-to-image generation.</dd></div><div><dt>Built</dt><dd>Linked to public Hugging Face Spaces demos.</dd></div></dl><ul class="chips" aria-label="stack"><li>Stable Diffusion</li><li>HF Spaces</li></ul>
+              <div class="card-links"><a class="card-btn" href="https://huggingface.co/spaces?search=stable+diffusion" target="_blank" rel="noopener">HF Spaces<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
             </div>
           </article>
-          <article class="card" data-tilt>
-            <div class="card-image" style="--accent: #6366f1;">
-              <img src="https://placehold.co/600x240/6366f1/fff?text=RAG" alt="RAG project preview" loading="lazy" width="600" height="240">
-            </div>
+          <article class="card" style="--card-accent: #6366f1;">
             <div class="card-body">
-              <h3>RAG Knowledge Chat (WIP)</h3>
-              <dl class="project-brief">
-                <div><dt>Problem</dt><dd>Generic LLMs cannot reliably cite private documents.</dd></div>
-                <div><dt>Built</dt><dd>Gemini + Chroma retrieval for custom knowledge-base Q&amp;A (in progress).</dd></div>
-                <div><dt>Stack</dt><dd>Python · Gemini API · Chroma · RAG</dd></div>
-                <div><dt>Link</dt><dd>In progress — see portfolio updates</dd></div>
-              </dl>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></span><span class="card-kicker">LLM · RAG</span><span class="badge badge-wip">In progress</span></div><h3>RAG Knowledge Chat</h3><p class="card-metric">Gemini + Chroma · cites private docs</p>
+              <dl class="project-brief"><div><dt>Problem</dt><dd>Generic LLMs cannot reliably cite private documents.</dd></div><div><dt>Built</dt><dd>Gemini + Chroma retrieval for custom knowledge-base Q&amp;A (in progress).</dd></div></dl><ul class="chips" aria-label="stack"><li>Python</li><li>Gemini API</li><li>Chroma</li><li>RAG</li></ul>
+              <div class="card-links"><span class="card-btn is-muted">In progress — see portfolio updates</span></div>
             </div>
           </article>
+          <a class="card card-more" href="https://github.com/boson316" target="_blank" rel="noopener">
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></span>
+            <h3>More on GitHub</h3>
+            <p>Source code, engineering logs and benchmark scripts are public and reproducible.</p>
+            <span class="card-btn">github.com/boson316<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+          </a>
         </div>
       </div>
     </section>
 
     <section id="ml-showcase" class="ml-showcase" aria-labelledby="ml-showcase-title">
       <div class="container tw-px-responsive">
+        <p class="section-eyebrow">03 / machine-learning</p>
         <h2 id="ml-showcase-title" class="section-title ml-showcase-title">
           <span class="ml-showcase-badge">Course project</span>
           AI × Data Science — Interactive charts
@@ -258,6 +245,7 @@
 
     <section id="gpu-showcase" class="gpu-showcase" aria-labelledby="gpu-showcase-title">
       <div class="container tw-px-responsive">
+        <p class="section-eyebrow">04 / gpu-lab</p>
         <h2 id="gpu-showcase-title" class="section-title gpu-showcase-title">
           <span class="gpu-showcase-badge">Self-study</span>
           GPU Optimization Lab — RTX 3050
@@ -340,7 +328,8 @@
 
     <section id="credentials" class="credentials" aria-labelledby="credentials-title">
       <div class="container tw-px-responsive">
-        <h2 id="credentials-title" class="section-title">🏆 Achievements & Credentials</h2>
+        <p class="section-eyebrow">05 / credentials</p>
+        <h2 id="credentials-title" class="section-title">Achievements &amp; Credentials</h2>
         <p class="credentials-intro">Industry-validated generative AI hackathon and workshop completion.</p>
         <div class="cert-grid">
           <article class="cert-card">
@@ -373,10 +362,18 @@
 
     <section id="contact" class="contact">
       <div class="container tw-px-responsive">
-        <h2 class="section-title">Contact</h2>
-        <p class="contact-desc">
-          Use the AI assistant below or email <a href="mailto:poboson316@gmail.com">poboson316@gmail.com</a>.
-        </p>
+        <div class="contact-card">
+          <div>
+            <p class="section-eyebrow">06 / contact</p>
+            <h2 class="section-title">Contact</h2>
+            <p class="contact-desc">Ask 小boson (bottom-right) anything, or email <a href="mailto:poboson316@gmail.com">poboson316@gmail.com</a>.</p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="mailto:poboson316@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Email me</a>
+            <a class="btn btn-secondary" href="https://github.com/boson316" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
+            <a class="btn btn-ghost" href="../card/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2"/><path d="M14 10h4M14 14h3"/></svg>Digital card</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -425,8 +422,9 @@
   </aside>
 
   <footer class="footer">
-    <div class="container tw-px-responsive">
-      <p>© 2026 Portfolio · GPU lab · Return calculator · AI chat · <a href="../card/">Digital card</a> · <a href="../index.html">中文</a></p>
+    <div class="container tw-px-responsive footer-inner">
+      <p>© 2026 Boson · <span class="mono">hand-written HTML / CSS / JS · deployed on GitHub Pages</span></p>
+      <p class="footer-links"><a href="../card/">Digital card</a><a href="https://github.com/boson316/portfolio" target="_blank" rel="noopener">Source</a><a href="../index.html">中文</a></p>
     </div>
   </footer>
 

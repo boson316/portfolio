@@ -4,7 +4,7 @@
   var isEn = (document.documentElement.getAttribute('lang') || '').toLowerCase().indexOf('en') === 0;
   var CALC_URL = isEn
     ? 'https://boson316.github.io/niu/annual_return_calculator_en_v1.html'
-    : 'https://boson316.github.io/niu/annual_return_calculator_v6.html';
+    : 'https://boson316.github.io/niu/annual_return_calculator_v6.html#calc';
   var assetBase = (function () {
     if (typeof window.PORTFOLIO_ASSET_BASE === 'string') {
       var b = window.PORTFOLIO_ASSET_BASE;
@@ -73,63 +73,63 @@
     ai: {
       title: 'AI / RAG / LLM',
       desc: 'RAG knowledge-base Q&A with Gemini, Groq APIs, and Chroma. Experience with vision pipelines and edge deployment.',
-      image: 'https://placehold.co/320x180/6366f1/fff?text=AI%2FRAG%2FLLM'
+      stack: ['Gemini API', 'Groq', 'Chroma', 'RAG', 'Perxona']
     },
     gpu: {
       title: 'GPU / CUDA / Triton',
       desc: 'RTX 3050 GPU lab: pure CUDA (WMMA GEMM at 79–87% of cuBLAS), PyTorch Extension, Triton, FlashAttention, Transformer kernels; Nsight/Roofline and one-command reproduction.',
-      image: 'https://placehold.co/320x180/76b900/fff?text=GPU%2FCUDA%2FTriton'
+      stack: ['CUDA 12.4', 'WMMA', 'Triton', 'PyTorch Extension', 'FlashAttention', 'Nsight']
     },
     web: {
       title: 'Frontend / RWD',
       desc: 'Responsive UI, utility-first CSS, Lighthouse tuning; interactive UI, dark mode, and accessibility.',
-      image: 'https://placehold.co/320x180/0ea5e9/fff?text=Frontend%2FRWD'
+      stack: ['HTML', 'CSS', 'JavaScript', 'RWD', 'PWA', 'a11y']
     },
     python: {
       title: 'Python / Flask',
       desc: 'Backend APIs, Flask deployment, Groq integration, scraping, .env and CORS setup.',
-      image: 'https://placehold.co/320x180/10b981/fff?text=Python%2FFlask'
+      stack: ['Flask', 'Streamlit', 'pytest', 'REST API', 'Render']
     },
     data: {
       title: 'Data / Scraping',
       desc: 'RSS and web crawlers, news aggregation and filtering; cleaning and structuring data for APIs.',
-      image: 'https://placehold.co/320x180/f59e0b/fff?text=Data%20%2F%20Scraping'
+      stack: ['RSS', 'Web scraping', 'GitHub Actions', 'Google Places API']
     },
     tools: {
       title: 'Tooling',
       desc: 'Annual return calculator, Chart.js visualizations, Three.js demos, and portfolio tooling.',
-      image: 'https://placehold.co/320x180/c45c26/fff?text=Tools'
+      stack: ['Chart.js', 'Three.js', 'SVG charts', 'PWA']
     }
   } : {
     ai: {
       title: 'AI / RAG / LLM',
       desc: '使用大型語言模型與檢索增強生成（RAG）打造知識庫問答；熟悉 Gemini、Groq 等 API，以及 Chroma 向量庫。另有即時視覺與邊緣管線實作經驗。',
-      image: 'https://placehold.co/320x180/6366f1/fff?text=AI%2FRAG%2FLLM'
+      stack: ['Gemini API', 'Groq', 'Chroma', 'RAG', 'Perxona']
     },
     gpu: {
       title: 'GPU / CUDA / Triton',
       desc: 'RTX 3050 GPU 優化實驗室：Pure CUDA（WMMA GEMM 達 cuBLAS 79–87%）、PyTorch Extension、Triton kernels、FlashAttention、Transformer kernels；含 Nsight 與 Roofline 分析、逐步教學與一鍵重現。',
-      image: 'https://placehold.co/320x180/76b900/fff?text=GPU%2FCUDA%2FTriton'
+      stack: ['CUDA 12.4', 'WMMA', 'Triton', 'PyTorch Extension', 'FlashAttention', 'Nsight']
     },
     web: {
       title: '前端 / RWD',
       desc: '響應式網頁設計、Tailwind 風格 utility、Lighthouse 優化；具備互動式 UI、暗黑模式與無障礙實作經驗。',
-      image: 'https://placehold.co/320x180/0ea5e9/fff?text=Frontend%2FRWD'
+      stack: ['HTML', 'CSS', 'JavaScript', 'RWD', 'PWA', 'a11y']
     },
     python: {
       title: 'Python / Flask',
       desc: '後端 API 開發、Flask 專案部署；串接 Groq、爬蟲與資料處理，以及 .env 與 CORS 設定。',
-      image: 'https://placehold.co/320x180/10b981/fff?text=Python%2FFlask'
+      stack: ['Flask', 'Streamlit', 'pytest', 'REST API', 'Render']
     },
     data: {
       title: '資料處理 / 爬蟲',
       desc: 'RSS 與網頁爬蟲、新聞蒐集與篩選；資料清洗與結構化，供前端或 API 使用。',
-      image: 'https://placehold.co/320x180/f59e0b/fff?text=Data%20%2F%20Scraping'
+      stack: ['RSS', 'Web scraping', 'GitHub Actions', 'Google Places API']
     },
     tools: {
       title: '工具開發',
       desc: '年化報酬率計算機、圖表視覺化（Chart.js）、3D 展示（Three.js）等工具與 demo 開發。',
-      image: 'https://placehold.co/320x180/c45c26/fff?text=Tools'
+      stack: ['Chart.js', 'Three.js', 'SVG charts', 'PWA']
     }
   };
 
@@ -137,7 +137,7 @@
   var skillModalBackdrop = document.getElementById('skillModalBackdrop');
   var skillModalClose = document.getElementById('skillModalClose');
   var skillModalTitle = document.getElementById('skillModalTitle');
-  var skillModalImage = document.getElementById('skillModalImage');
+  var skillModalStack = document.getElementById('skillModalStack');
   var skillModalDesc = document.getElementById('skillModalDesc');
   var skillsList = document.getElementById('skillsList');
 
@@ -146,9 +146,13 @@
     if (!data || !skillModal) return;
     if (skillModalTitle) skillModalTitle.textContent = data.title;
     if (skillModalDesc) skillModalDesc.textContent = data.desc;
-    if (skillModalImage) {
-      skillModalImage.src = data.image;
-      skillModalImage.alt = data.title + (isEn ? ' overview' : ' 介紹圖');
+    if (skillModalStack) {
+      skillModalStack.innerHTML = '';
+      (data.stack || []).forEach(function (name) {
+        var li = document.createElement('li');
+        li.textContent = name;
+        skillModalStack.appendChild(li);
+      });
     }
     skillModal.classList.add('is-open');
     skillModal.setAttribute('aria-hidden', 'false');
@@ -226,22 +230,6 @@
       }
     });
   }
-
-  // ========== 互動卡片 tilt ==========
-  var cards = document.querySelectorAll('.card[data-tilt]');
-  cards.forEach(function (card) {
-    card.addEventListener('mousemove', function (e) {
-      var rect = card.getBoundingClientRect();
-      var x = (e.clientX - rect.left) / rect.width - 0.5;
-      var y = (e.clientY - rect.top) / rect.height - 0.5;
-      var tiltX = y * -8;
-      var tiltY = x * 8;
-      card.style.transform = 'translateY(-4px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg)';
-    });
-    card.addEventListener('mouseleave', function () {
-      card.style.transform = '';
-    });
-  });
 
   var chatHistory = [];
   var isSending = false;
@@ -328,7 +316,7 @@
       lower.includes('irr') ||
       lower.includes('複利')
     ) {
-      return '退休規劃 v5／年化 v4 在作品集第二張卡片，也可直接開啟：' + CALC_URL;
+      return '複利／退休計算機 v6 在作品集第二張卡片，也可直接開啟：' + CALC_URL;
     }
 
     if (lower.includes('暗黑') || lower.includes('dark') || lower.includes('主題')) {

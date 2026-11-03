@@ -85,7 +85,7 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 - **實作**：v6 App 式單頁：可反推最終金額／報酬率／定額／本金／時間；多階段現金流與整體 IRR；退休規劃含通膨、退休後提領模擬與報酬率情境；互動圖表、逐年明細，可安裝到手機（PWA）
 - **技術**：純前端 HTML + CSS + JavaScript、SVG 圖表、PWA
 - **連結**：
-  - v6 https://boson316.github.io/niu/annual_return_calculator_v6.html
+  - v6 https://boson316.github.io/niu/annual_return_calculator_v6.html#calc
   - 退休規劃 https://boson316.github.io/niu/annual_return_calculator_v6.html#retire
   - GitHub https://github.com/boson316/niu
 
@@ -144,7 +144,7 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 | 新聞蒐集 Live | https://boson316.github.io/news/ | — |
 | 新聞蒐集 GitHub | https://github.com/boson316/news | — |
 | 美食地圖 Live | https://food-map-niu-v2.streamlit.app/ | — |
-| 計算機 v6 Live | https://boson316.github.io/niu/annual_return_calculator_v6.html | — |
+| 計算機 v6 Live | https://boson316.github.io/niu/annual_return_calculator_v6.html#calc | — |
 
 **連結規則（必守）：**
 - 訪客要「連結／GitHub／repo」→ 貼**完整 https:// URL**；不可只寫「GitHub 專案連結」而不給網址。
