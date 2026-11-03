@@ -514,7 +514,7 @@ Storyboard 指令可再加一句：
 
 專案：
 1. GPU Lab — WMMA 達 cuBLAS 79–87%、MNIST 98.6% — github.com/boson316/RTX3050-GPU-Mastery
-2. 退休計算機 v5 — boson316.github.io/niu/annual_return_calculator_v5.html
+2. 複利／退休計算機 v6 — boson316.github.io/niu/annual_return_calculator_v6.html
 3. 宜大美食地圖 — food-map-niu-v2.streamlit.app
 4. 新聞蒐集 — boson316.github.io/news
 5. ML 專區 — KNN ~94.7%

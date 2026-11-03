@@ -77,7 +77,7 @@ One short URL / QR for sharing; the page includes **Facebook, Instagram, LinkedI
 | Card page | <https://boson316.github.io/portfolio/card/> |
 | Portfolio | <https://boson316.github.io/portfolio/> |
 | GitHub Profile | <https://github.com/boson316> |
-| FinTools (annual return / retirement) | <https://boson316.github.io/niu/annual_return_calculator_v5.html> |
+| FinTools (annual return / retirement) | <https://boson316.github.io/niu/annual_return_calculator_v6.html> |
 | Facebook | <https://www.facebook.com/boson.huang.960102> |
 | Instagram | <https://www.instagram.com/boson_0727/> |
 | LinkedIn | <https://www.linkedin.com/in/boson-huang-334b03303/> |
@@ -93,7 +93,7 @@ Scan or open: <https://boson316.github.io/portfolio/card/> · QR: [`card/qr.png`
 | Project | Link |
 |---------|------|
 | GPU Optimization Lab | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU section](https://boson316.github.io/portfolio/en/#gpu-showcase) |
-| Annual Return Calculator (CAGR / IRR) | [Retirement v5](https://boson316.github.io/niu/annual_return_calculator_v5.html) · [CAGR v4](https://boson316.github.io/niu/annual_return_calculator_v4.html) · [GitHub](https://github.com/boson316/niu) |
+| Annual Return Calculator (CAGR / IRR) | [Calculator v6](https://boson316.github.io/niu/annual_return_calculator_v6.html) · [Retirement](https://boson316.github.io/niu/annual_return_calculator_v6.html#retire) · [GitHub](https://github.com/boson316/niu) |
 | News Aggregator | [Live](https://boson316.github.io/news/) · [GitHub](https://github.com/boson316/news) |
 | NIU Campus Food Map v2 | [Live](https://food-map-niu-v2.streamlit.app/) · [GitHub](https://github.com/boson316/food_map_niu_v2) |
 | ML interactive charts (Wisconsin breast cancer, KNN) | [ML section](https://boson316.github.io/portfolio/en/#ml-showcase) |

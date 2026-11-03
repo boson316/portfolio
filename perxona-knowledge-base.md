@@ -81,12 +81,12 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 - **連結**：GitHub https://github.com/boson316/RTX3050-GPU-Mastery · 站內 #gpu-showcase
 
 ### 2. 年化報酬率／退休規劃計算機
-- **問題**：多階段複利、CAGR/IRR、退休目標（4% 法則、買房）難快速試算
-- **實作**：v4 多階段現金流；v5 退休總資產、幾年可退休、每月要存多少
-- **技術**：純前端 HTML + JavaScript
+- **問題**：多階段複利、CAGR/IRR、退休目標（4% 法則、買房、通膨）難快速試算
+- **實作**：v6 App 式單頁：可反推最終金額／報酬率／定額／本金／時間；多階段現金流與整體 IRR；退休規劃含通膨、退休後提領模擬與報酬率情境；互動圖表、逐年明細，可安裝到手機（PWA）
+- **技術**：純前端 HTML + CSS + JavaScript、SVG 圖表、PWA
 - **連結**：
-  - v5 https://boson316.github.io/niu/annual_return_calculator_v5.html
-  - v4 https://boson316.github.io/niu/annual_return_calculator_v4.html
+  - v6 https://boson316.github.io/niu/annual_return_calculator_v6.html
+  - 退休規劃 https://boson316.github.io/niu/annual_return_calculator_v6.html#retire
   - GitHub https://github.com/boson316/niu
 
 ### 3. 新聞蒐集系統
@@ -144,7 +144,7 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 | 新聞蒐集 Live | https://boson316.github.io/news/ | — |
 | 新聞蒐集 GitHub | https://github.com/boson316/news | — |
 | 美食地圖 Live | https://food-map-niu-v2.streamlit.app/ | — |
-| 退休 v5 Live | https://boson316.github.io/niu/annual_return_calculator_v5.html | — |
+| 計算機 v6 Live | https://boson316.github.io/niu/annual_return_calculator_v6.html | — |
 
 **連結規則（必守）：**
 - 訪客要「連結／GitHub／repo」→ 貼**完整 https:// URL**；不可只寫「GitHub 專案連結」而不給網址。
@@ -204,7 +204,7 @@ poboson316@gmail.com，或捲到 #contact。
 A：Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU Lab：WMMA 達 cuBLAS 79–87%、MNIST 98.6%，→ #gpu-showcase；ML 專區 KNN 94.7%。七張卡在 #projects。
 
 **Q：好**（對方剛問要不要看專案）  
-A：速覽——① GPU Lab WMMA 達 cuBLAS 79–87%、MNIST 98.6% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 宜大美食地圖 300+ 店 ④ 退休計算機 v5 ⑤ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑥ RAG 開發中。要哪個細講？
+A：速覽——① GPU Lab WMMA 達 cuBLAS 79–87%、MNIST 98.6% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 宜大美食地圖 300+ 店 ④ 複利／退休計算機 v6 ⑤ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑥ RAG 開發中。要哪個細講？
 
 **Q：CUDA 有什麼亮點**  
 A：RTX 3050 Lab：WMMA GEMM 在 2048³ 達 cuBLAS 的 79–87%、MNIST 98.6%、Triton conv（B=128）0.083 ms（cuDNN 0.168 ms）、CUDA FlashAttention S=4096（FP32）為 17.3 ms，比 SDPA 的 FP32 路徑（20.2 ms）快 14%。→ #gpu-showcase，repo：RTX3050-GPU-Mastery。
