@@ -3,7 +3,7 @@
 
   var isEn = (document.documentElement.getAttribute('lang') || '').toLowerCase().indexOf('en') === 0;
   var CALC_URL = isEn
-    ? 'https://boson316.github.io/niu/annual_return_calculator_en_v1.html'
+    ? 'https://boson316.github.io/niu/annual_return_calculator_v6.html?lang=en#calc'
     : 'https://boson316.github.io/niu/annual_return_calculator_v6.html#calc';
   var assetBase = (function () {
     if (typeof window.PORTFOLIO_ASSET_BASE === 'string') {
