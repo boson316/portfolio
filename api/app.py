@@ -1,4 +1,5 @@
 # Portfolio 聊天後端：Groq API + Perxona session token
+import logging
 import os
 
 from flask import Flask, jsonify, request
@@ -20,7 +21,20 @@ app = Flask(__name__)
 CORS(app)
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+# Groq 會不定期下架模型（例如 llama-3.1-8b-instant 已無法使用）。
+# 先用環境變數 GROQ_MODEL，再依序嘗試下列候選；全都不存在時，向 Groq 查詢目前可用的模型。
+MODEL = (os.getenv("GROQ_MODEL") or "").strip()
+MODEL_CANDIDATES = [
+    m for m in dict.fromkeys([
+        MODEL,
+        "llama-3.3-70b-versatile",
+        "openai/gpt-oss-20b",
+        "openai/gpt-oss-120b",
+        "meta-llama/llama-4-scout-17b-16e-instruct",
+    ]) if m
+]
+NON_CHAT_MODEL_HINTS = ("whisper", "tts", "guard", "playai", "orpheus", "distil", "compound")
+_active_model = None
 PERXONA_API_KEY = (os.getenv("PERXONA_API_KEY") or "").strip().strip('"').strip("'")
 PERXONA_TOKEN_TTL_SECONDS = int(os.getenv("PERXONA_TOKEN_TTL_SECONDS", "10800"))
 PERXONA_ALLOWED_ORIGINS = parse_allowed_origins(
@@ -131,6 +145,49 @@ def get_quick_reply(message: str) -> str | None:
     return QUICK_REPLIES.get(message.strip())
 
 
+def is_model_missing(err: Exception) -> bool:
+    text = str(err).lower()
+    return "model_not_found" in text or "decommissioned" in text or "does not exist" in text
+
+
+def discover_models(client) -> list[str]:
+    """向 Groq 查詢可用的聊天模型（排除語音、安全過濾等非聊天模型）。"""
+    try:
+        ids = [m.id for m in client.models.list().data]
+    except Exception:
+        return []
+    return [i for i in ids if not any(h in i.lower() for h in NON_CHAT_MODEL_HINTS)]
+
+
+def create_completion(client, messages, **kwargs):
+    """依序嘗試模型；模型不存在就換下一個，成功後記住可用的模型。"""
+    global _active_model
+    tried = []
+    queue = list(dict.fromkeys([m for m in [_active_model, *MODEL_CANDIDATES] if m]))
+    discovered = False
+    while True:
+        while queue:
+            model = queue.pop(0)
+            if model in tried:
+                continue
+            tried.append(model)
+            try:
+                completion = client.chat.completions.create(model=model, messages=messages, **kwargs)
+            except Exception as e:
+                if is_model_missing(e):
+                    app.logger.warning("Groq model unavailable: %s", model)
+                    if _active_model == model:
+                        _active_model = None
+                    continue
+                raise
+            _active_model = model
+            return completion
+        if discovered:
+            raise RuntimeError("No available Groq chat model (tried: %s)" % ", ".join(tried))
+        discovered = True
+        queue = [m for m in discover_models(client) if m not in tried]
+
+
 def get_groq_client():
     try:
         from groq import Groq
@@ -144,6 +201,7 @@ def health():
     payload: dict[str, object] = {
         "ok": True,
         "groq": bool(GROQ_API_KEY),
+        "model": _active_model or (MODEL_CANDIDATES[0] if MODEL_CANDIDATES else None),
         "perxona": bool(PERXONA_API_KEY),
     }
     hint = perxona_key_hint(PERXONA_API_KEY)
@@ -251,17 +309,18 @@ def chat():
     messages.append({"role": "user", "content": message})
 
     try:
-        completion = client.chat.completions.create(
-            model=MODEL,
-            messages=messages,
-            max_tokens=120,
+        completion = create_completion(
+            client,
+            messages,
+            max_tokens=400,
             temperature=0.4,
         )
         reply = (completion.choices[0].message.content or "").strip() or "抱歉，我沒有產生回覆，請再試一次。"
         return jsonify({"reply": reply})
-    except Exception as e:
+    except Exception:
+        app.logger.exception("Groq chat failed")
         return jsonify({
-            "reply": f"暫時無法連線到 AI（{str(e)}），請稍後再試或寄信至 poboson316@gmail.com 聯絡站主。",
+            "reply": "小boson 暫時無法回覆，請稍後再試，或寄信至 poboson316@gmail.com 聯絡站主。",
             "fallback": True
         }), 200
 
