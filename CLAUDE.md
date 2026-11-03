@@ -25,7 +25,7 @@
 - 單頁作品集（GitHub Pages）：<https://boson316.github.io/portfolio/>，英文版在 `en/`，數位名片在 `card/`。
 - 中文 `index.html` 與英文 `en/index.html` 結構要保持一致；改一邊就要同步另一邊。
 - 樣式：`styles.css`（基礎）→ `tailwind.css` → `design.css`（設計層：米色＋赤陶橘配色、工程師風格）。新樣式優先寫在 `design.css`。
-- 互動：`script.js`（主題、導覽、技能介紹、聊天）、`ml-showcase.js`／`ml-charts.js`、`skills-3d.js`、`pytorch-chart.js`；Chart.js、Three.js 從 CDN 延遲載入。
+- 互動：`script.js`（主題、導覽、技能介紹、聊天）、`ml-showcase.js`／`ml-charts.js`、`skills-viz.js`（技能區四種 Canvas 視覺化：關係圖／CUDA 網格／標籤球／神經網路，與專案卡片篩選連動；技能與專案的對應在檔案開頭的 `USES`）、`pytorch-chart.js`；Chart.js 從 CDN 延遲載入。
 - 小boson 知識要同步更新三處：`api/app.py` 的 `SYSTEM_PROMPT`（文字聊天，部署在 Render，`main` 更新後需確認 Render 有重新部署）、`perxona-knowledge-base.txt`／`.md`（3D Perxona）、`script.js` 的快捷回覆。
 - 後端測試：在 `api/` 執行 `python -m pytest -q tests`。
 - 專案數字必須可驗證（例如 WMMA GEMM 79–87% cuBLAS、MNIST 98.6%），不要編造；GitHub repo 名稱只用知識庫對照表裡的。
