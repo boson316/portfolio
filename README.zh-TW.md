@@ -95,7 +95,7 @@
 | GPU Optimization Lab | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU 專區](https://boson316.github.io/portfolio/#gpu-showcase) |
 | 年化報酬率／退休規劃計算機 | [計算機 v6](https://boson316.github.io/niu/annual_return_calculator_v6.html#calc) · [退休規劃](https://boson316.github.io/niu/annual_return_calculator_v6.html#retire) · [GitHub](https://github.com/boson316/niu) |
 | 新聞蒐集系統 | [Live](https://boson316.github.io/news/) · [GitHub](https://github.com/boson316/news) |
-| 校園美食地圖 v2（宜大） | [Live](https://food-map-niu-v2.streamlit.app/) · [GitHub](https://github.com/boson316/food_map_niu_v2) |
+| 校園美食地圖（4 校） | [宜大](https://boson316.github.io/food_map_niu_v2/) · [台大](https://boson316.github.io/food_map_ntu_v1/) · [中央](https://boson316.github.io/food_map_ncu_v1/) · [中正](https://boson316.github.io/food_map_ccu_v1/) · [GitHub](https://github.com/boson316/food_map_niu_v2) |
 | 人工智慧 × 資料科學互動圖表 | [ML 專區](https://boson316.github.io/portfolio/#ml-showcase) |
 | RAG 知識庫聊天 | 開發中 |
 

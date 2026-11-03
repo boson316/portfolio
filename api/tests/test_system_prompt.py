@@ -19,7 +19,9 @@ def test_prompt_includes_verifiable_project_facts():
     assert "RTX3050-GPU-Mastery" in PROMPT
     assert "annual_return_calculator_v6.html#calc" in PROMPT
     assert "annual_return_calculator_v5.html" not in PROMPT
-    assert "food-map-niu-v2.streamlit.app" in PROMPT
+    assert "food-map-niu-v2.streamlit.app" not in PROMPT  # old Streamlit host sleeps; static Pages replaced it
+    for repo in ("food_map_niu_v2", "food_map_ntu_v1", "food_map_ncu_v1", "food_map_ccu_v1"):
+        assert f"boson316.github.io/{repo}/" in PROMPT
     assert "boson316.github.io/news" in PROMPT
     assert "26 個 RSS" in PROMPT
     assert "boson-news-app.onrender.com" not in PROMPT

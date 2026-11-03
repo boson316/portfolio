@@ -95,7 +95,7 @@ Scan or open: <https://boson316.github.io/portfolio/card/> · QR: [`card/qr.png`
 | GPU Optimization Lab | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU section](https://boson316.github.io/portfolio/en/#gpu-showcase) |
 | Annual Return Calculator (CAGR / IRR) | [Calculator v6](https://boson316.github.io/niu/annual_return_calculator_v6.html#calc) · [Retirement](https://boson316.github.io/niu/annual_return_calculator_v6.html#retire) · [GitHub](https://github.com/boson316/niu) |
 | News Aggregator | [Live](https://boson316.github.io/news/) · [GitHub](https://github.com/boson316/news) |
-| NIU Campus Food Map v2 | [Live](https://food-map-niu-v2.streamlit.app/) · [GitHub](https://github.com/boson316/food_map_niu_v2) |
+| Campus Food Map (4 campuses) | [NIU](https://boson316.github.io/food_map_niu_v2/) · [NTU](https://boson316.github.io/food_map_ntu_v1/) · [NCU](https://boson316.github.io/food_map_ncu_v1/) · [CCU](https://boson316.github.io/food_map_ccu_v1/) · [GitHub](https://github.com/boson316/food_map_niu_v2) |
 | ML interactive charts (Wisconsin breast cancer, KNN) | [ML section](https://boson316.github.io/portfolio/en/#ml-showcase) |
 | RAG knowledge chat | In progress |
 

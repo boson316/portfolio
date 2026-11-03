@@ -492,7 +492,7 @@ DON'T：不做「品牌／敘事優化顧問」、不幫寫 code、不代做 ser
 |------|-------------|----------|
 | GPU Lab | https://github.com/boson316/RTX3050-GPU-Mastery | gpu-lab、GPU-Lab |
 | 退休計算機 | https://github.com/boson316/niu | — |
-| 美食地圖 | https://github.com/boson316/food_map_niu_v2 | — |
+| 美食地圖 | https://github.com/boson316/food_map_niu_v2（另有 food_map_ntu_v1、food_map_ncu_v1、food_map_ccu_v1） | — |
 | 作品集 | https://github.com/boson316/portfolio | — |
 
 **規則：** 訪客要連結 → 貼**完整 https://**；禁止猜 repo 名。
@@ -515,7 +515,7 @@ Storyboard 指令可再加一句：
 專案：
 1. GPU Lab — WMMA 達 cuBLAS 79–87%、MNIST 98.6% — github.com/boson316/RTX3050-GPU-Mastery
 2. 複利／退休計算機 v6 — boson316.github.io/niu/annual_return_calculator_v6.html#calc
-3. 宜大美食地圖 — food-map-niu-v2.streamlit.app
+3. 校園美食地圖（4 校）— boson316.github.io/food_map_niu_v2（宜大）· food_map_ntu_v1（台大）· food_map_ncu_v1（中央）· food_map_ccu_v1（中正）
 4. 新聞蒐集 — boson316.github.io/news
 5. ML 專區 — KNN ~94.7%
 6. RAG — 開發中
