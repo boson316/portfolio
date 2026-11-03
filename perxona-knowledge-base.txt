@@ -84,7 +84,7 @@ Benchmark：
 實作：v6 App 式單頁：反推金額／報酬率／定額／本金／時間；多階段現金流與整體 IRR；退休規劃含通膨與提領模擬；互動圖表，可安裝到手機（PWA）
 技術：純前端 HTML + CSS + JavaScript、SVG 圖表、PWA
 連結：
-  v6 https://boson316.github.io/niu/annual_return_calculator_v6.html
+  v6 https://boson316.github.io/niu/annual_return_calculator_v6.html#calc
   退休規劃 https://boson316.github.io/niu/annual_return_calculator_v6.html#retire
   GitHub https://github.com/boson316/niu
 
@@ -138,7 +138,7 @@ GPU Lab（RTX 3050）
 
 退休／年化計算機
   正確：https://github.com/boson316/niu
-  Live v6：https://boson316.github.io/niu/annual_return_calculator_v6.html
+  Live v6：https://boson316.github.io/niu/annual_return_calculator_v6.html#calc
 
 美食地圖 v2
   正確：https://github.com/boson316/food_map_niu_v2

@@ -56,7 +56,7 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 
 2. 年化報酬率／退休規劃計算機（純前端）
    - v6 App 式單頁：反推金額／報酬率／定額／本金／時間；多階段現金流與整體 IRR；退休規劃（4% 法則、買房、通膨、提領模擬）
-   - v6: https://boson316.github.io/niu/annual_return_calculator_v6.html
+   - v6: https://boson316.github.io/niu/annual_return_calculator_v6.html#calc
    - 退休規劃: https://boson316.github.io/niu/annual_return_calculator_v6.html#retire
    - GitHub: https://github.com/boson316/niu
 
