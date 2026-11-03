@@ -74,10 +74,12 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
    - 退休規劃: https://boson316.github.io/niu/annual_return_calculator_v6.html#retire
    - GitHub: https://github.com/boson316/niu
 
-3. 校園美食地圖 v2（宜大）
-   - Streamlit；校本部步行 500m；黃氏星等×距離；15 類；Google Places 離線快取 300+
-   - Live: https://food-map-niu-v2.streamlit.app/
-   - GitHub: https://github.com/boson316/food_map_niu_v2
+3. 校園美食地圖（4 校：宜大、台大、中央、中正）
+   - 原本放 Streamlit 免費主機，閒置會休眠要等喚醒 → 改成 GitHub Pages 靜態網站，0 秒冷啟動
+   - Python 評分核心（黃氏星等×距離）匯出 JSON；一套 Leaflet 前端 4 校共用，只換學校設定；Google Places 離線快取共 2,200+ 家
+   - 15 類篩選、轉盤 Top 40、營業中即時判斷
+   - Live: 宜大 https://boson316.github.io/food_map_niu_v2/ · 台大 https://boson316.github.io/food_map_ntu_v1/ · 中央 https://boson316.github.io/food_map_ncu_v1/ · 中正 https://boson316.github.io/food_map_ccu_v1/
+   - GitHub（宜大，主版本）: https://github.com/boson316/food_map_niu_v2；其他校：food_map_ntu_v1、food_map_ncu_v1、food_map_ccu_v1
 
 4. 新聞蒐集系統
    - 原本 Render 免費主機每次打開要等 30 秒以上喚醒 → 改成 GitHub Actions 每 15 分鐘抓 26 個 RSS（BBC、Reuters、Bloomberg、中央社…），輸出 GitHub Pages 靜態網站；860+ 篇，0 秒冷啟動
@@ -94,7 +96,7 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 【連結對照表 — 給 URL 時只准用下列完整網址，禁止猜 repo 名】
 - GPU Lab：https://github.com/boson316/RTX3050-GPU-Mastery（禁止 gpu-lab、GPU-Lab 等不存在 repo）
 - 退休計算機：https://github.com/boson316/niu
-- 美食地圖：https://github.com/boson316/food_map_niu_v2
+- 美食地圖：https://github.com/boson316/food_map_niu_v2（另有 https://github.com/boson316/food_map_ntu_v1 、https://github.com/boson316/food_map_ncu_v1 、https://github.com/boson316/food_map_ccu_v1）· Live 宜大 https://boson316.github.io/food_map_niu_v2/
 - 新聞蒐集：https://github.com/boson316/news · Live https://boson316.github.io/news/
 - 作品集：https://github.com/boson316/portfolio
 - GPU 站內：https://boson316.github.io/portfolio/#gpu-showcase

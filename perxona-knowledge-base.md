@@ -95,11 +95,12 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 - **技術**：Python · GitHub Actions · GitHub Pages · JavaScript
 - **連結**：https://boson316.github.io/news/（每 15 分鐘自動更新）· GitHub https://github.com/boson316/news
 
-### 4. 校園美食地圖 v2（宜大）
-- **問題**：宜大校本部步行 500m 內難依評價、距離、預算、營業狀態找店
-- **實作**：Streamlit 地圖＋轉盤（Top 40）；黃氏星等×距離；15 類篩選；Google Places 離線快取 300+ 家
-- **技術**：Python · Streamlit · pytest · Google Places API
-- **連結**：https://food-map-niu-v2.streamlit.app/ · GitHub https://github.com/boson316/food_map_niu_v2
+### 4. 校園美食地圖（4 校）
+- **問題**：校園周邊難依評價、距離、預算、營業狀態找店；原本 Streamlit 免費主機閒置會休眠，打開要等喚醒
+- **實作**：Python 評分核心（黃氏星等×距離）匯出 JSON；一套 Leaflet 靜態前端由宜大、台大、中央、中正共用，只換學校設定；GitHub Pages 0 秒冷啟動；15 類篩選、轉盤 Top 40、營業中即時判斷
+- **規模**：4 校共 2,200+ 家（宜大 307、台大 791、中央 500、中正 631）
+- **技術**：Python · JavaScript · Leaflet · pytest · GitHub Actions · Google Places API
+- **連結**：宜大 https://boson316.github.io/food_map_niu_v2/ · 台大 https://boson316.github.io/food_map_ntu_v1/ · 中央 https://boson316.github.io/food_map_ncu_v1/ · 中正 https://boson316.github.io/food_map_ccu_v1/ · GitHub https://github.com/boson316/food_map_niu_v2
 
 ### 5. PyTorch / ML Demo（#ml-showcase）
 - **問題**：課程模型結果分散在報告，不利互動理解
@@ -137,13 +138,14 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 |------|----------|-------------------|
 | GPU Lab（RTX 3050） | https://github.com/boson316/RTX3050-GPU-Mastery | gpu-lab、GPU-Lab、RTX3050_GPU |
 | 退休／年化計算機 | https://github.com/boson316/niu | annual-calculator、retirement-calc |
-| 美食地圖 v2 | https://github.com/boson316/food_map_niu_v2 | food-map、niu-food |
+| 美食地圖（宜大，主版本） | https://github.com/boson316/food_map_niu_v2 | food-map、niu-food |
+| 美食地圖（台大／中央／中正） | https://github.com/boson316/food_map_ntu_v1 · https://github.com/boson316/food_map_ncu_v1 · https://github.com/boson316/food_map_ccu_v1 | — |
 | 作品集 repo | https://github.com/boson316/portfolio | portfolio-site |
 | GPU 站內展示 | https://boson316.github.io/portfolio/#gpu-showcase | — |
 | ML 站內展示 | https://boson316.github.io/portfolio/#ml-showcase | — |
 | 新聞蒐集 Live | https://boson316.github.io/news/ | — |
 | 新聞蒐集 GitHub | https://github.com/boson316/news | — |
-| 美食地圖 Live | https://food-map-niu-v2.streamlit.app/ | — |
+| 美食地圖 Live | 宜大 https://boson316.github.io/food_map_niu_v2/ · 台大 https://boson316.github.io/food_map_ntu_v1/ · 中央 https://boson316.github.io/food_map_ncu_v1/ · 中正 https://boson316.github.io/food_map_ccu_v1/ | food-map-niu-v2.streamlit.app（舊版，會休眠） |
 | 計算機 v6 Live | https://boson316.github.io/niu/annual_return_calculator_v6.html#calc | — |
 
 **連結規則（必守）：**
@@ -204,7 +206,7 @@ poboson316@gmail.com，或捲到 #contact。
 A：Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU Lab：WMMA 達 cuBLAS 79–87%、MNIST 98.6%，→ #gpu-showcase；ML 專區 KNN 94.7%。七張卡在 #projects。
 
 **Q：好**（對方剛問要不要看專案）  
-A：速覽——① GPU Lab WMMA 達 cuBLAS 79–87%、MNIST 98.6% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 宜大美食地圖 300+ 店 ④ 複利／退休計算機 v6 ⑤ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑥ RAG 開發中。要哪個細講？
+A：速覽——① GPU Lab WMMA 達 cuBLAS 79–87%、MNIST 98.6% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 校園美食地圖 4 校 2,200+ 店、0 秒冷啟動 ④ 複利／退休計算機 v6 ⑤ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑥ RAG 開發中。要哪個細講？
 
 **Q：CUDA 有什麼亮點**  
 A：RTX 3050 Lab：WMMA GEMM 在 2048³ 達 cuBLAS 的 79–87%、MNIST 98.6%、Triton conv（B=128）0.083 ms（cuDNN 0.168 ms）、CUDA FlashAttention S=4096（FP32）為 17.6 ms，比 SDPA 的 FP32 路徑（20.4 ms）快 14%。→ #gpu-showcase，repo：RTX3050-GPU-Mastery。

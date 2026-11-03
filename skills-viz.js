@@ -44,7 +44,7 @@
   var USES = {
     ai: ['rag', 'sd', 'ml'],
     gpu: ['gpu-lab', 'ml'],
-    web: ['calc', 'news', 'ml'],
+    web: ['calc', 'news', 'food', 'ml'],
     python: ['gpu-lab', 'news', 'food', 'rag', 'ml'],
     data: ['news', 'food', 'ml'],
     tools: ['calc', 'ml', 'gpu-lab']
