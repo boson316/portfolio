@@ -328,7 +328,7 @@
       lower.includes('irr') ||
       lower.includes('複利')
     ) {
-      return '退休規劃 v5／年化 v4 在作品集第二張卡片，也可直接開啟：' + CALC_URL;
+      return '複利／退休計算機 v6 在作品集第二張卡片，也可直接開啟：' + CALC_URL;
     }
 
     if (lower.includes('暗黑') || lower.includes('dark') || lower.includes('主題')) {
