@@ -79,7 +79,7 @@ One short URL / QR for sharing; the page includes **Facebook, Instagram, LinkedI
 | GitHub Profile | <https://github.com/boson316> |
 | FinTools (annual return / retirement) | <https://boson316.github.io/niu/annual_return_calculator_v6.html#calc> |
 | Facebook | <https://www.facebook.com/boson.huang.960102> |
-| Instagram | <https://www.instagram.com/boson_0727/> |
+| Instagram | <https://www.instagram.com/bosonhuang07/> |
 | LinkedIn | <https://www.linkedin.com/in/boson-huang-334b03303/> |
 | YouTube · Life | <https://www.youtube.com/@boson0777> |
 | YouTube · Finance | <https://www.youtube.com/@Boson0727> |
