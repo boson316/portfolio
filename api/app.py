@@ -70,33 +70,43 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 
 2. 年化報酬率／退休規劃計算機（純前端）
    - 挑戰→解法：常見做法把年報酬 ÷12 當月報酬，6% 實際約變 6.17%；v6 預設有效年化（月報酬 = (1+r)^(1/12) − 1），可切回名目
-   - v6 App 式單頁，中英文介面：反推金額／報酬率／定額／本金／時間；多階段現金流與整體 IRR；退休規劃（4% 法則、買房、通膨、提領模擬）
+   - v6 App 式單頁，中英文介面：反推金額／報酬率／定額／本金／時間；多階段現金流與整體 IRR；退休規劃（4% 法則、買房、通膨、提領模擬，可反推幾歲能退休／每月要存多少／現在要有多少）；可安裝到手機離線使用
    - v6: https://boson316.github.io/niu/annual_return_calculator_v6.html#calc
    - 退休規劃: https://boson316.github.io/niu/annual_return_calculator_v6.html#retire
+   - 英文版: https://boson316.github.io/niu/annual_return_calculator_v6.html?lang=en#calc
    - GitHub: https://github.com/boson316/niu
 
-3. 校園美食地圖（4 校：宜大、台大、中央、中正）
+3. 大師 13F 持股追蹤（Live，介面中文）
+   - 每天用 GitHub Actions 抓 SEC 13F 申報：20 位投資人（巴菲特、Ackman、Klarman、Burry…，主要 14 位＋備選 6 位）、回溯 20 季
+   - 季對季加減碼、跨大師共識、新買進、查個股（某檔股票有哪些大師持有）、持股推估報酬對照 S&P 500；可離線瀏覽
+   - 挑戰→解法：外國公司（Chubb、ASML）的 CUSIP 是 CINS 格式，原本 568 檔對不到代號，Dorsey 最新一季約 33% 市值沒代號 → 改用 CINS／ISIN 查 OpenFIGI，加上由測試核對的人工對照表；最新一季沒有代號的市值降到 0.4% 以下（Burry 的特別股除外）
+   - Python 標準函式庫、290 個測試；前端純 JavaScript＋SVG，部署在 Cloudflare Workers
+   - Live: https://us-stock-tracker.boson316.workers.dev/ （查個股：https://us-stock-tracker.boson316.workers.dev/#stock）
+   - 原始碼不公開：沒有 GitHub 連結，禁止編造 repo 網址
+
+4. 校園美食地圖（4 校：宜大、台大、中央、中正）
    - 原本放 Streamlit 免費主機，閒置會休眠要等喚醒 → 改成 GitHub Pages 靜態網站，0 秒冷啟動
    - Python 評分核心（黃氏星等×距離）匯出 JSON；一套 Leaflet 前端 4 校共用，只換學校設定；Google Places 離線快取共 2,200+ 家
    - 15 類篩選、轉盤 Top 40、營業中即時判斷
    - Live: 宜大 https://boson316.github.io/food_map_niu_v2/ · 台大 https://boson316.github.io/food_map_ntu_v1/ · 中央 https://boson316.github.io/food_map_ncu_v1/ · 中正 https://boson316.github.io/food_map_ccu_v1/
    - GitHub（宜大，主版本）: https://github.com/boson316/food_map_niu_v2；其他校：food_map_ntu_v1、food_map_ncu_v1、food_map_ccu_v1
 
-4. 新聞蒐集系統
+5. 新聞蒐集系統
    - 原本 Render 免費主機每次打開要等 30 秒以上喚醒 → 改成 GitHub Actions 每 15 分鐘抓 26 個 RSS（BBC、Reuters、Bloomberg、中央社…），輸出 GitHub Pages 靜態網站；860+ 篇，0 秒冷啟動
    - 依分類／中英文／來源／關鍵字篩選；預設繁體中文
    - Live: https://boson316.github.io/news/
 
-5. ML 專區（大二課程）
+6. ML 專區（大二課程）
    - 威斯康辛乳腺癌 KNN（K=9）：TN=68 TP=40 FP=3 FN=3，約 94.7%
    - 本頁互動圖：混淆矩陣、Loss/Acc、Feature Importance、相關熱圖、PCA
    - 錨點：#ml-showcase
 
-6. RAG 知識庫聊天：開發中。Gemini + Chroma。沒有 live demo。不要假裝已上線。
+7. RAG 知識庫聊天：開發中。Gemini + Chroma。沒有 live demo。不要假裝已上線。
 
 【連結對照表 — 給 URL 時只准用下列完整網址，禁止猜 repo 名】
 - GPU Lab：https://github.com/boson316/RTX3050-GPU-Mastery（禁止 gpu-lab、GPU-Lab 等不存在 repo）
 - 退休計算機：https://github.com/boson316/niu
+- 13F 持股追蹤：只有 Live https://us-stock-tracker.boson316.workers.dev/ （原始碼不公開，沒有 GitHub 連結）
 - 美食地圖：https://github.com/boson316/food_map_niu_v2（另有 https://github.com/boson316/food_map_ntu_v1 、https://github.com/boson316/food_map_ncu_v1 、https://github.com/boson316/food_map_ccu_v1）· Live 宜大 https://boson316.github.io/food_map_niu_v2/
 - 新聞蒐集：https://github.com/boson316/news · Live https://boson316.github.io/news/
 - 作品集：https://github.com/boson316/portfolio
@@ -124,7 +134,7 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 # 快捷 chip 固定短回覆（不走 LLM，避免冗長）
 QUICK_REPLIES: dict[str, str] = {
     "介紹專案": (
-        "五大作品：GPU Lab、退休計算機、美食地圖、新聞蒐集、ML 專區（→ #projects）。"
+        "六大作品：GPU Lab、退休計算機、13F 持股追蹤、美食地圖、新聞蒐集、ML 專區（→ #projects）。"
         "RAG 開發中。想深入哪個？"
     ),
     "你的 CUDA 專案有哪些亮點？": (
@@ -135,7 +145,7 @@ QUICK_REPLIES: dict[str, str] = {
     ),
     "怎麼聯絡 Boson？": "poboson316@gmail.com，或 #contact。",
     "Introduce your projects": (
-        "Five projects: GPU Lab, retirement calculator, food map, news scraper, ML (→ #projects). "
+        "Six projects: GPU Lab, retirement calculator, 13F tracker, food map, news scraper, ML (→ #projects). "
         "RAG in progress. Which one?"
     ),
     "CUDA project highlights": "RTX 3050 Lab: WMMA 79–87% of cuBLAS, MNIST 98.6%. → #gpu-showcase",

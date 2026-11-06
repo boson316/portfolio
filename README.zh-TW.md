@@ -21,7 +21,7 @@
 |------|------|------|
 | 首頁 | `#hero` | 自我介紹 · **和 AI 聊聊** 按鈕 |
 | 技能 | `#skills` | 六類技能 · Canvas 視覺化（技能 × 專案關係圖、CUDA 網格、標籤球、神經網路），可篩選專案卡片 |
-| 專案精選 | `#projects` | 六張專案卡片（摘要／挑戰／解法／成果） |
+| 專案精選 | `#projects` | 七張專案卡片（摘要／挑戰／解法／成果） |
 | ML 專區 | `#ml-showcase` | 威斯康辛乳腺癌 · KNN ~**94.7%** · 五張 Chart.js 圖表 |
 | GPU 專區 | `#gpu-showcase` | RTX 3050 benchmark — WMMA GEMM 達 cuBLAS **79–87%**、MNIST **98.6%** |
 | 認證 | `#credentials` | AWS AIWave + AI Workshop（lightbox 放大） |
@@ -94,6 +94,7 @@
 |------|------|
 | GPU Optimization Lab | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU 專區](https://boson316.github.io/portfolio/#gpu-showcase) |
 | 年化報酬率／退休規劃計算機 | [計算機 v6](https://boson316.github.io/niu/annual_return_calculator_v6.html#calc) · [退休規劃](https://boson316.github.io/niu/annual_return_calculator_v6.html#retire) · [GitHub](https://github.com/boson316/niu) |
+| 大師 13F 持股追蹤 | [Live](https://us-stock-tracker.boson316.workers.dev/) · [查個股](https://us-stock-tracker.boson316.workers.dev/#stock)（原始碼不公開） |
 | 新聞蒐集系統 | [Live](https://boson316.github.io/news/) · [GitHub](https://github.com/boson316/news) |
 | 校園美食地圖（4 校） | [宜大](https://boson316.github.io/food_map_niu_v2/) · [台大](https://boson316.github.io/food_map_ntu_v1/) · [中央](https://boson316.github.io/food_map_ncu_v1/) · [中正](https://boson316.github.io/food_map_ccu_v1/) · [GitHub](https://github.com/boson316/food_map_niu_v2) |
 | 人工智慧 × 資料科學互動圖表 | [ML 專區](https://boson316.github.io/portfolio/#ml-showcase) |

@@ -5,6 +5,7 @@
   var CALC_URL = isEn
     ? 'https://boson316.github.io/niu/annual_return_calculator_v6.html?lang=en#calc'
     : 'https://boson316.github.io/niu/annual_return_calculator_v6.html#calc';
+  var TRACKER_URL = 'https://us-stock-tracker.boson316.workers.dev/';
   var assetBase = (function () {
     if (typeof window.PORTFOLIO_ASSET_BASE === 'string') {
       var b = window.PORTFOLIO_ASSET_BASE;
@@ -292,13 +293,16 @@
     var lower = text.toLowerCase();
     if (!text) return 'Ask about projects, the return calculator, or contact info.';
     if (lower.includes('hi') || lower.includes('hello')) {
-      return 'Hi, I\'m 小boson. I can walk you through GPU projects, ML charts, the calculator, or how to reach Boson.';
+      return 'Hi, I\'m 小boson. I can walk you through GPU projects, ML charts, the calculator, the 13F tracker, or how to reach Boson.';
     }
     if (lower.includes('project') || lower.includes('portfolio')) {
-      return 'Featured: GPU Optimization Lab, annual return calculator, news aggregator, campus food map (4 campuses), ML charts, and RAG (WIP). Scroll to Selected projects.';
+      return 'Featured: GPU Optimization Lab, annual return calculator, 13F holdings tracker, news aggregator, campus food map (4 campuses), ML charts, and RAG (WIP). Scroll to Selected projects.';
     }
     if (lower.includes('contact') || lower.includes('email')) {
       return 'Email: poboson316@gmail.com';
+    }
+    if (lower.includes('13f') || lower.includes('buffett') || lower.includes('holding') || lower.includes('guru')) {
+      return '13F holdings tracker: 20 investors, 20 quarters, updated daily; stock lookup shows who holds a ticker (Chinese UI). ' + TRACKER_URL;
     }
     if (lower.includes('calculator') || lower.includes('cagr') || lower.includes('irr') || lower.includes('return')) {
       return 'Annual return calculator: ' + CALC_URL;
@@ -326,11 +330,15 @@
     }
 
     if (lower.includes('你好') || lower.includes('嗨') || lower.includes('hi')) {
-      return '你好，我是小boson。可以介紹 GPU Lab、計算機、美食地圖、新聞蒐集、ML 專區，或給聯絡信箱。';
+      return '你好，我是小boson。可以介紹 GPU Lab、計算機、13F 持股追蹤、美食地圖、新聞蒐集、ML 專區，或給聯絡信箱。';
     }
 
     if (lower.includes('專案') || lower.includes('作品') || lower.includes('portfolio')) {
-      return '目前作品包含：GPU Optimization Lab、校園美食地圖（宜大、台大、中央、中正 4 校）、新聞蒐集、年化報酬率計算機與 RAG（開發中）。請捲到「專案精選」查看卡片與連結。';
+      return '目前作品包含：GPU Optimization Lab、年化報酬率計算機、大師 13F 持股追蹤、校園美食地圖（宜大、台大、中央、中正 4 校）、新聞蒐集與 RAG（開發中）。請捲到「專案精選」查看卡片與連結。';
+    }
+
+    if (lower.includes('13f') || lower.includes('持股') || lower.includes('巴菲特') || lower.includes('大師')) {
+      return '大師 13F 持股追蹤：20 位投資人、20 季、每天自動更新，可查某檔股票有哪些大師持有：' + TRACKER_URL;
     }
 
     if (
@@ -349,7 +357,7 @@
       lower.includes('irr') ||
       lower.includes('複利')
     ) {
-      return '複利／退休計算機 v6 在作品集第二張卡片，也可直接開啟：' + CALC_URL;
+      return '複利／退休計算機 v6 在作品集第二張卡片（中英文介面），也可直接開啟：' + CALC_URL;
     }
 
     if (lower.includes('暗黑') || lower.includes('dark') || lower.includes('主題')) {

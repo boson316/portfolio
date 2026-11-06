@@ -34,6 +34,7 @@
   var PROJECTS = [
     { id: 'gpu-lab', label: 'GPU Lab' },
     { id: 'calc', label: isEn ? 'Calculator' : '計算機' },
+    { id: '13f', label: isEn ? '13F Tracker' : '13F 追蹤' },
     { id: 'news', label: isEn ? 'News' : '新聞蒐集' },
     { id: 'food', label: isEn ? 'Food Map' : '美食地圖' },
     { id: 'ml', label: 'ML Demo' },
@@ -43,10 +44,10 @@
   var USES = {
     ai: ['rag', 'ml'],
     gpu: ['gpu-lab', 'ml'],
-    web: ['calc', 'news', 'food', 'ml'],
-    python: ['gpu-lab', 'news', 'food', 'rag', 'ml'],
-    data: ['news', 'food', 'ml'],
-    tools: ['calc', 'ml', 'gpu-lab']
+    web: ['calc', '13f', 'news', 'food', 'ml'],
+    python: ['gpu-lab', '13f', 'news', 'food', 'rag', 'ml'],
+    data: ['13f', 'news', 'food', 'ml'],
+    tools: ['calc', '13f', 'ml', 'gpu-lab']
   };
   var TAGS = {
     ai: ['Gemini', 'Groq', 'Chroma', 'RAG', 'LLM', 'Perxona'],

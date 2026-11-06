@@ -27,6 +27,9 @@ def test_prompt_includes_verifiable_project_facts():
     assert "boson-news-app.onrender.com" not in PROMPT
     assert "94.7%" in PROMPT
     assert "開發中" in PROMPT
+    assert "us-stock-tracker.boson316.workers.dev" in PROMPT
+    assert "github.com/boson316/us-stock-tracker" not in PROMPT  # private repo: live site only
+    assert "?lang=en#calc" in PROMPT
 
 
 def test_prompt_forbids_invention():

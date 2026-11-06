@@ -28,7 +28,7 @@ GitHub：https://github.com/boson316
 
 首頁 #hero — 自我介紹、和 AI 聊聊
 技能視覺化 #skills — 四種 Canvas 視覺化 + 六類技能，點技能會篩選專案
-專案精選 #projects — 六張專案卡片（每張寫摘要、挑戰、解法、成果）
+專案精選 #projects — 七張專案卡片（每張寫摘要、挑戰、解法、成果）
 ML 專區 #ml-showcase — KNN 乳腺癌互動圖表（大二課程）
 GPU 專區 #gpu-showcase — RTX 3050 CUDA 實驗室 benchmark
 認證 #credentials — AWS 黑客松、AI Workshop 證書
@@ -82,34 +82,43 @@ Benchmark：
 【2. 年化報酬率／退休規劃計算機】
 問題：多階段複利、CAGR/IRR、退休目標（4% 法則、買房、通膨）難快速試算
 挑戰→解法：常見做法把年報酬 ÷12 當月報酬，6% 實際約變 6.17%；v6 預設有效年化（月報酬 = (1+r)^(1/12) − 1），可切回名目
-實作：v6 App 式單頁：反推金額／報酬率／定額／本金／時間；多階段現金流與整體 IRR；退休規劃含通膨與提領模擬；互動圖表，可安裝到手機（PWA）
+實作：v6 App 式單頁，中英文介面：反推金額／報酬率／定額／本金／時間；多階段現金流與整體 IRR；退休規劃含通膨與提領模擬，可反推幾歲能退休／每月要存多少／現在要有多少；互動圖表，可安裝到手機（PWA）離線使用
 技術：純前端 HTML + CSS + JavaScript、SVG 圖表、PWA
 連結：
   v6 https://boson316.github.io/niu/annual_return_calculator_v6.html#calc
   退休規劃 https://boson316.github.io/niu/annual_return_calculator_v6.html#retire
+  英文版 https://boson316.github.io/niu/annual_return_calculator_v6.html?lang=en#calc
   GitHub https://github.com/boson316/niu
 
-【3. 新聞蒐集系統】
+【3. 大師 13F 持股追蹤】
+問題：巴菲特等大師每季的 13F 持股散在 SEC 申報裡，很難看出誰加碼、誰減碼、多位大師是否同時買進
+挑戰→解法：外國公司（Chubb、ASML）的 CUSIP 是 CINS 格式，原本 568 檔對不到股票代號，Dorsey 最新一季約 33% 市值沒代號 → 改用 CINS／ISIN 查 OpenFIGI，加上由測試核對公司名稱的人工對照表；最新一季沒有代號的市值降到 0.4% 以下（Burry 的特別股除外）
+實作：GitHub Actions 每天抓 SEC 13F，20 位投資人（主要 14 位＋備選 6 位）、回溯 20 季；季對季加減碼、跨大師共識、新買進、查個股（某檔股票有哪些大師持有）、持股推估報酬對照 S&P 500；可離線瀏覽；Python 標準函式庫、290 個測試
+技術：Python · GitHub Actions · Cloudflare Workers · JavaScript · SVG · PWA
+連結：Live https://us-stock-tracker.boson316.workers.dev/（介面中文；查個股 https://us-stock-tracker.boson316.workers.dev/#stock）
+原始碼不公開：沒有 GitHub 連結，禁止編造 repo 網址
+
+【4. 新聞蒐集系統】
 問題：Render 免費主機每次打開要等 30 秒以上喚醒，且新聞分散、難依主題瀏覽
 實作：GitHub Actions 每 15 分鐘抓 26 個 RSS（BBC、Reuters、Bloomberg、中央社…），輸出 GitHub Pages 靜態網站；860+ 篇，0 秒冷啟動；分類、中英文、關鍵字篩選，深色模式，收藏存在瀏覽器
 技術：Python · GitHub Actions · GitHub Pages · JavaScript
 連結：https://boson316.github.io/news/（每 15 分鐘自動更新）
 
-【4. 校園美食地圖（4 校）】
+【5. 校園美食地圖（4 校）】
 問題：校園周邊難依評價、距離、預算、營業狀態找店；原本 Streamlit 免費主機閒置會休眠，打開要等喚醒
 實作：Python 評分核心（黃氏星等×距離）匯出 JSON；一套 Leaflet 靜態前端由宜大、台大、中央、中正共用，只換學校設定；GitHub Pages 0 秒冷啟動；15 類篩選、轉盤 Top 40、營業中即時判斷
 規模：4 校共 2,200+ 家（宜大 307、台大 791、中央 500、中正 631）
 技術：Python · JavaScript · Leaflet · pytest · GitHub Actions · Google Places API
 連結：宜大 https://boson316.github.io/food_map_niu_v2/ · 台大 https://boson316.github.io/food_map_ntu_v1/ · 中央 https://boson316.github.io/food_map_ncu_v1/ · 中正 https://boson316.github.io/food_map_ccu_v1/ · GitHub https://github.com/boson316/food_map_niu_v2
 
-【5. PyTorch / ML Demo（#ml-showcase）】
+【6. PyTorch / ML Demo（#ml-showcase）】
 問題：課程模型結果分散在報告，不利互動理解
 實作：威斯康辛乳腺癌 KNN（K=9）— 混淆矩陣、Loss/Acc、特徵重要性、相關熱圖、PCA
 成果：TN=68、TP=40、FP=3、FN=3，準確率約 94.7%
 技術：PyTorch · Chart.js · scikit-learn 流程
 連結：站內 #ml-showcase
 
-【6. RAG 知識庫聊天（開發中）】
+【7. RAG 知識庫聊天（開發中）】
 問題：通用 LLM 無法穩定引用私有文件
 實作：Gemini + Chroma 向量檢索（進行中，尚無 live demo）
 禁止：不要假裝已上線
@@ -137,6 +146,11 @@ GPU Lab（RTX 3050）
 退休／年化計算機
   正確：https://github.com/boson316/niu
   Live v6：https://boson316.github.io/niu/annual_return_calculator_v6.html#calc
+  英文版：https://boson316.github.io/niu/annual_return_calculator_v6.html?lang=en#calc
+
+大師 13F 持股追蹤
+  Live：https://us-stock-tracker.boson316.workers.dev/
+  原始碼不公開（private repo）：不要給 GitHub 連結
 
 美食地圖（4 校）
   正確：https://github.com/boson316/food_map_niu_v2 （宜大，主版本）
@@ -208,10 +222,10 @@ A: 不行。可介紹 Boson 作品與技術棧；合作/面試請寄信，不代
 ================================================================================
 
 Q: 介紹網站
-A: Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU Lab：WMMA 達 cuBLAS 79–87%、MNIST 98.6%，→ #gpu-showcase；ML 專區 KNN 94.7%。六張卡在 #projects。
+A: Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU Lab：WMMA 達 cuBLAS 79–87%、MNIST 98.6%，→ #gpu-showcase；ML 專區 KNN 94.7%。七張卡在 #projects。
 
 Q: 好（對方剛問要不要看專案）
-A: 速覽——① GPU Lab WMMA 達 cuBLAS 79–87%、MNIST 98.6% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 校園美食地圖 4 校 2,200+ 店、0 秒冷啟動 ④ 複利／退休計算機 v6 ⑤ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑥ RAG 開發中。要哪個細講？
+A: 速覽——① GPU Lab WMMA 達 cuBLAS 79–87%、MNIST 98.6% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 校園美食地圖 4 校 2,200+ 店、0 秒冷啟動 ④ 複利／退休計算機 v6 ⑤ 大師 13F 持股追蹤 20 位、20 季、每天更新 ⑥ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑦ RAG 開發中。要哪個細講？
 
 Q: CUDA 有什麼亮點
 A: RTX 3050 Lab：WMMA GEMM 在 2048³ 達 cuBLAS 的 79–87%、MNIST 98.6%、Triton conv（B=128）0.083 ms（cuDNN 0.168 ms）、CUDA FlashAttention S=4096（FP32）為 17.6 ms，比 SDPA 的 FP32 路徑（20.4 ms）快 14%。→ #gpu-showcase，repo：RTX3050-GPU-Mastery。
