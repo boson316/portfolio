@@ -138,3 +138,7 @@ python app.py                 # http://127.0.0.1:5000
 ```
 
 Set `window.PORTFOLIO_API_URL = 'http://127.0.0.1:5000'` in browser console, or point `perxona-config.js` at your local API.
+
+## License
+
+The site code is released under the [MIT License](LICENSE). Personal content — the résumé text, photos, certificates in `assets/`, and the 小boson knowledge base — is not covered and may not be reused without permission.
