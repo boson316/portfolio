@@ -34,7 +34,7 @@ Also: **dark mode** (nav toggle), lazy-loaded Chart.js, responsive layout.
 
 **Multimodal AI for Elderly Care** (`#multimodal-research`) is undergraduate research in progress. Boson leads a five-person team, responsible for NLP, system integration, frontend development, and emotion decision algorithms. NVIDIA Jetson AGX Orin is the target edge platform.
 
-The bilingual card presents a conceptual audio/visual → emotion fusion → LLM → response architecture and native HTML **Research Details**. There is no stable public demo. Module-level status is **Unconfirmed** until evidence is supplied; no completed modules, performance metrics, or end-to-end Jetson deployment are claimed. The source is the owner's research brief, not a verified research repository. No medical or clinical outcomes are claimed.
+The bilingual card presents a conceptual audio/visual → emotion fusion → LLM → response architecture and native HTML **Project Details**. There is no stable public demo. Module-level status is **Unconfirmed** until evidence is supplied; no completed modules, performance metrics, or end-to-end Jetson deployment are claimed. The source is the owner's research brief, not a verified research repository. No medical or clinical outcomes are claimed.
 
 Update both `index.html` and `en/index.html` when evidence becomes available. Assign Completed / In Progress / Planned only after confirming each module's status; cite experiment settings and results before publishing metrics. Add only real, available demo/repository links. `skills-viz.js` maps this research to AI / LLM and frontend responsibilities, without implying completed GPU deployment. Styles live in `design.css`; there are no new runtime dependencies or build steps.
 

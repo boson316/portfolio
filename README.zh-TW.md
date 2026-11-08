@@ -34,7 +34,7 @@
 
 **Multimodal AI for Elderly Care**（`#multimodal-research`）為進行中的大學專題研究。Boson 擔任五人團隊的 Team Lead，負責 NLP、系統整合、前端開發與情緒決策演算法；目標邊緣平台為 NVIDIA Jetson AGX Orin。
 
-中英文卡片包含語音／影像 → 情緒融合 → LLM → 回應的概念架構，以及原生 HTML 的 **Research Details** 展開區。目前沒有穩定的公開 Demo；個別模組在提供驗證資料前標示為「待確認」，不宣稱已完成模組、模型指標或 Jetson 端到端部署。內容來源為擁有者提供的研究描述，並非已驗證的研究 Repository，不宣稱醫療或臨床成果。
+中英文卡片包含語音／影像 → 情緒融合 → LLM → 回應的概念架構，以及原生 HTML 的 **專題細節** 展開區。目前沒有穩定的公開 Demo；個別模組在提供驗證資料前標示為「待確認」，不宣稱已完成模組、模型指標或 Jetson 端到端部署。內容來源為擁有者提供的研究描述，並非已驗證的研究 Repository，不宣稱醫療或臨床成果。
 
 後續取得資料時，請同步更新 `index.html` 與 `en/index.html`。逐項確認後才標示 Completed／In Progress／Planned，公布指標時需附實驗設定與結果來源。Demo／Repo 連結只於真實可用時加入。`skills-viz.js` 依研究職責連結 AI / LLM 與前端技能，不表示 GPU 部署已完成。樣式位於 `design.css`，無新增執行期套件或建置步驟。
 
