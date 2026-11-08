@@ -21,13 +21,23 @@ Single-page portfolio (GitHub Pages) with bilingual UI and interactive sections:
 |---------|--------|------------|
 | Hero | `#hero` | Intro + **Chat with AI** CTA |
 | Skills | `#skills` | Six skill categories · Canvas visualizations (skill × project graph, CUDA grid, tag sphere, neural net) that filter the project cards |
-| Projects | `#projects` | Seven project cards (summary / challenge / fix / result) |
+| Projects | `#projects` | Eight project cards: flagship research followed by the existing engineering projects |
 | ML showcase | `#ml-showcase` | Wisconsin breast cancer · KNN ~**94.7%** · five Chart.js charts |
 | GPU showcase | `#gpu-showcase` | RTX 3050 benchmarks — WMMA GEMM **79–87 % of cuBLAS**, MNIST **98.6 %** |
 | Credentials | `#credentials` | AWS AIWave + AI Workshop (lightbox) |
 | Contact | `#contact` | Email + AI assistants |
 
 Also: **dark mode** (nav toggle), lazy-loaded Chart.js, responsive layout.
+
+## Flagship research
+
+**Multimodal AI for Elderly Care** (`#multimodal-research`) is undergraduate research in progress. Boson leads a five-person team, responsible for NLP, system integration, frontend development, and emotion decision algorithms. NVIDIA Jetson AGX Orin is the target edge platform.
+
+The bilingual card presents a conceptual audio/visual → emotion fusion → LLM → response architecture and native HTML **Research Details**. There is no stable public demo. Module-level status is **Unconfirmed** until evidence is supplied; no completed modules, performance metrics, or end-to-end Jetson deployment are claimed. The source is the owner's research brief, not a verified research repository. No medical or clinical outcomes are claimed.
+
+Update both `index.html` and `en/index.html` when evidence becomes available. Assign Completed / In Progress / Planned only after confirming each module's status; cite experiment settings and results before publishing metrics. Add only real, available demo/repository links. `skills-viz.js` maps this research to AI / LLM and frontend responsibilities, without implying completed GPU deployment. Styles live in `design.css`; there are no new runtime dependencies or build steps.
+
+Before merging, review both languages, desktop/tablet/mobile layouts, light/dark themes, keyboard expansion, JavaScript-disabled rendering, skills filtering, existing charts, and relative asset paths. Merge only after owner review, then verify GitHub Pages and both language routes. The digital card and API deployment are unchanged.
 
 ## AI assistants (dual FAB)
 
@@ -92,6 +102,7 @@ Scan or open: <https://boson316.github.io/portfolio/card/> · QR: [`card/qr.png`
 
 | Project | Link |
 |---------|------|
+| Multimodal AI for Elderly Care | Research in progress · `#multimodal-research` (available after merge) |
 | GPU Optimization Lab | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU section](https://boson316.github.io/portfolio/en/#gpu-showcase) |
 | Annual Return Calculator (CAGR / IRR) | [Calculator v6](https://boson316.github.io/niu/annual_return_calculator_v6.html?lang=en#calc) · [Retirement](https://boson316.github.io/niu/annual_return_calculator_v6.html?lang=en#retire) · [中文](https://boson316.github.io/niu/annual_return_calculator_v6.html#calc) · [GitHub](https://github.com/boson316/niu) |
 | Guru 13F Holdings Tracker | [Live](https://us-stock-tracker.boson316.workers.dev/) (Chinese UI) · [Stock lookup](https://us-stock-tracker.boson316.workers.dev/#stock) — source is private |

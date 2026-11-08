@@ -21,13 +21,23 @@
 |------|------|------|
 | 首頁 | `#hero` | 自我介紹 · **和 AI 聊聊** 按鈕 |
 | 技能 | `#skills` | 六類技能 · Canvas 視覺化（技能 × 專案關係圖、CUDA 網格、標籤球、神經網路），可篩選專案卡片 |
-| 專案精選 | `#projects` | 七張專案卡片（摘要／挑戰／解法／成果） |
+| 專案精選 | `#projects` | 八張專案卡片：旗艦研究在前，其後保留既有工程專案 |
 | ML 專區 | `#ml-showcase` | 威斯康辛乳腺癌 · KNN ~**94.7%** · 五張 Chart.js 圖表 |
 | GPU 專區 | `#gpu-showcase` | RTX 3050 benchmark — WMMA GEMM 達 cuBLAS **79–87%**、MNIST **98.6%** |
 | 認證 | `#credentials` | AWS AIWave + AI Workshop（lightbox 放大） |
 | 聯絡 | `#contact` | 信箱 · AI 助手 |
 
 另有：**暗黑模式**（導覽列切換）、Chart.js 延遲載入、RWD 排版。
+
+## 旗艦研究
+
+**Multimodal AI for Elderly Care**（`#multimodal-research`）為進行中的大學專題研究。Boson 擔任五人團隊的 Team Lead，負責 NLP、系統整合、前端開發與情緒決策演算法；目標邊緣平台為 NVIDIA Jetson AGX Orin。
+
+中英文卡片包含語音／影像 → 情緒融合 → LLM → 回應的概念架構，以及原生 HTML 的 **Research Details** 展開區。目前沒有穩定的公開 Demo；個別模組在提供驗證資料前標示為「待確認」，不宣稱已完成模組、模型指標或 Jetson 端到端部署。內容來源為擁有者提供的研究描述，並非已驗證的研究 Repository，不宣稱醫療或臨床成果。
+
+後續取得資料時，請同步更新 `index.html` 與 `en/index.html`。逐項確認後才標示 Completed／In Progress／Planned，公布指標時需附實驗設定與結果來源。Demo／Repo 連結只於真實可用時加入。`skills-viz.js` 依研究職責連結 AI / LLM 與前端技能，不表示 GPU 部署已完成。樣式位於 `design.css`，無新增執行期套件或建置步驟。
+
+合併前需檢查中英文、桌機／平板／手機、明暗主題、鍵盤展開、停用 JavaScript、技能篩選、既有圖表及相對資源路徑。經擁有者審核後才合併，再確認 GitHub Pages 部署與雙語路由。數位名片與 API 部署維持原樣。
 
 ## AI 助手（雙 FAB）
 
@@ -92,6 +102,7 @@
 
 | 專案 | 連結 |
 |------|------|
+| Multimodal AI for Elderly Care | 研究開發中 · `#multimodal-research`（合併後生效） |
 | GPU Optimization Lab | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU 專區](https://boson316.github.io/portfolio/#gpu-showcase) |
 | 年化報酬率／退休規劃計算機 | [計算機 v6](https://boson316.github.io/niu/annual_return_calculator_v6.html#calc) · [退休規劃](https://boson316.github.io/niu/annual_return_calculator_v6.html#retire) · [GitHub](https://github.com/boson316/niu) |
 | 大師 13F 持股追蹤 | [Live](https://us-stock-tracker.boson316.workers.dev/) · [查個股](https://us-stock-tracker.boson316.workers.dev/#stock)（原始碼不公開） |

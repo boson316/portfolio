@@ -32,6 +32,7 @@
     { id: 'tools', label: isEn ? 'Tools' : '工具', color: '#c45c26', kernel: 'ripple_stencil' }
   ];
   var PROJECTS = [
+    { id: 'multimodal', label: isEn ? 'Multimodal AI' : '多模態 AI' },
     { id: 'gpu-lab', label: 'GPU Lab' },
     { id: 'calc', label: isEn ? 'Calculator' : '計算機' },
     { id: '13f', label: isEn ? '13F Tracker' : '13F 追蹤' },
@@ -42,9 +43,9 @@
   ];
   // 技能實際用在哪些專案（依各專案卡片的技術堆疊）
   var USES = {
-    ai: ['rag', 'ml'],
+    ai: ['multimodal', 'rag', 'ml'],
     gpu: ['gpu-lab', 'ml'],
-    web: ['calc', '13f', 'news', 'food', 'ml'],
+    web: ['multimodal', 'calc', '13f', 'news', 'food', 'ml'],
     python: ['gpu-lab', '13f', 'news', 'food', 'rag', 'ml'],
     data: ['13f', 'news', 'food', 'ml'],
     tools: ['calc', '13f', 'ml', 'gpu-lab']

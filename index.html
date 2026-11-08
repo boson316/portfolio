@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boson 作品集｜前端 · AI · GPU/CUDA 專案</title>
-  <meta name="description" content="Boson 的作品集：GPU/CUDA、RAG、新聞蒐集、年化報酬率計算機與大師 13F 持股追蹤。">
+  <meta name="description" content="Boson Huang 的作品集：進行中的長者照護多模態 AI 研究，目標平台 Jetson AGX Orin；另有 CUDA / Triton GPU 優化、ML 互動圖表與金融資料工具。">
   <meta name="keywords" content="GPU, CUDA, RAG, news crawler, annual return calculator, 13F tracker, RTX3050, Taiwan, AI student">
   <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
@@ -68,14 +68,15 @@
           <p class="hero-eyebrow"><span class="dot" aria-hidden="true"></span>資工系大三 · 國立宜蘭大學</p>
           <h1>你好，我是<span class="accent">Boson</span></h1>
           <p class="hero-role">前端 <span>×</span> AI 應用 <span>×</span> GPU / CUDA 最佳化</p>
-          <p class="hero-desc">專注於前端與 AI 應用，打造流暢的使用體驗。寫程式習慣先驗證、再量測——從使用者介面到 CUDA kernel 都一樣。</p>
+          <p class="hero-desc">目前帶領五人團隊，研究長者照護的多模態 AI，負責 NLP、情緒決策、系統整合與前端。研究開發中；也持續以先驗證、再量測的方式打造 CUDA / Triton 與工程作品。</p>
           <div class="hero-btns">
-            <a href="#projects" class="btn btn-primary">看專案<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+            <a href="#multimodal-research" class="btn btn-primary">查看旗艦研究</a>
+            <a href="#projects" class="btn btn-secondary">看專案<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
             <button type="button" class="btn btn-secondary" id="heroChatBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>和 AI 聊聊</button>
             <a href="https://github.com/boson316" class="btn btn-ghost" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
           </div>
           <dl class="hero-stats">
-            <div><dt>WMMA GEMM 對 cuBLAS</dt><dd>79–87%</dd></div><div><dt>MNIST 測試準確率</dt><dd>98.6%</dd></div><div><dt>精選專案</dt><dd>6</dd></div><div><dt>生成式 AI 黑客松完賽</dt><dd>AWS</dd></div>
+            <div><dt>WMMA GEMM 對 cuBLAS</dt><dd>79–87%</dd></div><div><dt>MNIST 測試準確率</dt><dd>98.6%</dd></div><div><dt>精選專案</dt><dd>8</dd></div><div><dt>生成式 AI 黑客松完賽</dt><dd>AWS</dd></div>
           </dl>
         </div>
         <div class="terminal" role="img" aria-label="終端機風格的自我介紹">
@@ -123,12 +124,59 @@
       <div class="container tw-px-responsive">
         <p class="section-eyebrow">02 / projects</p>
         <h2 class="section-title">專案精選</h2>
-        <p class="section-sub">每個專案都寫清楚要解決的問題、怎麼做，以及可以驗證的數字。</p>
+        <p class="section-sub">研究進度與工程成果分別呈現；已完成作品提供可驗證的數據與來源。</p>
         <div class="project-filter" id="projectFilter" hidden>
           <span class="pf-label">篩選</span><span class="pf-skill" id="projectFilterName"></span><span class="pf-count" id="projectFilterCount"></span>
           <button type="button" class="pf-clear" id="projectFilterClear">清除 ✕</button>
         </div>
         <div class="cards tw-grid-cards" id="projectCards">
+          <article id="multimodal-research" data-project="multimodal" class="card research-card" aria-labelledby="research-title">
+            <div class="card-body">
+              <div class="research-header">
+                <span class="card-kicker">旗艦研究專題</span>
+                <span class="research-status">Research in Progress</span>
+                <span class="card-kicker">大學專題研究</span>
+              </div>
+              <h3 id="research-title">Multimodal AI for Elderly Care</h3>
+              <p class="research-subtitle">Speech · Facial Expression · Emotion Fusion · LLM · Edge AI</p>
+              <div class="research-overview">
+                <div>
+                  <p class="research-intro">透過語音與臉部表情訊號進行情緒辨識與融合，結合大型語言模型產生情境化回應，探索邊緣 AI 在長者照護中的互動應用。</p>
+                  <dl class="research-facts">
+                    <div><dt>研究目標</dt><dd>多模態情緒感知與人機互動</dd></div>
+                    <div><dt>目標平台</dt><dd>NVIDIA Jetson AGX Orin</dd></div>
+                    <div><dt>我的角色</dt><dd>五人團隊 Team Lead<span>負責 NLP、系統整合、前端開發與情緒決策演算法。</span></dd></div>
+                    <div><dt>目前進度</dt><dd>研究與開發中；尚無可公開展示的穩定 Demo。</dd></div>
+                  </dl>
+                </div>
+                <figure class="research-architecture" aria-labelledby="research-architecture-title">
+                  <figcaption id="research-architecture-title">概念架構</figcaption>
+                  <div class="research-inputs">
+                    <div class="research-node">語音輸入<span aria-hidden="true">↓</span>語音處理</div>
+                    <div class="research-node">影像輸入<span aria-hidden="true">↓</span>臉部表情辨識</div>
+                  </div>
+                  <div class="research-merge" aria-hidden="true"><span>↓</span><span>↓</span></div>
+                  <div class="research-node research-fusion">情緒融合／決策層</div>
+                  <div class="research-arrow" aria-hidden="true">↓</div>
+                  <div class="research-output"><span>LLM</span><span aria-hidden="true">→</span><span>情境化回應</span></div>
+                  <p class="research-platform">NVIDIA Jetson AGX Orin <span>目標：邊緣部署</span></p>
+                  <p class="research-note">此圖為研究概念架構；各模組與 Jetson 端到端部署狀態仍待驗證。</p>
+                </figure>
+              </div>
+              <details class="research-details">
+                <summary>研究詳細資訊</summary>
+                <div class="research-details-body">
+                  <section aria-labelledby="research-objective"><h4 id="research-objective">研究方向</h4><p>探索多模態情緒辨識、視聽融合、邊緣 AI 部署與長者照護中的人機互動。</p></section>
+                  <section aria-labelledby="research-progress">
+                    <h4 id="research-progress">研究工作與進度</h4><p>整體研究正在進行。以下為目前工作項目；尚未取得逐項驗證資料，因此不宣稱個別模組已完成。</p>
+                    <table class="research-progress"><caption>研究工作與進度</caption><thead><tr><th scope="col">工作項目</th><th scope="col">模組狀態</th></tr></thead><tbody><tr><th scope="row">臉部表情辨識</th><td>待確認</td></tr><tr><th scope="row">語音／音訊處理</th><td>待確認</td></tr><tr><th scope="row">情緒決策邏輯</th><td>待確認</td></tr><tr><th scope="row">LLM 整合</th><td>待確認</td></tr><tr><th scope="row">邊緣部署與系統整合</th><td>待確認</td></tr><tr><th scope="row">模型評估</th><td>待確認</td></tr></tbody></table>
+                  </section>
+                  <section aria-labelledby="research-challenges"><h4 id="research-challenges">目前研究挑戰</h4><ol class="research-challenges"><li>跨資料集泛化：如何降低資料集與實際互動情境之間的分布差異？</li><li>多模態融合策略：語音與表情訊號不一致或缺失時，如何做情緒決策？</li><li>即時邊緣推論：如何在 Jetson 的運算與記憶體限制下平衡回應速度與模型品質？</li><li>端到端系統整合：如何銜接訊號處理、情緒決策與 LLM，並設計可重現的評估流程？</li></ol></section>
+                  <section aria-labelledby="research-evidence"><h4 id="research-evidence">驗證與後續更新</h4><p>目前尚無可引用的模型指標或已驗證部署結果。後續將依實際成果補上實驗設定、評估結果、研究更新及可用的 Demo。</p><p class="research-note">研究範圍為互動式 AI 探索，不宣稱醫療診斷、臨床驗證或照護療效。</p></section>
+                </div>
+              </details>
+            </div>
+          </article>
           <article data-project="gpu-lab" class="card card-featured" style="--card-accent: #76b900;">
             <div class="card-body">
               <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span><span class="card-kicker">GPU · CUDA</span><span class="badge badge-open">開源</span></div><h3>RTX 3050 GPU Optimization Lab</h3><p class="card-metric"><strong>79–87%</strong> cuBLAS · MNIST <strong>98.6%</strong> · 先驗證才計時</p>
