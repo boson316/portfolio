@@ -32,6 +32,7 @@
     { id: 'tools', label: isEn ? 'Tools' : '工具', color: '#c45c26', kernel: 'ripple_stencil' }
   ];
   var PROJECTS = [
+    { id: 'multimodal', label: isEn ? 'Multimodal AI' : '多模態 AI' },
     { id: 'gpu-lab', label: 'GPU Lab' },
     { id: 'calc', label: isEn ? 'Calculator' : '計算機' },
     { id: '13f', label: isEn ? '13F Tracker' : '13F 追蹤' },
@@ -42,9 +43,9 @@
   ];
   // 技能實際用在哪些專案（依各專案卡片的技術堆疊）
   var USES = {
-    ai: ['rag', 'ml'],
+    ai: ['multimodal', 'rag', 'ml'],
     gpu: ['gpu-lab', 'ml'],
-    web: ['calc', '13f', 'news', 'food', 'ml'],
+    web: ['multimodal', 'calc', '13f', 'news', 'food', 'ml'],
     python: ['gpu-lab', '13f', 'news', 'food', 'rag', 'ml'],
     data: ['13f', 'news', 'food', 'ml'],
     tools: ['calc', '13f', 'ml', 'gpu-lab']
@@ -558,11 +559,15 @@
   function selectSkill(id) {
     selected = id;
     if (id && mode === 'cuda') cudaSkill = id;
-    var cards = document.querySelectorAll('#projectCards [data-project]');
+    var cards = document.querySelectorAll('main [data-project]');
     var count = 0;
+    var firstMatch = null;
     cards.forEach(function (card) {
       var match = !id || isLinked(id, card.getAttribute('data-project'));
-      if (id && match) count++;
+      if (id && match) {
+        count++;
+        if (!firstMatch) firstMatch = card;
+      }
       card.classList.toggle('is-dim', !!id && !match);
       card.classList.toggle('is-match', !!id && match);
     });
@@ -578,6 +583,9 @@
     }
     if (filterHint) {
       filterHint.hidden = !id;
+      filterHint.setAttribute('href', firstMatch && firstMatch.id ? '#' + firstMatch.id : '#projects');
+      var direction = filterHint.querySelector('[data-filter-direction]');
+      if (direction) direction.textContent = firstMatch && firstMatch.id === 'multimodal-research' ? '↑' : '↓';
       if (id) filterHint.querySelector('span').textContent = isEn
         ? skillById[id].label + ' is used in ' + count + ' projects'
         : skillById[id].label + ' 用在 ' + count + ' 個專案';
@@ -586,7 +594,7 @@
   }
   if (filterClear) filterClear.addEventListener('click', function () { selectSkill(null); });
   function scrollToProject(id) {
-    var card = document.querySelector('#projectCards [data-project="' + id + '"]');
+    var card = document.querySelector('main [data-project="' + id + '"]');
     if (!card) return;
     card.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
     card.classList.remove('is-flash'); void card.offsetWidth; card.classList.add('is-flash');

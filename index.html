@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boson 作品集｜前端 · AI · GPU/CUDA 專案</title>
-  <meta name="description" content="Boson 的作品集：GPU/CUDA、RAG、新聞蒐集、年化報酬率計算機與大師 13F 持股追蹤。">
+  <meta name="description" content="Boson Huang 的作品集：長者陪伴多模態 AI 大學專題、語音處理、CUDA 與 Triton 實驗，以及金融資料工具。">
   <meta name="keywords" content="GPU, CUDA, RAG, news crawler, annual return calculator, 13F tracker, RTX3050, Taiwan, AI student">
   <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
@@ -35,6 +35,7 @@
       <a href="#" class="logo" aria-label="Boson 作品集首頁"><span class="logo-mark" aria-hidden="true">b/</span><span class="logo-text">Boson</span><span class="logo-sub">/ 作品集</span></a>
       <ul class="nav-links">
         <li><a href="#hero">首頁</a></li>
+        <li><a href="#research">研究</a></li>
         <li><a href="#skills">技能</a></li>
         <li><a href="#projects">專案</a></li>
         <li><a href="#ml-showcase">ML 專區</a></li>
@@ -65,17 +66,18 @@
       <div class="hero-bg" id="heroCanvas" aria-hidden="true"></div>
       <div class="container tw-px-responsive hero-content hero-grid">
         <div class="hero-main">
-          <p class="hero-eyebrow"><span class="dot" aria-hidden="true"></span>資工系大三 · 國立宜蘭大學</p>
+          <p class="hero-eyebrow">國立宜蘭大學資工系大三</p>
           <h1>你好，我是<span class="accent">Boson</span></h1>
-          <p class="hero-role">前端 <span>×</span> AI 應用 <span>×</span> GPU / CUDA 最佳化</p>
-          <p class="hero-desc">專注於前端與 AI 應用，打造流暢的使用體驗。寫程式習慣先驗證、再量測——從使用者介面到 CUDA kernel 都一樣。</p>
+          <p class="hero-role">前端開發、AI 應用與 GPU 最佳化</p>
+          <p class="hero-desc">我和四位組員正在做長者照護相關的多模態 AI 專題。我擔任組長，負責 NLP、情緒判斷、系統整合和前端。其他作品包括 CUDA 與 Triton 實驗，以及金融資料工具。</p>
           <div class="hero-btns">
-            <a href="#projects" class="btn btn-primary">看專案<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+            <a href="#multimodal-research" class="btn btn-primary">看目前的專題</a>
+            <a href="#projects" class="btn btn-secondary">看專案<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
             <button type="button" class="btn btn-secondary" id="heroChatBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>和 AI 聊聊</button>
             <a href="https://github.com/boson316" class="btn btn-ghost" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
           </div>
           <dl class="hero-stats">
-            <div><dt>WMMA GEMM 對 cuBLAS</dt><dd>79–87%</dd></div><div><dt>MNIST 測試準確率</dt><dd>98.6%</dd></div><div><dt>精選專案</dt><dd>6</dd></div><div><dt>生成式 AI 黑客松完賽</dt><dd>AWS</dd></div>
+            <div><dt>WMMA GEMM 對 cuBLAS</dt><dd>79–87%</dd></div><div><dt>MNIST 測試準確率</dt><dd>98.6%</dd></div><div><dt>精選專案</dt><dd>8</dd></div><div><dt>生成式 AI 黑客松完賽</dt><dd>AWS</dd></div>
           </dl>
         </div>
         <div class="terminal" role="img" aria-label="終端機風格的自我介紹">
@@ -85,9 +87,34 @@
       </div>
     </section>
 
+    <section id="research" class="flagship-research" aria-labelledby="flagship-title">
+      <div class="container tw-px-responsive">
+        <p class="section-eyebrow">01 研究</p>
+        <h2 id="flagship-title" class="section-title">目前的專題</h2>
+        <article id="multimodal-research" data-project="multimodal" class="card research-card" aria-labelledby="research-title">
+          <div class="card-body">
+            <div class="research-header">
+              <span class="research-status">Research in Progress</span>
+              <span class="card-kicker">大學專題</span>
+            </div>
+            <h3 id="research-title">Multimodal AI for Elderly Care</h3>
+            <p class="research-intro">我們的大學專題以長者陪伴為方向，希望讓 AI 能參考語音和臉部表情來回應對話。</p>
+            <dl class="research-facts">
+              <div><dt>我的角色</dt><dd>五人團隊的組長<span>我負責 NLP、情緒決策演算法、系統整合和前端。</span></dd></div>
+              <div><dt>目前進度</dt><dd>開發中</dd></div>
+            </dl>
+            <div class="research-metrics" aria-label="語音測試結果">
+              <div class="research-metric"><strong>1.24 → 0.35 秒</strong><h4>語音辨識處理時間</h4><p>5 秒錄音在 10 月 26 日加速前後的比較；162 句中有 157 句的辨識文字相同。</p></div>
+              <div class="research-metric"><strong>2.43 秒</strong><h4>說完話到正式回覆</h4><p>11 月 8 日在 Orin 用錄音測試 16 輪的中位數，以正式回覆開口為準。尚未做長者實測。</p></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section id="skills" class="skills">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">01 / skills</p>
+        <p class="section-eyebrow">02 技能</p>
         <h2 class="section-title">技能與工具</h2>
         <p class="section-sub">左邊可以切換四種視覺化，看每個技能用在哪些專案；點右邊項目看介紹。</p>
         <div class="skills-wrap tw-grid-skills">
@@ -95,7 +122,7 @@
             <div class="viz-tabs" role="tablist" aria-label="視覺化模式"><button type="button" role="tab" data-viz="graph">關係圖</button><button type="button" role="tab" data-viz="cuda">CUDA 網格</button><button type="button" role="tab" data-viz="sphere">標籤球</button><button type="button" role="tab" data-viz="nn">神經網路</button></div>
             <canvas id="skillsViz" role="img" aria-label="技能與專案關係視覺化"></canvas>
             <p class="viz-caption" id="vizCaption"></p>
-            <a class="viz-hint" id="vizHint" href="#projects" hidden><span></span> ↓</a>
+            <a class="viz-hint" id="vizHint" href="#projects" hidden><span></span> <span data-filter-direction aria-hidden="true">↓</span></a>
           </div>
           <ul class="skills-list" id="skillsList" role="list">
             <li data-skill="ai" tabindex="0"><span class="skill-name">AI / RAG / LLM</span><span class="skill-meta">Gemini · Groq · Chroma</span></li>
@@ -121,9 +148,9 @@
 
     <section id="projects" class="projects">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">02 / projects</p>
+        <p class="section-eyebrow">03 專案</p>
         <h2 class="section-title">專案精選</h2>
-        <p class="section-sub">每個專案都寫清楚要解決的問題、怎麼做，以及可以驗證的數字。</p>
+        <p class="section-sub">我做過的工具、實驗和課程作品。</p>
         <div class="project-filter" id="projectFilter" hidden>
           <span class="pf-label">篩選</span><span class="pf-skill" id="projectFilterName"></span><span class="pf-count" id="projectFilterCount"></span>
           <button type="button" class="pf-clear" id="projectFilterClear">清除 ✕</button>
@@ -199,7 +226,7 @@
     <!-- ML 專區：課程報告圖表互動版（KNN 乳腺癌、Loss/Acc、Feature Importance、PCA）-->
     <section id="ml-showcase" class="ml-showcase" aria-labelledby="ml-showcase-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">03 / machine-learning</p>
+        <p class="section-eyebrow">04 機器學習</p>
         <h2 id="ml-showcase-title" class="section-title ml-showcase-title">
           <span class="ml-showcase-badge">大二課程專案</span>
           人工智慧 × 資料科學 — 互動圖表
@@ -266,7 +293,7 @@
     <!-- GPU 專區：CUDA 學習 + RTX 3050 作品集 -->
     <section id="gpu-showcase" class="gpu-showcase" aria-labelledby="gpu-showcase-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">04 / gpu-lab</p>
+        <p class="section-eyebrow">05 GPU 實驗</p>
         <h2 id="gpu-showcase-title" class="section-title gpu-showcase-title">
           <span class="gpu-showcase-badge">自學作品集</span>
           GPU Optimization Lab — RTX 3050 實作
@@ -353,7 +380,7 @@
 
     <section id="credentials" class="credentials" aria-labelledby="credentials-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">05 / credentials</p>
+        <p class="section-eyebrow">06 認證</p>
         <h2 id="credentials-title" class="section-title">認證與戰果</h2>
         <p class="credentials-intro">AWS 與業界聯合頒發，驗證生成式 AI 實戰與工作坊完訓。</p>
         <div class="cert-grid">
@@ -389,7 +416,7 @@
       <div class="container tw-px-responsive">
         <div class="contact-card">
           <div>
-            <p class="section-eyebrow">06 / contact</p>
+            <p class="section-eyebrow">07 聯絡</p>
             <h2 class="section-title">聯絡我</h2>
             <p class="contact-desc">歡迎透過右下角的小boson提問，或寄信到 <a href="mailto:poboson316@gmail.com">poboson316@gmail.com</a> 與我聯繫。</p>
           </div>

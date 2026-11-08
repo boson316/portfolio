@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boson Portfolio | Frontend · AI · GPU/CUDA</title>
-  <meta name="description" content="Boson's portfolio: GPU/CUDA optimization, ML visualizations, news crawler, annual return calculator, and a 13F holdings tracker.">
+  <meta name="description" content="Boson Huang’s portfolio: an undergraduate multimodal AI companionship project, speech processing, CUDA and Triton experiments, and financial data tools.">
   <meta name="keywords" content="GPU, CUDA, RAG, news crawler, annual return calculator, 13F tracker, RTX3050, AI student, portfolio">
   <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
@@ -36,6 +36,7 @@
       <a href="#" class="logo" aria-label="Boson portfolio home"><span class="logo-mark" aria-hidden="true">b/</span><span class="logo-text">Boson</span><span class="logo-sub">/ portfolio</span></a>
       <ul class="nav-links">
         <li><a href="#hero">Home</a></li>
+        <li><a href="#research">Research</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#ml-showcase">ML</a></li>
@@ -66,17 +67,18 @@
       <div class="hero-bg" id="heroCanvas" aria-hidden="true"></div>
       <div class="container tw-px-responsive hero-content hero-grid">
         <div class="hero-main">
-          <p class="hero-eyebrow"><span class="dot" aria-hidden="true"></span>CS junior · National Ilan University</p>
+          <p class="hero-eyebrow">Third-year computer science student at National Ilan University</p>
           <h1>Hi, I'm <span class="accent">Boson</span></h1>
-          <p class="hero-role">Frontend <span>×</span> AI apps <span>×</span> GPU / CUDA optimization</p>
-          <p class="hero-desc">CS junior building frontend, AI apps, and GPU-accelerated tools. I verify first, then measure — from the UI down to CUDA kernels.</p>
+          <p class="hero-role">Frontend development, AI applications, and GPU optimization</p>
+          <p class="hero-desc">I lead a five-person team working on multimodal AI for elderly care. I handle NLP, emotion decisions, system integration, and the frontend. My other projects include CUDA and Triton experiments and financial data tools.</p>
           <div class="hero-btns">
-            <a href="#projects" class="btn btn-primary">View projects<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+            <a href="#multimodal-research" class="btn btn-primary">See my current project</a>
+            <a href="#projects" class="btn btn-secondary">View projects<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
             <button type="button" class="btn btn-secondary" id="heroChatBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>Chat with AI</button>
             <a href="https://github.com/boson316" class="btn btn-ghost" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
           </div>
           <dl class="hero-stats">
-            <div><dt>WMMA GEMM vs cuBLAS</dt><dd>79–87%</dd></div><div><dt>MNIST test accuracy</dt><dd>98.6%</dd></div><div><dt>featured projects</dt><dd>6</dd></div><div><dt>GenAI hackathon finisher</dt><dd>AWS</dd></div>
+            <div><dt>WMMA GEMM vs cuBLAS</dt><dd>79–87%</dd></div><div><dt>MNIST test accuracy</dt><dd>98.6%</dd></div><div><dt>featured projects</dt><dd>8</dd></div><div><dt>GenAI hackathon finisher</dt><dd>AWS</dd></div>
           </dl>
         </div>
         <div class="terminal" role="img" aria-label="Terminal-style introduction">
@@ -86,9 +88,34 @@
       </div>
     </section>
 
+    <section id="research" class="flagship-research" aria-labelledby="flagship-title">
+      <div class="container tw-px-responsive">
+        <p class="section-eyebrow">01 Research</p>
+        <h2 id="flagship-title" class="section-title">Current Project</h2>
+        <article id="multimodal-research" data-project="multimodal" class="card research-card" aria-labelledby="research-title">
+          <div class="card-body">
+            <div class="research-header">
+              <span class="research-status">Research in Progress</span>
+              <span class="card-kicker">Undergraduate Research</span>
+            </div>
+            <h3 id="research-title">Multimodal AI for Elderly Care</h3>
+            <p class="research-intro">Our undergraduate project focuses on AI companionship for older adults. We are working on using speech and facial expressions to guide conversation.</p>
+            <dl class="research-facts">
+              <div><dt>My Role</dt><dd>I lead a team of five.<span>I handle NLP, emotion decision algorithms, system integration, and the frontend.</span></dd></div>
+              <div><dt>Current Progress</dt><dd>In development</dd></div>
+            </dl>
+            <div class="research-metrics" aria-label="Speech Test Results">
+              <div class="research-metric"><strong>1.24 → 0.35 s</strong><h4>Speech Recognition Time</h4><p>Before and after the October 26 optimization, using 5-second audio. Transcripts were unchanged for 157 of 162 utterances.</p></div>
+              <div class="research-metric"><strong>2.43 s</strong><h4>Until the Actual Reply Starts</h4><p>Median of 16 recorded-audio turns on Orin on November 8, measured until the actual reply starts. Not tested with older adults yet.</p></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section id="skills" class="skills">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">01 / skills</p>
+        <p class="section-eyebrow">02 Skills</p>
         <h2 class="section-title">Skills &amp; tools</h2>
         <p class="section-sub">Switch between four visualizations to see where each skill is used; click a skill on the right for details.</p>
         <div class="skills-wrap tw-grid-skills">
@@ -96,7 +123,7 @@
             <div class="viz-tabs" role="tablist" aria-label="Visualization mode"><button type="button" role="tab" data-viz="graph">Graph</button><button type="button" role="tab" data-viz="cuda">CUDA grid</button><button type="button" role="tab" data-viz="sphere">Tag sphere</button><button type="button" role="tab" data-viz="nn">Neural net</button></div>
             <canvas id="skillsViz" role="img" aria-label="Skills and projects visualization"></canvas>
             <p class="viz-caption" id="vizCaption"></p>
-            <a class="viz-hint" id="vizHint" href="#projects" hidden><span></span> ↓</a>
+            <a class="viz-hint" id="vizHint" href="#projects" hidden><span></span> <span data-filter-direction aria-hidden="true">↓</span></a>
           </div>
           <ul class="skills-list" id="skillsList" role="list">
             <li data-skill="ai" tabindex="0"><span class="skill-name">AI / RAG / LLM</span><span class="skill-meta">Gemini · Groq · Chroma</span></li>
@@ -121,9 +148,9 @@
 
     <section id="projects" class="projects">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">02 / projects</p>
+        <p class="section-eyebrow">03 Projects</p>
         <h2 class="section-title">Selected projects</h2>
-        <p class="section-sub">Each project states the problem, the approach, and numbers you can verify.</p>
+        <p class="section-sub">Tools, experiments, and coursework I have worked on.</p>
         <div class="project-filter" id="projectFilter" hidden>
           <span class="pf-label">Filtered by</span><span class="pf-skill" id="projectFilterName"></span><span class="pf-count" id="projectFilterCount"></span>
           <button type="button" class="pf-clear" id="projectFilterClear">Clear ✕</button>
@@ -198,7 +225,7 @@
 
     <section id="ml-showcase" class="ml-showcase" aria-labelledby="ml-showcase-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">03 / machine-learning</p>
+        <p class="section-eyebrow">04 Machine Learning</p>
         <h2 id="ml-showcase-title" class="section-title ml-showcase-title">
           <span class="ml-showcase-badge">Course project</span>
           AI × Data Science — Interactive charts
@@ -252,7 +279,7 @@
 
     <section id="gpu-showcase" class="gpu-showcase" aria-labelledby="gpu-showcase-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">04 / gpu-lab</p>
+        <p class="section-eyebrow">05 GPU Lab</p>
         <h2 id="gpu-showcase-title" class="section-title gpu-showcase-title">
           <span class="gpu-showcase-badge">Self-study</span>
           GPU Optimization Lab — RTX 3050
@@ -335,7 +362,7 @@
 
     <section id="credentials" class="credentials" aria-labelledby="credentials-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">05 / credentials</p>
+        <p class="section-eyebrow">06 Credentials</p>
         <h2 id="credentials-title" class="section-title">Achievements &amp; Credentials</h2>
         <p class="credentials-intro">Industry-validated generative AI hackathon and workshop completion.</p>
         <div class="cert-grid">
@@ -371,7 +398,7 @@
       <div class="container tw-px-responsive">
         <div class="contact-card">
           <div>
-            <p class="section-eyebrow">06 / contact</p>
+            <p class="section-eyebrow">07 Contact</p>
             <h2 class="section-title">Contact</h2>
             <p class="contact-desc">Ask 小boson (bottom-right) anything, or email <a href="mailto:poboson316@gmail.com">poboson316@gmail.com</a>.</p>
           </div>

@@ -20,14 +20,21 @@
 | 區塊 | 錨點 | 重點 |
 |------|------|------|
 | 首頁 | `#hero` | 自我介紹 · **和 AI 聊聊** 按鈕 |
+| 旗艦研究 | `#research` | 首頁介紹後第一個內容區塊：多模態 AI 研究、概念架構與展開資訊 |
 | 技能 | `#skills` | 六類技能 · Canvas 視覺化（技能 × 專案關係圖、CUDA 網格、標籤球、神經網路），可篩選專案卡片 |
-| 專案精選 | `#projects` | 七張專案卡片（摘要／挑戰／解法／成果） |
+| 專案精選 | `#projects` | 七張既有工程專案卡片，GPU Optimization Lab 排第一 |
 | ML 專區 | `#ml-showcase` | 威斯康辛乳腺癌 · KNN ~**94.7%** · 五張 Chart.js 圖表 |
 | GPU 專區 | `#gpu-showcase` | RTX 3050 benchmark — WMMA GEMM 達 cuBLAS **79–87%**、MNIST **98.6%** |
 | 認證 | `#credentials` | AWS AIWave + AI Workshop（lightbox 放大） |
 | 聯絡 | `#contact` | 信箱 · AI 助手 |
 
 另有：**暗黑模式**（導覽列切換）、Chart.js 延遲載入、RWD 排版。
+
+## 目前的專題
+
+首頁介紹後的第一個內容區塊，只介紹五人團隊的 Multimodal AI for Elderly Care 專題、Boson 的分工與「開發中」狀態。保留擁有者提供的兩組語音結果：10 月 26 日，5 秒錄音的辨識處理時間從 **1.24 秒降到 0.35 秒**，162 句中有 157 句辨識文字相同；11 月 8 日在 Orin 用錄音測試 16 輪，正式回覆中位數 **2.43 秒**，以正式回覆開口為準，不是墊檔首聲。尚未做長者實測。
+
+因尚待老師與學長確認公開範圍，目前只放簡介。不要公布模型設定、架構、臉部辨識數據、詳細實驗或展開式專題細節。先給擁有者確認預覽，再直接更新 main。沒有新增執行期套件或建置步驟。
 
 ## AI 助手（雙 FAB）
 
@@ -92,6 +99,7 @@
 
 | 專案 | 連結 |
 |------|------|
+| Multimodal AI for Elderly Care | 研究開發中 · `#multimodal-research`（合併後生效） |
 | GPU Optimization Lab | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU 專區](https://boson316.github.io/portfolio/#gpu-showcase) |
 | 年化報酬率／退休規劃計算機 | [計算機 v6](https://boson316.github.io/niu/annual_return_calculator_v6.html#calc) · [退休規劃](https://boson316.github.io/niu/annual_return_calculator_v6.html#retire) · [GitHub](https://github.com/boson316/niu) |
 | 大師 13F 持股追蹤 | [Live](https://us-stock-tracker.boson316.workers.dev/) · [查個股](https://us-stock-tracker.boson316.workers.dev/#stock)（原始碼不公開） |
