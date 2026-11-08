@@ -30,15 +30,15 @@ Single-page portfolio (GitHub Pages) with bilingual UI and interactive sections:
 
 Also: **dark mode** (nav toggle), lazy-loaded Chart.js, responsive layout.
 
-## Flagship research
+## Current research
 
-**Multimodal AI for Elderly Care** (`#multimodal-research`) is undergraduate research in progress. Boson leads a five-person team, responsible for NLP, system integration, frontend development, and emotion decision algorithms. NVIDIA Jetson AGX Orin is the target edge platform.
+**Multimodal AI for Elderly Care** is the first content section after Hero. Boson leads a five-person team and handles NLP, emotion decisions, integration, and frontend development. The main status stays **In development**. The Orin system is deployed; a human demo has been recorded, but there have been no trials with older adults.
 
-The bilingual card presents a conceptual audio/visual → emotion fusion → LLM → response architecture and native HTML **Project Details**. There is no stable public demo. Module-level status is **Unconfirmed** until evidence is supplied; no completed modules, performance metrics, or end-to-end Jetson deployment are claimed. The source is the owner's research brief, not a verified research repository. No medical or clinical outcomes are claimed.
+The card shows three results from the owner's November 8 progress dashboard: an actual-reply median of **2.43 seconds** over 16 recorded-audio turns, **75.7% FER+ facial accuracy** on 3,154 offline test images with November 8 class biases, and **35 of 40 self-harm intent text cases** detected. It distinguishes filler first audio (1.13 seconds) from the actual reply, reports fear precision alongside recall, and states false flags and test scope in Project Details.
 
-Update both `index.html` and `en/index.html` when evidence becomes available. Assign Completed / In Progress / Planned only after confirming each module's status; cite experiment settings and results before publishing metrics. Add only real, available demo/repository links. `skills-viz.js` maps this research to AI / LLM and frontend responsibilities, without implying completed GPU deployment. Styles live in `design.css`; there are no new runtime dependencies or build steps.
+Model configuration, deployed features, matched latency comparisons, safety text evaluation, and remaining work are in the bilingual pages. [Research source notes](docs/research/2026-11-08.md) record exact conditions, model versions, and limits. These are owner-supplied team results, not an independent rerun. No public code or video link was supplied.
 
-Before merging, review both languages, desktop/tablet/mobile layouts, light/dark themes, keyboard expansion, JavaScript-disabled rendering, skills filtering, existing charts, and relative asset paths. Merge only after owner review, then verify GitHub Pages and both language routes. The digital card and API deployment are unchanged.
+Update both language pages and the source notes when new evidence is available. Do not combine different dates or treat offline facial and text results as real-world elderly performance. Review the PR before merging into main and verify GitHub Pages afterward. No new runtime dependencies or build steps are required.
 
 ## AI assistants (dual FAB)
 

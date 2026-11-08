@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boson Portfolio | Frontend · AI · GPU/CUDA</title>
-  <meta name="description" content="Boson Huang's portfolio: multimodal AI research in progress for elderly care, targeting Jetson AGX Orin, alongside CUDA / Triton optimization, ML visualizations, and financial data tools.">
+  <meta name="description" content="Boson Huang's portfolio: multimodal AI research in progress for elderly care, with a system deployed on Jetson AGX Orin, alongside CUDA and Triton optimization, ML visualizations, and financial data tools.">
   <meta name="keywords" content="GPU, CUDA, RAG, news crawler, annual return calculator, 13F tracker, RTX3050, AI student, portfolio">
   <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
@@ -102,38 +102,45 @@
               <p class="research-subtitle">Combining speech, facial expressions, emotion decisions, and language models for edge AI.</p>
               <div class="research-overview">
                 <div>
-                  <p class="research-intro">We are building an AI system for interacting with older adults. Our goal is to combine speech and facial expressions to estimate emotion, then use that result to guide an LLM’s response.</p>
+                  <p class="research-intro">We are building an AI system for interacting with older adults. It combines facial expressions, tone of voice, and speech content to estimate emotion and guide LLM responses. The system is deployed on Jetson AGX Orin; we are now working on response timing and wording.</p>
                   <dl class="research-facts">
                     <div><dt>Goal</dt><dd>Use speech and expression to guide conversation</dd></div>
-                    <div><dt>Target Platform</dt><dd>NVIDIA Jetson AGX Orin</dd></div>
+                    <div><dt>Platform</dt><dd>NVIDIA Jetson AGX Orin</dd></div>
                     <div><dt>My Role</dt><dd>I lead a team of five.<span>I handle NLP, emotion decision algorithms, system integration, and the frontend.</span></dd></div>
                     <div><dt>Current Progress</dt><dd>In development</dd></div>
                   </dl>
                 </div>
                 <figure class="research-architecture" aria-labelledby="research-architecture-title">
-                  <figcaption id="research-architecture-title">Conceptual Architecture</figcaption>
+                  <figcaption id="research-architecture-title">System Flow</figcaption>
                   <div class="research-inputs">
-                    <div class="research-node">Audio Input<span aria-hidden="true">↓</span>Speech Processing</div>
+                    <div class="research-node">Audio Input<span aria-hidden="true">↓</span>Speech Recognition and Voice Emotion</div>
                     <div class="research-node">Visual Input<span aria-hidden="true">↓</span>Facial Expression Recognition</div>
                   </div>
                   <div class="research-merge" aria-hidden="true"><span>↓</span><span>↓</span></div>
-                  <div class="research-node research-fusion">Emotion Fusion and Decisions</div>
+                  <div class="research-node research-fusion">Fuse Facial, Voice, and Semantic Emotion</div>
                   <div class="research-arrow" aria-hidden="true">↓</div>
                   <div class="research-output"><span>LLM</span><span aria-hidden="true">→</span><span>Conversational Response</span></div>
-                  <p class="research-platform">NVIDIA Jetson AGX Orin <span>Target: Edge Deployment</span></p>
-                  <p class="research-note">Proposed system flow. End-to-end deployment on Jetson is still unverified.</p>
+                  <p class="research-platform">NVIDIA Jetson AGX Orin <span>System deployed</span></p>
+                  <p class="research-note">Updated on November 8 after the November 6 deployment. Tested with recordings; no trials with older adults yet. Crisis phrases take a separate safety path with fixed help responses.</p>
                 </figure>
               </div>
+              <div class="research-metrics" aria-label="Test Results"><div class="research-metric"><strong>2.43 s</strong><h4>Until the actual reply starts</h4><p>Median of 16 recorded-audio turns on Orin on November 8. A filler phrase starts first, at a median of 1.13 seconds.</p></div><div class="research-metric"><strong>75.7%</strong><h4>Facial emotion accuracy</h4><p>3,154 FER+ test images with the November 8 class-bias settings. Measured before facial gates.</p></div><div class="research-metric"><strong>35 of 40</strong><h4>Self-harm intent text cases</h4><p>Rules alone caught 8 cases. This independent text set did not pass through speech recognition.</p></div></div>
               <details class="research-details">
                 <summary>Project Details</summary>
                 <div class="research-details-body">
-                  <section aria-labelledby="research-objective"><h4 id="research-objective">The Problem</h4><p>Speech and facial expressions can suggest different emotions. How should the system handle that disagreement, and how should its decision affect the LLM’s response?</p></section>
-                  <section aria-labelledby="research-progress">
-                    <h4 id="research-progress">Development Work</h4><p>These are our current work items. Individual module status is still unconfirmed.</p>
-                    <table class="research-progress"><caption>Module Progress</caption><thead><tr><th scope="col">Module</th><th scope="col">Module Status</th></tr></thead><tbody><tr><th scope="row">Facial Expression Recognition</th><td>Unconfirmed</td></tr><tr><th scope="row">Speech and Audio Processing</th><td>Unconfirmed</td></tr><tr><th scope="row">Emotion Decision Logic</th><td>Unconfirmed</td></tr><tr><th scope="row">LLM Integration</th><td>Unconfirmed</td></tr><tr><th scope="row">Edge Deployment and System Integration</th><td>Unconfirmed</td></tr><tr><th scope="row">Model Evaluation</th><td>Unconfirmed</td></tr></tbody></table>
-                  </section>
-                  <section aria-labelledby="research-challenges"><h4 id="research-challenges">Open Questions</h4><ol class="research-challenges"><li>Cross-dataset generalization: Do recognition results hold up on different data and in real interactions?</li><li>Emotion fusion: What should happen when speech and expression disagree, or one signal is missing?</li><li>Edge inference: Can the models run fast enough for conversation within Jetson’s memory limits?</li><li>System integration: How do we connect the inputs, emotion decisions, and LLM, then track down delays and errors?</li></ol></section>
-                  <section aria-labelledby="research-evidence"><h4 id="research-evidence">Next Updates</h4><p>Test settings, experiment results, and a demo will be added when ready.</p></section>
+<section aria-labelledby="research-deployment"><h4 id="research-deployment">What Is Running</h4><p>On November 6, we deployed the large-text interface, continuous conversation, and short-response prompts to Orin and recorded our first human demo. On November 8, we reduced repeated wording between fillers and replies and updated subtitle backgrounds and response-length settings. The subtitle update is deployed, but its actual appearance has not been checked.</p><p>Everyday replies use one or two sentences, with more detail when requested. Continuous conversation is deployed; echo and false triggers still need live testing.</p></section>
+<section aria-labelledby="research-progress"><h4 id="research-progress">Models in the System</h4><table class="research-progress research-models"><caption>Configuration as of November 8</caption><thead><tr><th scope="col">Module</th><th scope="col">Model and Method</th></tr></thead><tbody>
+<tr><th scope="row">Speech recognition</th><td>Qwen3-ASR-0.6B with CUDA graph decoding</td></tr>
+<tr><th scope="row">Voice emotion</th><td>MERaLiON-SER-v1 running on GPU</td></tr>
+<tr><th scope="row">Facial emotion</th><td>YuNet face detection, MediaPipe landmarks, and ORSANet large. Equal mixing of original and fine-tuned weights, followed by class biases and gates</td></tr>
+<tr><th scope="row">Emotion fusion</th><td>Confidence-weighted facial, voice, and semantic emotion. Temperatures are not calibrated yet</td></tr>
+<tr><th scope="row">Semantics and dialogue</th><td>Qwen3.6-35B-A3B with AWQ 4-bit quantization and vLLM. Semantic emotion and replies share the model</td></tr>
+<tr><th scope="row">Speech synthesis</th><td>Ming-omni-tts-0.5B with streaming playback; Qwen3-TTS-1.7B as fallback</td></tr>
+</tbody></table></section>
+<section aria-labelledby="research-evaluation"><h4 id="research-evaluation">Reading the Results</h4><p>The actual reply starts at a median of 2.43 seconds, with a 95th percentile of 2.65 seconds. Filler audio starts at 1.13 and 1.24 seconds respectively. There were no audio dropouts in 16 turns, but the gap between filler and reply reached 1.03 seconds. Timing includes 0.8 seconds of ending silence. These are recorded-audio tests; the human demo was not timed turn by turn.</p><p>A matched November 6 test used 24 turns before and 24 after moving the filler earlier. Median first audio fell from 1.48 to 1.27 seconds. The actual reply changed from 2.53 to 2.49 seconds, within measurement error. We do not treat different-day measurements as direct speedups.</p><p>FER+ class biases were selected using validation data only. Test accuracy changed from 73.8% to 75.7%, and neutral recall from 57.8% to 62.7%. Fear precision remains only 35.4%, with 80.2% recall: false positives are still a problem. These are offline results; camera performance after deployment has not been measured.</p></section>
+<section aria-labelledby="research-safety"><h4 id="research-safety">Crisis Phrases and Everyday Conversation</h4><p>Rules run first, followed when needed by model classification into self-harm intent, acute symptoms, or other content. Crisis cases receive fixed help information. On independent text sets, self-harm intent detection rose from 8 to 35 of 40 cases, and acute-symptom detection from 7 to 29 of 30. Rules still incorrectly flagged 6 of 80 everyday statements; the model added no false positives.</p><p>We also fixed routine loneliness being routed to crisis help. In a small Orin test on November 6, none of 15 everyday-mood turns mentioned the help line, while all 12 crisis phrases received the fixed help response. These results do not establish crisis detection in real use with older adults. The system does not automatically notify caregivers.</p></section>
+<section aria-labelledby="research-challenges"><h4 id="research-challenges">What Comes Next</h4><ol class="research-challenges"><li>Other expressions are still mistaken for fear. We plan to evaluate retraining with FER+ annotator vote distributions and obtain older-adult expression data.</li><li>Fusion is connected, but we lack labeled multimodal data. The three confidence temperatures and overall emotion accuracy remain unevaluated.</li><li>Fillers start earlier, but a gap can remain before the reply. Taiwanese-accent speech synthesis is under evaluation and has not replaced the current voice.</li><li>Live tests with older adults and a physical microphone are needed for echo, false wakeups, and turn-taking. Browser microphone input, the full HDMI demonstration, and caregiver notifications are not implemented.</li></ol></section>
+<section aria-labelledby="research-evidence"><h4 id="research-evidence">Sources and Test Scope</h4><p>Figures come from our team’s progress dashboard as of November 8, 2026. Facial results use offline test images, latency mostly uses recordings on Orin, and safety results mostly use text cases. A human demo has been recorded, but there have been no trials with older adults and no older-adult facial test set. No public video or project-code link is provided here yet.</p></section>
                 </div>
               </details>
             </div>

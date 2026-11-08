@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boson 作品集｜前端 · AI · GPU/CUDA 專案</title>
-  <meta name="description" content="Boson Huang 的作品集：進行中的長者照護多模態 AI 研究，目標平台 Jetson AGX Orin；另有 CUDA / Triton GPU 優化、ML 互動圖表與金融資料工具。">
+  <meta name="description" content="Boson Huang 的作品集：進行中的長者照護多模態 AI 研究，系統已部署到 Jetson AGX Orin；另有 CUDA 與 Triton GPU 優化、ML 互動圖表與金融資料工具。">
   <meta name="keywords" content="GPU, CUDA, RAG, news crawler, annual return calculator, 13F tracker, RTX3050, Taiwan, AI student">
   <meta name="theme-color" content="#c45c26" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
@@ -101,38 +101,45 @@
               <p class="research-subtitle">結合語音、臉部表情、情緒判斷與大型語言模型的邊緣 AI 專題</p>
               <div class="research-overview">
                 <div>
-                  <p class="research-intro">我們正在做一個和長者互動的 AI 系統，希望結合語音和臉部表情判斷情緒，再讓 LLM 根據結果回應。</p>
+                  <p class="research-intro">我們正在做一個和長者互動的 AI 系統，結合表情、語氣和說話內容判斷情緒，再讓 LLM 根據結果回應。目前已部署到 Jetson AGX Orin，正在調整對話速度和回覆方式。</p>
                   <dl class="research-facts">
                     <div><dt>想做什麼</dt><dd>讓對話回應參考語音與表情</dd></div>
-                    <div><dt>目標平台</dt><dd>NVIDIA Jetson AGX Orin</dd></div>
+                    <div><dt>運行平台</dt><dd>NVIDIA Jetson AGX Orin</dd></div>
                     <div><dt>我的角色</dt><dd>五人團隊的組長<span>我負責 NLP、情緒決策演算法、系統整合和前端。</span></dd></div>
                     <div><dt>目前進度</dt><dd>開發中</dd></div>
                   </dl>
                 </div>
                 <figure class="research-architecture" aria-labelledby="research-architecture-title">
-                  <figcaption id="research-architecture-title">概念架構</figcaption>
+                  <figcaption id="research-architecture-title">系統流程</figcaption>
                   <div class="research-inputs">
-                    <div class="research-node">語音輸入<span aria-hidden="true">↓</span>語音處理</div>
+                    <div class="research-node">語音輸入<span aria-hidden="true">↓</span>語音辨識與語氣判斷</div>
                     <div class="research-node">影像輸入<span aria-hidden="true">↓</span>臉部表情辨識</div>
                   </div>
                   <div class="research-merge" aria-hidden="true"><span>↓</span><span>↓</span></div>
-                  <div class="research-node research-fusion">情緒融合與決策</div>
+                  <div class="research-node research-fusion">融合表情、語氣和語意</div>
                   <div class="research-arrow" aria-hidden="true">↓</div>
                   <div class="research-output"><span>LLM</span><span aria-hidden="true">→</span><span>對話回應</span></div>
-                  <p class="research-platform">NVIDIA Jetson AGX Orin <span>目標：邊緣部署</span></p>
-                  <p class="research-note">預計的系統流程；Jetson 端到端部署仍待驗證。</p>
+                  <p class="research-platform">NVIDIA Jetson AGX Orin <span>已部署系統</span></p>
+                  <p class="research-note">11 月 6 日部署新版，11 月 8 日更新。已用錄音測試，尚未做長者實測。危機句另外經過安全判斷，改回固定求助資訊。</p>
                 </figure>
               </div>
+              <div class="research-metrics" aria-label="測試結果"><div class="research-metric"><strong>2.43 秒</strong><h4>說完話到正式回覆</h4><p>11 月 8 日在 Orin 用錄音測試 16 輪的中位數。第一個聲音是墊檔短句，中位數為 1.13 秒。</p></div><div class="research-metric"><strong>75.7%</strong><h4>臉部情緒辨識準確率</h4><p>FER+ 測試集共 3,154 張，使用 11 月 8 日的類別偏移設定，結果在臉部閘門前計算。</p></div><div class="research-metric"><strong>40 題答對 35 題</strong><h4>自傷意念文字題</h4><p>加入模型分類前，規則辨識出 8 題。這是獨立文字題組，沒有經過語音辨識。</p></div></div>
               <details class="research-details">
                 <summary>專題細節</summary>
                 <div class="research-details-body">
-                  <section aria-labelledby="research-objective"><h4 id="research-objective">想解決的問題</h4><p>語音和表情不一定會傳達相同的情緒。兩者不一致時，系統該怎麼判斷？這個判斷又該怎麼影響 LLM 的回應？</p></section>
-                  <section aria-labelledby="research-progress">
-                    <h4 id="research-progress">開發項目</h4><p>以下是目前的工作項目，個別模組進度尚待確認。</p>
-                    <table class="research-progress"><caption>模組進度</caption><thead><tr><th scope="col">工作項目</th><th scope="col">模組狀態</th></tr></thead><tbody><tr><th scope="row">臉部表情辨識</th><td>待確認</td></tr><tr><th scope="row">語音與音訊處理</th><td>待確認</td></tr><tr><th scope="row">情緒決策邏輯</th><td>待確認</td></tr><tr><th scope="row">LLM 整合</th><td>待確認</td></tr><tr><th scope="row">邊緣部署與系統整合</th><td>待確認</td></tr><tr><th scope="row">模型評估</th><td>待確認</td></tr></tbody></table>
-                  </section>
-                  <section aria-labelledby="research-challenges"><h4 id="research-challenges">正在處理的問題</h4><ol class="research-challenges"><li>跨資料集泛化：換一批資料或換到實際互動情境，辨識結果是否仍可靠？</li><li>情緒融合：語音和表情判斷不同，或少了一路訊號時，該怎麼取捨？</li><li>邊緣推論：模型放到 Jetson 後，速度和記憶體用量能否支撐即時互動？</li><li>系統整合：怎麼把輸入、情緒判斷和 LLM 串起來，並找出延遲或錯誤出在哪一段？</li></ol></section>
-                  <section aria-labelledby="research-evidence"><h4 id="research-evidence">後續更新</h4><p>測試設定、實驗結果和 Demo 會在完成後補上。</p></section>
+<section aria-labelledby="research-deployment"><h4 id="research-deployment">已經做到哪裡</h4><p>11 月 6 日把長者大字畫面、連續對話和短句提示詞部署到 Orin，也錄了第一支真人 Demo。11 月 8 日再調整墊檔與正式回覆的重複用語，並更新字幕黑底和回覆長度設定。字幕改動已部署，實際畫面還沒確認。</p><p>日常對話目前用一到兩句回覆，要求詳細說明時可以多說一些。連續對話已部署，回音和誤觸發還要用真人測試。</p></section>
+<section aria-labelledby="research-progress"><h4 id="research-progress">系統用的模型</h4><table class="research-progress research-models"><caption>截至 11 月 8 日的設定</caption><thead><tr><th scope="col">模組</th><th scope="col">模型與做法</th></tr></thead><tbody>
+<tr><th scope="row">語音辨識</th><td>Qwen3-ASR-0.6B，使用 CUDA graph 加速解碼</td></tr>
+<tr><th scope="row">語氣情緒</th><td>MERaLiON-SER-v1，在 GPU 執行</td></tr>
+<tr><th scope="row">臉部情緒</th><td>YuNet 找臉，MediaPipe 取特徵點，ORSANet large 判斷表情。新舊權重各取一半混合，再加類別偏移與閘門</td></tr>
+<tr><th scope="row">情緒融合</th><td>依信心加權表情、語氣與語意三種結果。溫度尚未校準</td></tr>
+<tr><th scope="row">語意與對話</th><td>Qwen3.6-35B-A3B，使用 AWQ 四位元量化與 vLLM。語意判斷和回覆共用模型</td></tr>
+<tr><th scope="row">語音合成</th><td>Ming-omni-tts-0.5B，邊合成邊播放；失敗時改用 Qwen3-TTS-1.7B</td></tr>
+</tbody></table></section>
+<section aria-labelledby="research-evaluation"><h4 id="research-evaluation">數字怎麼看</h4><p>正式回覆的 2.43 秒是中位數，P95 為 2.65 秒；墊檔首聲則是 1.13 秒與 1.24 秒。16 輪沒有斷音，但墊檔講完到正式回覆之間，最長仍空白 1.03 秒。計時包含 0.8 秒的結尾靜音。這些數字來自錄音測試，真人 Demo 沒有逐輪量測。</p><p>11 月 6 日在同條件下前後各測 24 輪，把墊檔提前後，首聲中位數從 1.48 秒降到 1.27 秒；正式回覆從 2.53 秒變成 2.49 秒，差異在誤差內。不把不同日期的數字直接當成加速幅度。</p><p>FER+ 的類別偏移只用驗證集挑選。加入偏移後，測試集準確率從 73.8% 變成 75.7%，平靜召回率從 57.8% 變成 62.7%。恐懼的精確率仍只有 35.4%，召回率為 80.2%，誤判還很多。這是離線結果，部署後的鏡頭畫面尚未量測。</p></section>
+<section aria-labelledby="research-safety"><h4 id="research-safety">危機句與日常對話</h4><p>先比對規則，必要時再請模型判斷自傷意念、急症或其他內容，危機句改回固定求助資訊。獨立文字題組中，自傷意念從 40 題辨識出 8 題提高到 35 題；急症從 30 題辨識出 7 題提高到 29 題。80 題日常話仍有 6 題被規則誤攔，模型分類沒有增加誤攔。</p><p>另外修正了「孤單」被當成危機轉介的問題。11 月 6 日的 Orin 小規模測試中，15 輪日常心情沒有再提求助專線，12 句危機說法仍回固定求助句。這些結果不代表真人長者使用時一定能辨識危機；系統目前也不會主動通知照護者。</p></section>
+<section aria-labelledby="research-challenges"><h4 id="research-challenges">接下來要處理的問題</h4><ol class="research-challenges"><li>臉部模型還會把其他表情看成恐懼。下一步評估用 FER+ 的多人投票比例重新訓練，並取得長者表情資料。</li><li>融合已接上，但缺少有標註的多模態資料，三種訊號的信心還沒校準，也還沒量過整體情緒準確率。</li><li>墊檔雖然先出聲，正式回覆前仍可能有空白。台灣口音語音合成正在評估，還沒有更換。</li><li>要做真人長者與實體麥克風測試，確認回音、誤喚醒和對話節奏。瀏覽器麥克風遠端對話、完整 HDMI 展示流程與照護者通知都還沒做。</li></ol></section>
+<section aria-labelledby="research-evidence"><h4 id="research-evidence">資料來源與測試範圍</h4><p>數據來自團隊截至 2026 年 11 月 8 日的專題進度看板。臉部結果來自離線測試集，延遲主要用錄好的語音在 Orin 量測，安全判斷主要用文字題組。已有真人 Demo 影片，但尚未做真人長者實測，也沒有長者臉部測試集。影片與專題程式目前未在這裡提供公開連結。</p></section>
                 </div>
               </details>
             </div>

@@ -267,6 +267,14 @@ body {
 .research-platform span { display: block; color: var(--text-muted); font-size: 0.72rem; margin-top: 0.2rem; }
 .research-card .research-note { font-size: 0.78rem; line-height: 1.65; color: var(--text-muted); margin: 0; }
 .research-details { margin-top: 1.5rem; border-top: 1px dashed var(--border-strong); }
+.research-metrics { display: grid; gap: 0.8rem; margin-top: 1.5rem; }
+.research-metric { min-width: 0; padding: 1rem; background: var(--bg); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); }
+.research-metric strong { display: block; font-family: var(--font-mono); font-size: 1.6rem; color: var(--research-green); line-height: 1.4; }
+.research-metric h4 { margin: 0.4rem 0; font-size: 0.9rem; color: var(--text); }
+.research-card .research-metric p { margin: 0; font-size: 0.78rem; line-height: 1.7; }
+.research-models th:first-child { width: 30%; }
+.research-models td { width: 70%; }
+@media (min-width: 640px) { .research-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .research-details summary { cursor: pointer; padding: 1rem 0; font-weight: 600; font-size: 0.9rem; color: var(--research-green); }
 .research-details summary:hover { text-decoration: underline; }
 .research-details-body { display: grid; gap: 1.5rem; padding: 0.5rem 0; }
