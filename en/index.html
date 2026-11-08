@@ -158,7 +158,7 @@
         <div class="cards tw-grid-cards" id="projectCards">
           <article data-project="gpu-lab" class="card card-featured" style="--card-accent: #76b900;">
             <div class="card-body">
-              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span><span class="card-kicker">GPU · CUDA</span><span class="badge badge-open">Open source</span></div><h3>RTX 3050 GPU Optimization Lab</h3><p class="card-metric"><strong>79–87%</strong> of cuBLAS · MNIST <strong>98.6%</strong> · verified before timed</p>
+              <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span><span class="card-kicker">GPU · CUDA</span><span class="badge badge-open">Open source</span></div><h3>RTX 3050 GPU Optimization Project</h3><p class="card-metric"><strong>79–87%</strong> of cuBLAS · MNIST <strong>98.6%</strong> · verified before timed</p>
               <div class="feature-split"><div><dl class="project-brief"><div><dt>Summary</dt><dd>CUDA and Triton kernels written from scratch on a laptop RTX 3050; every kernel is verified before it is timed, and one command reproduces the run.</dd></div><div class="pb-ch"><dt>Challenge</dt><dd>In v2.0 my own Softmax and LayerNorm only reached 57–67 GB/s, slower than PyTorch.</dd></div><div class="pb-fx"><dt>Fix</dt><dd>One warp per row: each row is read from DRAM once with 128-bit loads → <strong>118 GB/s</strong>, 1–6% faster than PyTorch.</dd></div><div class="pb-rs"><dt>Result</dt><dd>WMMA GEMM at <strong>79–87%</strong> of cuBLAS (2048³); FP16 FlashAttention <strong>26%</strong> faster than SDPA; pytest 129/129. QKV is still 1–10% slower, and the README says so.</dd></div></dl><ul class="chips" aria-label="stack"><li>CUDA 12.4</li><li>PyTorch</li><li>Triton</li><li>C++ Extension</li></ul></div><div class="mini-bench" aria-label="GEMM 2048³ FP16 · throughput vs cuBLAS">
                 <p>GEMM 2048³ FP16 · throughput vs cuBLAS</p>
                 <div class="mb-row"><span>cuBLAS</span><span class="mb-track"><i style="width:100%"></i></span><b>100%</b></div>
@@ -279,13 +279,13 @@
 
     <section id="gpu-showcase" class="gpu-showcase" aria-labelledby="gpu-showcase-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">05 GPU Lab</p>
+        <p class="section-eyebrow">05 GPU Project</p>
         <h2 id="gpu-showcase-title" class="section-title gpu-showcase-title">
           <span class="gpu-showcase-badge">Self-study</span>
-          GPU Optimization Lab — RTX 3050
+          GPU Optimization Project — RTX 3050
         </h2>
         <p class="gpu-showcase-desc">
-          CS junior · An 8-week self-study plan, from vector add, matrix multiply and reduction to a PyTorch MNIST CNN, a CUDA Extension and Triton kernels — all on a 6GB RTX 3050 laptop GPU. Expanded into a full <strong>GPU optimization lab</strong>: FlashAttention, Transformer kernels and roofline analysis, with every kernel verified for correctness before it is timed, reproducible from GitHub.
+          CS junior · A personal project following an 8-week self-study plan, from vector add, matrix multiply and reduction to a PyTorch MNIST CNN, a CUDA Extension and Triton kernels — all on a 6GB RTX 3050 laptop GPU. I later extended this <strong>GPU optimization project</strong> with FlashAttention, Transformer kernels and roofline analysis, with every kernel verified for correctness before it is timed, reproducible from GitHub.
         </p>
         <div class="gpu-stack">
           <span class="gpu-stack-item">CUDA 12.4</span>
@@ -429,7 +429,7 @@
     <div class="chat-messages" id="chatMessages">
       <div class="msg msg-bot">
         <span class="msg-avatar">小B</span>
-        <p>I'm 小boson. Ask about the GPU lab, calculator, food map, news crawler, ML charts, or how to reach Boson.</p>
+        <p>I'm 小boson. Ask about the GPU project, calculator, food map, news crawler, ML charts, or how to reach Boson.</p>
       </div>
     </div>
     <div class="chat-chips" aria-label="Quick prompts">

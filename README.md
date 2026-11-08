@@ -22,7 +22,7 @@ Single-page portfolio (GitHub Pages) with bilingual UI and interactive sections:
 | Hero | `#hero` | Intro + **Chat with AI** CTA |
 | Flagship research | `#research` | First content section after Hero: multimodal AI research, conceptual architecture, and expandable details |
 | Skills | `#skills` | Six skill categories · Canvas visualizations (skill × project graph, CUDA grid, tag sphere, neural net) that filter the project cards |
-| Projects | `#projects` | Seven existing engineering projects, starting with GPU Optimization Lab |
+| Projects | `#projects` | Seven existing engineering projects, starting with GPU Optimization Project |
 | ML showcase | `#ml-showcase` | Wisconsin breast cancer · KNN ~**94.7%** · five Chart.js charts |
 | GPU showcase | `#gpu-showcase` | RTX 3050 benchmarks — WMMA GEMM **79–87 % of cuBLAS**, MNIST **98.6 %** |
 | Credentials | `#credentials` | AWS AIWave + AI Workshop (lightbox) |
@@ -100,7 +100,7 @@ Scan or open: <https://boson316.github.io/portfolio/card/> · QR: [`card/qr.png`
 | Project | Link |
 |---------|------|
 | Multimodal AI for Elderly Care | Research in progress · `#multimodal-research` (available after merge) |
-| GPU Optimization Lab | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU section](https://boson316.github.io/portfolio/en/#gpu-showcase) |
+| GPU Optimization Project | [GitHub](https://github.com/boson316/RTX3050-GPU-Mastery) · [GPU section](https://boson316.github.io/portfolio/en/#gpu-showcase) |
 | Annual Return Calculator (CAGR / IRR) | [Calculator v6](https://boson316.github.io/niu/annual_return_calculator_v6.html?lang=en#calc) · [Retirement](https://boson316.github.io/niu/annual_return_calculator_v6.html?lang=en#retire) · [中文](https://boson316.github.io/niu/annual_return_calculator_v6.html#calc) · [GitHub](https://github.com/boson316/niu) |
 | Guru 13F Holdings Tracker | [Live](https://us-stock-tracker.boson316.workers.dev/) (Chinese UI) · [Stock lookup](https://us-stock-tracker.boson316.workers.dev/#stock) — source is private |
 | News Aggregator | [Live](https://boson316.github.io/news/) · [GitHub](https://github.com/boson316/news) |

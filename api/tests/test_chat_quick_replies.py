@@ -13,7 +13,7 @@ def test_intro_projects_is_short():
     assert reply is not None
     assert len(reply) <= 80
     assert "#projects" in reply
-    assert "GPU Lab" in reply
+    assert "GPU 實作" in reply
 
 
 def test_all_chips_have_replies():

@@ -56,7 +56,7 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 【只根據下列事實回答。沒寫的就說不知道，叫對方寄信。禁止編造實習、獎項、論文、數字。】
 
 專案（依訪客常問順序）：
-1. RTX 3050 GPU Optimization Lab
+1. RTX 3050 GPU Optimization Project
    - 筆電 RTX 3050 6GB（Ampere sm_86）、CUDA 12.4、PyTorch、Triton、C++ Extension
    - WMMA tiled GEMM：2048³ 達 cuBLAS 的 79–87%（6 次）；Triton 14.0 TFLOPS，cuBLAS 14.4 TFLOPS
    - reduction：warp shuffle 比 shared-memory tree 快 1.68×（125 GB/s）
@@ -104,7 +104,7 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 7. RAG 知識庫聊天：開發中。Gemini + Chroma。沒有 live demo。不要假裝已上線。
 
 【連結對照表 — 給 URL 時只准用下列完整網址，禁止猜 repo 名】
-- GPU Lab：https://github.com/boson316/RTX3050-GPU-Mastery（禁止 gpu-lab、GPU-Lab 等不存在 repo）
+- GPU 實作：https://github.com/boson316/RTX3050-GPU-Mastery（禁止 gpu-lab、GPU-Lab 等不存在 repo）
 - 退休計算機：https://github.com/boson316/niu
 - 13F 持股追蹤：只有 Live https://us-stock-tracker.boson316.workers.dev/ （原始碼不公開，沒有 GitHub 連結）
 - 美食地圖：https://github.com/boson316/food_map_niu_v2（另有 https://github.com/boson316/food_map_ntu_v1 、https://github.com/boson316/food_map_ncu_v1 、https://github.com/boson316/food_map_ccu_v1）· Live 宜大 https://boson316.github.io/food_map_niu_v2/
@@ -134,21 +134,21 @@ SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集�
 # 快捷 chip 固定短回覆（不走 LLM，避免冗長）
 QUICK_REPLIES: dict[str, str] = {
     "介紹專案": (
-        "六大作品：GPU Lab、退休計算機、13F 持股追蹤、美食地圖、新聞蒐集、ML 專區（→ #projects）。"
+        "六大作品：GPU 實作、退休計算機、13F 持股追蹤、美食地圖、新聞蒐集、ML 專區（→ #projects）。"
         "RAG 開發中。想深入哪個？"
     ),
     "你的 CUDA 專案有哪些亮點？": (
-        "RTX 3050 Lab：WMMA 達 cuBLAS 79–87%、MNIST 98.6%。→ #gpu-showcase"
+        "RTX 3050 實作：WMMA 達 cuBLAS 79–87%、MNIST 98.6%。→ #gpu-showcase"
     ),
     "你的 ML 專區有哪些內容？": (
         "KNN（K=9）約 94.7%，五張互動圖。→ #ml-showcase"
     ),
     "怎麼聯絡 Boson？": "poboson316@gmail.com，或 #contact。",
     "Introduce your projects": (
-        "Six projects: GPU Lab, retirement calculator, 13F tracker, food map, news scraper, ML (→ #projects). "
+        "Six projects: GPU project, retirement calculator, 13F tracker, food map, news scraper, ML (→ #projects). "
         "RAG in progress. Which one?"
     ),
-    "CUDA project highlights": "RTX 3050 Lab: WMMA 79–87% of cuBLAS, MNIST 98.6%. → #gpu-showcase",
+    "CUDA project highlights": "RTX 3050 project: WMMA 79–87% of cuBLAS, MNIST 98.6%. → #gpu-showcase",
     "What is in the ML section?": "Breast cancer KNN ~94.7%, five interactive charts. → #ml-showcase",
     "How can I contact Boson?": "Email poboson316@gmail.com or #contact.",
 }

@@ -30,7 +30,7 @@ GitHub：https://github.com/boson316
 技能視覺化 #skills — 四種 Canvas 視覺化 + 六類技能，點技能會篩選專案
 專案精選 #projects — 七張專案卡片（每張寫摘要、挑戰、解法、成果）
 ML 專區 #ml-showcase — KNN 乳腺癌互動圖表（大二課程）
-GPU 專區 #gpu-showcase — RTX 3050 CUDA 實驗室 benchmark
+GPU 專區 #gpu-showcase — RTX 3050 CUDA 個人實作 benchmark
 認證 #credentials — AWS 黑客松、AI Workshop 證書
 聯絡 #contact — 信箱與小boson
 
@@ -44,7 +44,7 @@ GPU 專區 #gpu-showcase — RTX 3050 CUDA 實驗室 benchmark
 RAG 知識庫問答（Gemini、Groq API、Chroma 向量庫）。Perxona 3D avatar、Groq 文字聊天整合。即時視覺與邊緣管線經驗。
 
 【GPU / CUDA / Triton】
-RTX 3050 GPU 優化實驗室：Pure CUDA（WMMA GEMM 達 cuBLAS 79–87%）、PyTorch Extension、Triton kernels、FlashAttention、Transformer kernels。Nsight、Roofline 分析、一鍵重現。
+RTX 3050 GPU 優化實作：Pure CUDA（WMMA GEMM 達 cuBLAS 79–87%）、PyTorch Extension、Triton kernels、FlashAttention、Transformer kernels。Nsight、Roofline 分析、一鍵重現。
 
 【前端 / RWD】
 響應式網頁、Tailwind 風格 utility、Lighthouse 優化。互動 UI、暗黑模式、無障礙。
@@ -62,7 +62,7 @@ RSS 與網頁爬蟲、新聞蒐集與篩選、資料清洗供 API 使用。
 專案詳細（#projects）
 ================================================================================
 
-【1. RTX 3050 GPU Optimization Lab】
+【1. RTX 3050 GPU Optimization Project】
 問題：筆電 GPU 效能與 kernel 難以系統化驗證
 實作：8 週自學路線，先驗證才計時；WMMA GEMM 達 cuBLAS 79–87%（2048³）、MNIST 98.6%、CUDA Extension、Triton、FlashAttention
 技術：CUDA 12.4 · PyTorch · Triton · C++ Extension
@@ -139,7 +139,7 @@ AI Workshop Completion Certificate
 GitHub / Live 連結對照表（給連結時只准用這張表）
 ================================================================================
 
-GPU Lab（RTX 3050）
+GPU 實作（RTX 3050）
   正確：https://github.com/boson316/RTX3050-GPU-Mastery
   禁止編造：gpu-lab、GPU-Lab、RTX3050_GPU（這些 repo 不存在）
 
@@ -169,7 +169,7 @@ GPU Lab（RTX 3050）
 連結規則（必守）：
 - 訪客要連結 → 貼完整 https:// URL；不可只說「GitHub 專案連結」而不給網址
 - 禁止猜 repo 名稱；表上沒有的 URL 不要給
-- GPU Lab 別名「RTX 3050 GPU Optimization Lab」，repo 全名 RTX3050-GPU-Mastery
+- GPU 實作 別名「RTX 3050 GPU Optimization Project」，repo 全名 RTX3050-GPU-Mastery
 
 ================================================================================
 常見問答
@@ -185,7 +185,7 @@ Q: 怎麼聯絡 Boson？
 A: poboson316@gmail.com，或捲到 #contact。
 
 Q: MediaPipe / 邊緣人臉管線？
-A: 已下架。改推 GPU Lab 與 ML 專區。
+A: 已下架。改推 GPU 實作 與 ML 專區。
 
 Q: 可以幫寫作業或面試答案嗎？
 A: 不行。可介紹 Boson 作品與技術棧；合作/面試請寄信，不代答檔期或薪資。
@@ -222,16 +222,16 @@ A: 不行。可介紹 Boson 作品與技術棧；合作/面試請寄信，不代
 ================================================================================
 
 Q: 介紹網站
-A: Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU Lab：WMMA 達 cuBLAS 79–87%、MNIST 98.6%，→ #gpu-showcase；ML 專區 KNN 94.7%。七張卡在 #projects。
+A: Boson 宜大資工作品集，主打 GPU/CUDA、ML、前端。旗艦 GPU 實作：WMMA 達 cuBLAS 79–87%、MNIST 98.6%，→ #gpu-showcase；ML 專區 KNN 94.7%。七張卡在 #projects。
 
 Q: 好（對方剛問要不要看專案）
-A: 速覽——① GPU Lab WMMA 達 cuBLAS 79–87%、MNIST 98.6% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 校園美食地圖 4 校 2,200+ 店、0 秒冷啟動 ④ 複利／退休計算機 v6 ⑤ 大師 13F 持股追蹤 20 位、20 季、每天更新 ⑥ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑦ RAG 開發中。要哪個細講？
+A: 速覽——① GPU 實作 WMMA 達 cuBLAS 79–87%、MNIST 98.6% → #gpu-showcase ② ML KNN 94.7% 五圖 → #ml-showcase ③ 校園美食地圖 4 校 2,200+ 店、0 秒冷啟動 ④ 複利／退休計算機 v6 ⑤ 大師 13F 持股追蹤 20 位、20 季、每天更新 ⑥ 新聞蒐集 26 個 RSS、0 秒冷啟動 ⑦ RAG 開發中。要哪個細講？
 
 Q: CUDA 有什麼亮點
-A: RTX 3050 Lab：WMMA GEMM 在 2048³ 達 cuBLAS 的 79–87%、MNIST 98.6%、Triton conv（B=128）0.083 ms（cuDNN 0.168 ms）、CUDA FlashAttention S=4096（FP32）為 17.6 ms，比 SDPA 的 FP32 路徑（20.4 ms）快 14%。→ #gpu-showcase，repo：RTX3050-GPU-Mastery。
+A: RTX 3050 實作：WMMA GEMM 在 2048³ 達 cuBLAS 的 79–87%、MNIST 98.6%、Triton conv（B=128）0.083 ms（cuDNN 0.168 ms）、CUDA FlashAttention S=4096（FP32）為 17.6 ms，比 SDPA 的 FP32 路徑（20.4 ms）快 14%。→ #gpu-showcase，repo：RTX3050-GPU-Mastery。
 
 Q: https://boson316.github.io/portfolio/#projects
-A: 你已在 #projects。建議先看 GPU Lab（WMMA 達 cuBLAS 79–87%）和 ML 專區（94.7%）；卡片可點 GitHub 或 live demo。
+A: 你已在 #projects。建議先看 GPU 實作（WMMA 達 cuBLAS 79–87%）和 ML 專區（94.7%）；卡片可點 GitHub 或 live demo。
 
-Q: 查看連結 / GPU Lab 連結
-A: GPU Lab GitHub：https://github.com/boson316/RTX3050-GPU-Mastery · 站內 #gpu-showcase。ML 無獨立 repo，→ #ml-showcase。
+Q: 查看連結 / GPU 實作 連結
+A: GPU 實作 GitHub：https://github.com/boson316/RTX3050-GPU-Mastery · 站內 #gpu-showcase。ML 無獨立 repo，→ #ml-showcase。

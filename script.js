@@ -78,7 +78,7 @@
     },
     gpu: {
       title: 'GPU / CUDA / Triton',
-      desc: 'RTX 3050 GPU lab: pure CUDA (WMMA GEMM at 79–87% of cuBLAS), PyTorch Extension, Triton, FlashAttention, Transformer kernels; Nsight/Roofline and one-command reproduction.',
+      desc: 'RTX 3050 GPU project: pure CUDA (WMMA GEMM at 79–87% of cuBLAS), PyTorch Extension, Triton, FlashAttention, Transformer kernels; Nsight/Roofline and one-command reproduction.',
       stack: ['CUDA 12.4', 'WMMA', 'Triton', 'PyTorch Extension', 'FlashAttention', 'Nsight']
     },
     web: {
@@ -109,7 +109,7 @@
     },
     gpu: {
       title: 'GPU / CUDA / Triton',
-      desc: 'RTX 3050 GPU 優化實驗室：Pure CUDA（WMMA GEMM 達 cuBLAS 79–87%）、PyTorch Extension、Triton kernels、FlashAttention、Transformer kernels；含 Nsight 與 Roofline 分析、逐步教學與一鍵重現。',
+      desc: 'RTX 3050 GPU 優化實作：Pure CUDA（WMMA GEMM 達 cuBLAS 79–87%）、PyTorch Extension、Triton kernels、FlashAttention、Transformer kernels；含 Nsight 與 Roofline 分析、逐步教學與一鍵重現。',
       stack: ['CUDA 12.4', 'WMMA', 'Triton', 'PyTorch Extension', 'FlashAttention', 'Nsight']
     },
     web: {
@@ -296,7 +296,7 @@
       return 'Hi, I\'m 小boson. I can walk you through GPU projects, ML charts, the calculator, the 13F tracker, or how to reach Boson.';
     }
     if (lower.includes('project') || lower.includes('portfolio')) {
-      return 'Featured: GPU Optimization Lab, annual return calculator, 13F holdings tracker, news aggregator, campus food map (4 campuses), ML charts, and RAG (WIP). Scroll to Selected projects.';
+      return 'Featured: GPU Optimization Project, annual return calculator, 13F holdings tracker, news aggregator, campus food map (4 campuses), ML charts, and RAG (WIP). Scroll to Selected projects.';
     }
     if (lower.includes('contact') || lower.includes('email')) {
       return 'Email: poboson316@gmail.com';
@@ -311,7 +311,7 @@
       return 'Use the ☀/🌙 button in the nav to toggle light/dark mode.';
     }
     if (lower.includes('cuda') || lower.includes('gpu') || lower.includes('pytorch')) {
-      return 'See the GPU Optimization Lab — WMMA GEMM at 79–87% of cuBLAS, MNIST 98.6%, Triton, FlashAttention. GitHub: https://github.com/boson316/RTX3050-GPU-Mastery';
+      return 'See the GPU Optimization Project — WMMA GEMM at 79–87% of cuBLAS, MNIST 98.6%, Triton, FlashAttention. GitHub: https://github.com/boson316/RTX3050-GPU-Mastery';
     }
     if (lower.includes('ml') || lower.includes('knn') || lower.includes('confusion') || lower.includes('pca')) {
       return 'ML section: Wisconsin breast cancer KNN (~94.7% acc), confusion matrix, loss/acc curves, feature importance, PCA.';
@@ -330,11 +330,11 @@
     }
 
     if (lower.includes('你好') || lower.includes('嗨') || lower.includes('hi')) {
-      return '你好，我是小boson。可以介紹 GPU Lab、計算機、13F 持股追蹤、美食地圖、新聞蒐集、ML 專區，或給聯絡信箱。';
+      return '你好，我是小boson。可以介紹 GPU 實作、計算機、13F 持股追蹤、美食地圖、新聞蒐集、ML 專區，或給聯絡信箱。';
     }
 
     if (lower.includes('專案') || lower.includes('作品') || lower.includes('portfolio')) {
-      return '目前作品包含：GPU Optimization Lab、年化報酬率計算機、大師 13F 持股追蹤、校園美食地圖（宜大、台大、中央、中正 4 校）、新聞蒐集與 RAG（開發中）。請捲到「專案精選」查看卡片與連結。';
+      return '目前作品包含：GPU Optimization Project、年化報酬率計算機、大師 13F 持股追蹤、校園美食地圖（宜大、台大、中央、中正 4 校）、新聞蒐集與 RAG（開發中）。請捲到「專案精選」查看卡片與連結。';
     }
 
     if (lower.includes('13f') || lower.includes('持股') || lower.includes('巴菲特') || lower.includes('大師')) {
@@ -372,7 +372,7 @@
     }
 
     if (lower.includes('cuda') || lower.includes('gpu') || lower.includes('pytorch')) {
-      return 'GPU Optimization Lab：WMMA GEMM 達 cuBLAS 79–87%、MNIST 98.6%。GitHub：https://github.com/boson316/RTX3050-GPU-Mastery — 本頁 #gpu-showcase。';
+      return 'GPU Optimization Project：WMMA GEMM 達 cuBLAS 79–87%、MNIST 98.6%。GitHub：https://github.com/boson316/RTX3050-GPU-Mastery — 本頁 #gpu-showcase。';
     }
 
     if (

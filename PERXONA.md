@@ -448,7 +448,7 @@ git push origin main
 
 ```
 直接回答，用知識庫裡的專案名、數字、錨點、連結。
-問題模糊時：先給 30 秒速覽（GPU Lab WMMA 達 cuBLAS 79–87%、ML 94.7%、美食地圖、退休計算機、新聞、RAG 開發中），末尾最多問一次偏好。
+問題模糊時：先給 30 秒速覽（GPU 實作 WMMA 達 cuBLAS 79–87%、ML 94.7%、美食地圖、退休計算機、新聞、RAG 開發中），末尾最多問一次偏好。
 禁止：只回「您想從哪個專案開始」而沒列任何專案。
 引導至 #projects、#gpu-showcase、#ml-showcase、#skills。
 ```
@@ -457,7 +457,7 @@ git push origin main
 
 ```
 目標：說明單一專案的背景、技術選型、量化成果（cuBLAS 79–87%、94.7%、98.6% 等）。
-DO：履歷用語、benchmark、GitHub/live 連結、技能對應（CUDA→GPU Lab、KNN→ML 專區）。
+DO：履歷用語、benchmark、GitHub/live 連結、技能對應（CUDA→GPU 實作、KNN→ML 專區）。
 DON'T：不做「品牌／敘事優化顧問」、不幫寫 code、不代做 server、不答政治/作業。
 ```
 
@@ -479,7 +479,7 @@ DON'T：不做「品牌／敘事優化顧問」、不幫寫 code、不代做 ser
 **建議開場白（貼 Greeting 欄，不是指令 DO）：**
 
 ```
-嗨，我是小boson，Boson 作品集的 3D 導覽。GPU Lab WMMA 達 cuBLAS 79–87%、ML 94.7% 都在站上——想先看哪塊？
+嗨，我是小boson，Boson 作品集的 3D 導覽。GPU 實作 WMMA 達 cuBLAS 79–87%、ML 94.7% 都在站上——想先看哪塊？
 ```
 
 若 Preview 仍出現英文 *personal brand narrative* → Agent 建立時的預設 Greeting 未改；DO 區寫「開場白：…」**通常不會**覆蓋獨立 Greeting 欄。
@@ -490,7 +490,7 @@ DON'T：不做「品牌／敘事優化顧問」、不幫寫 code、不代做 ser
 
 | 專案 | 正確 GitHub | 禁止編造 |
 |------|-------------|----------|
-| GPU Lab | https://github.com/boson316/RTX3050-GPU-Mastery | gpu-lab、GPU-Lab |
+| GPU 實作 | https://github.com/boson316/RTX3050-GPU-Mastery | gpu-lab、GPU-Lab |
 | 退休計算機 | https://github.com/boson316/niu | — |
 | 美食地圖 | https://github.com/boson316/food_map_niu_v2（另有 food_map_ntu_v1、food_map_ncu_v1、food_map_ccu_v1） | — |
 | 作品集 | https://github.com/boson316/portfolio | — |
@@ -500,7 +500,7 @@ DON'T：不做「品牌／敘事優化顧問」、不幫寫 code、不代做 ser
 Storyboard 指令可再加一句：
 
 ```
-給 GitHub 連結時只用知識庫連結對照表；GPU Lab 只能是 https://github.com/boson316/RTX3050-GPU-Mastery，禁止 gpu-lab。
+給 GitHub 連結時只用知識庫連結對照表；GPU 實作 只能是 https://github.com/boson316/RTX3050-GPU-Mastery，禁止 gpu-lab。
 ```
 
 ### 精簡 Prompt（知識庫太長時備用）
@@ -513,7 +513,7 @@ Storyboard 指令可再加一句：
 聯絡：poboson316@gmail.com
 
 專案：
-1. GPU Lab — WMMA 達 cuBLAS 79–87%、MNIST 98.6% — github.com/boson316/RTX3050-GPU-Mastery
+1. GPU 實作 — WMMA 達 cuBLAS 79–87%、MNIST 98.6% — github.com/boson316/RTX3050-GPU-Mastery
 2. 複利／退休計算機 v6 — boson316.github.io/niu/annual_return_calculator_v6.html#calc
 3. 校園美食地圖（4 校）— boson316.github.io/food_map_niu_v2（宜大）· food_map_ntu_v1（台大）· food_map_ncu_v1（中央）· food_map_ccu_v1（中正）
 4. 新聞蒐集 — boson316.github.io/news
@@ -529,7 +529,7 @@ Storyboard 指令可再加一句：
 
 | 訪客常問 | 知識庫章節 | 站內錨點 |
 |----------|------------|----------|
-| CUDA 亮點 | GPU Lab benchmark | #gpu-showcase |
+| CUDA 亮點 | GPU 實作 benchmark | #gpu-showcase |
 | ML 內容 | KNN 94.7% 五圖 | #ml-showcase |
 | 技能 | 六類 skillData | #skills |
 | 聯絡 | poboson316@gmail.com | #contact |
@@ -978,7 +978,7 @@ C 層 CDN        cdn.perxona.ai native.zip  → 無檔案（import.zip 200）  �
 |------|------|
 | 能介紹網站／專案／cuBLAS 79–87%／98.6% | ✅ 尚可 |
 | 語氣仍偏「數位助理／品牌」 | ⚠️ Storyboard 舊模板 + Greeting 英文 |
-| GPU Lab GitHub | ❌ 曾給 `gpu-lab` → 知識庫已禁；**重傳後再測** |
+| GPU 實作 GitHub | ❌ 曾給 `gpu-lab` → 知識庫已禁；**重傳後再測** |
 | ML 專區 | 站內 #ml-showcase，**無獨立 GitHub repo** |
 
 ### F. 403 / CDN 四層（最終）
@@ -997,7 +997,7 @@ D   Live 載入       5–15s 3D 資源                → 我們 v14 預載；�
 - [ ] `<head>` 有 `preconnect` → `live.perxona.ai`
 - [ ] 進站 10s 再按 3D → 比立刻按更快（預載生效）
 - [ ] 按 3D 立刻見 **載入殼**（非全白 panel）
-- [ ] 💬「GPU Lab 連結」→ `RTX3050-GPU-Mastery` 完整 URL
+- [ ] 💬「GPU 實作 連結」→ `RTX3050-GPU-Mastery` 完整 URL
 - [ ] 3D 同題 → 重傳知識庫 + publish 後一致
 - [ ] Preview 第一句 → 繁中 Greeting（非 brand narrative）
 - [ ] Render health：`https://perxona.onrender.com/api/health`

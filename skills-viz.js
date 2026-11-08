@@ -33,7 +33,7 @@
   ];
   var PROJECTS = [
     { id: 'multimodal', label: isEn ? 'Multimodal AI' : '多模態 AI' },
-    { id: 'gpu-lab', label: 'GPU Lab' },
+    { id: 'gpu-lab', label: 'GPU 實作' },
     { id: 'calc', label: isEn ? 'Calculator' : '計算機' },
     { id: '13f', label: isEn ? '13F Tracker' : '13F 追蹤' },
     { id: 'news', label: isEn ? 'News' : '新聞蒐集' },
