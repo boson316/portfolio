@@ -20,8 +20,9 @@
 | 區塊 | 錨點 | 重點 |
 |------|------|------|
 | 首頁 | `#hero` | 自我介紹 · **和 AI 聊聊** 按鈕 |
+| 旗艦研究 | `#research` | 首頁介紹後第一個內容區塊：多模態 AI 研究、概念架構與展開資訊 |
 | 技能 | `#skills` | 六類技能 · Canvas 視覺化（技能 × 專案關係圖、CUDA 網格、標籤球、神經網路），可篩選專案卡片 |
-| 專案精選 | `#projects` | 八張專案卡片：旗艦研究在前，其後保留既有工程專案 |
+| 專案精選 | `#projects` | 七張既有工程專案卡片，GPU Optimization Lab 排第一 |
 | ML 專區 | `#ml-showcase` | 威斯康辛乳腺癌 · KNN ~**94.7%** · 五張 Chart.js 圖表 |
 | GPU 專區 | `#gpu-showcase` | RTX 3050 benchmark — WMMA GEMM 達 cuBLAS **79–87%**、MNIST **98.6%** |
 | 認證 | `#credentials` | AWS AIWave + AI Workshop（lightbox 放大） |

@@ -559,11 +559,15 @@
   function selectSkill(id) {
     selected = id;
     if (id && mode === 'cuda') cudaSkill = id;
-    var cards = document.querySelectorAll('#projectCards [data-project]');
+    var cards = document.querySelectorAll('main [data-project]');
     var count = 0;
+    var firstMatch = null;
     cards.forEach(function (card) {
       var match = !id || isLinked(id, card.getAttribute('data-project'));
-      if (id && match) count++;
+      if (id && match) {
+        count++;
+        if (!firstMatch) firstMatch = card;
+      }
       card.classList.toggle('is-dim', !!id && !match);
       card.classList.toggle('is-match', !!id && match);
     });
@@ -579,6 +583,9 @@
     }
     if (filterHint) {
       filterHint.hidden = !id;
+      filterHint.setAttribute('href', firstMatch && firstMatch.id ? '#' + firstMatch.id : '#projects');
+      var direction = filterHint.querySelector('[data-filter-direction]');
+      if (direction) direction.textContent = firstMatch && firstMatch.id === 'multimodal-research' ? '↑' : '↓';
       if (id) filterHint.querySelector('span').textContent = isEn
         ? skillById[id].label + ' is used in ' + count + ' projects'
         : skillById[id].label + ' 用在 ' + count + ' 個專案';
@@ -587,7 +594,7 @@
   }
   if (filterClear) filterClear.addEventListener('click', function () { selectSkill(null); });
   function scrollToProject(id) {
-    var card = document.querySelector('#projectCards [data-project="' + id + '"]');
+    var card = document.querySelector('main [data-project="' + id + '"]');
     if (!card) return;
     card.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
     card.classList.remove('is-flash'); void card.offsetWidth; card.classList.add('is-flash');

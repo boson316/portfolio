@@ -35,6 +35,7 @@
       <a href="#" class="logo" aria-label="Boson 作品集首頁"><span class="logo-mark" aria-hidden="true">b/</span><span class="logo-text">Boson</span><span class="logo-sub">/ 作品集</span></a>
       <ul class="nav-links">
         <li><a href="#hero">首頁</a></li>
+        <li><a href="#research">研究</a></li>
         <li><a href="#skills">技能</a></li>
         <li><a href="#projects">專案</a></li>
         <li><a href="#ml-showcase">ML 專區</a></li>
@@ -86,50 +87,10 @@
       </div>
     </section>
 
-    <section id="skills" class="skills">
+    <section id="research" class="flagship-research" aria-labelledby="flagship-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">01 / skills</p>
-        <h2 class="section-title">技能與工具</h2>
-        <p class="section-sub">左邊可以切換四種視覺化，看每個技能用在哪些專案；點右邊項目看介紹。</p>
-        <div class="skills-wrap tw-grid-skills">
-          <div class="skills-canvas-wrap skills-viz">
-            <div class="viz-tabs" role="tablist" aria-label="視覺化模式"><button type="button" role="tab" data-viz="graph">關係圖</button><button type="button" role="tab" data-viz="cuda">CUDA 網格</button><button type="button" role="tab" data-viz="sphere">標籤球</button><button type="button" role="tab" data-viz="nn">神經網路</button></div>
-            <canvas id="skillsViz" role="img" aria-label="技能與專案關係視覺化"></canvas>
-            <p class="viz-caption" id="vizCaption"></p>
-            <a class="viz-hint" id="vizHint" href="#projects" hidden><span></span> ↓</a>
-          </div>
-          <ul class="skills-list" id="skillsList" role="list">
-            <li data-skill="ai" tabindex="0"><span class="skill-name">AI / RAG / LLM</span><span class="skill-meta">Gemini · Groq · Chroma</span></li>
-            <li data-skill="gpu" tabindex="0"><span class="skill-name">GPU / CUDA / Triton</span><span class="skill-meta">WMMA · FlashAttention · Nsight</span></li>
-            <li data-skill="web" tabindex="0"><span class="skill-name">前端 / RWD</span><span class="skill-meta">HTML · CSS · JS · PWA</span></li>
-            <li data-skill="python" tabindex="0"><span class="skill-name">Python / Flask</span><span class="skill-meta">Flask · Streamlit · pytest</span></li>
-            <li data-skill="data" tabindex="0"><span class="skill-name">資料處理 / 爬蟲</span><span class="skill-meta">RSS · GitHub Actions · APIs</span></li>
-            <li data-skill="tools" tabindex="0"><span class="skill-name">工具開發</span><span class="skill-meta">Chart.js · Canvas · SVG</span></li>
-          </ul>
-        </div>
-      </div>
-      <!-- 技能介紹浮層：點擊技能後顯示 -->
-      <div class="skill-modal" id="skillModal" aria-hidden="true" role="dialog" aria-labelledby="skillModalTitle">
-        <div class="skill-modal-backdrop" id="skillModalBackdrop"></div>
-        <div class="skill-modal-content">
-          <button type="button" class="skill-modal-close" id="skillModalClose" aria-label="關閉">×</button>
-          <h3 class="skill-modal-title" id="skillModalTitle"></h3>
-          <ul class="skill-modal-stack" id="skillModalStack"></ul>
-          <p class="skill-modal-desc" id="skillModalDesc"></p>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="projects">
-      <div class="container tw-px-responsive">
-        <p class="section-eyebrow">02 / projects</p>
-        <h2 class="section-title">專案精選</h2>
-        <p class="section-sub">研究進度與工程成果分別呈現；已完成作品提供可驗證的數據與來源。</p>
-        <div class="project-filter" id="projectFilter" hidden>
-          <span class="pf-label">篩選</span><span class="pf-skill" id="projectFilterName"></span><span class="pf-count" id="projectFilterCount"></span>
-          <button type="button" class="pf-clear" id="projectFilterClear">清除 ✕</button>
-        </div>
-        <div class="cards tw-grid-cards" id="projectCards">
+        <p class="section-eyebrow">01 / research</p>
+        <h2 id="flagship-title" class="section-title">旗艦研究</h2>
           <article id="multimodal-research" data-project="multimodal" class="card research-card" aria-labelledby="research-title">
             <div class="card-body">
               <div class="research-header">
@@ -177,6 +138,53 @@
               </details>
             </div>
           </article>
+      </div>
+    </section>
+
+    <section id="skills" class="skills">
+      <div class="container tw-px-responsive">
+        <p class="section-eyebrow">02 / skills</p>
+        <h2 class="section-title">技能與工具</h2>
+        <p class="section-sub">左邊可以切換四種視覺化，看每個技能用在哪些專案；點右邊項目看介紹。</p>
+        <div class="skills-wrap tw-grid-skills">
+          <div class="skills-canvas-wrap skills-viz">
+            <div class="viz-tabs" role="tablist" aria-label="視覺化模式"><button type="button" role="tab" data-viz="graph">關係圖</button><button type="button" role="tab" data-viz="cuda">CUDA 網格</button><button type="button" role="tab" data-viz="sphere">標籤球</button><button type="button" role="tab" data-viz="nn">神經網路</button></div>
+            <canvas id="skillsViz" role="img" aria-label="技能與專案關係視覺化"></canvas>
+            <p class="viz-caption" id="vizCaption"></p>
+            <a class="viz-hint" id="vizHint" href="#projects" hidden><span></span> <span data-filter-direction aria-hidden="true">↓</span></a>
+          </div>
+          <ul class="skills-list" id="skillsList" role="list">
+            <li data-skill="ai" tabindex="0"><span class="skill-name">AI / RAG / LLM</span><span class="skill-meta">Gemini · Groq · Chroma</span></li>
+            <li data-skill="gpu" tabindex="0"><span class="skill-name">GPU / CUDA / Triton</span><span class="skill-meta">WMMA · FlashAttention · Nsight</span></li>
+            <li data-skill="web" tabindex="0"><span class="skill-name">前端 / RWD</span><span class="skill-meta">HTML · CSS · JS · PWA</span></li>
+            <li data-skill="python" tabindex="0"><span class="skill-name">Python / Flask</span><span class="skill-meta">Flask · Streamlit · pytest</span></li>
+            <li data-skill="data" tabindex="0"><span class="skill-name">資料處理 / 爬蟲</span><span class="skill-meta">RSS · GitHub Actions · APIs</span></li>
+            <li data-skill="tools" tabindex="0"><span class="skill-name">工具開發</span><span class="skill-meta">Chart.js · Canvas · SVG</span></li>
+          </ul>
+        </div>
+      </div>
+      <!-- 技能介紹浮層：點擊技能後顯示 -->
+      <div class="skill-modal" id="skillModal" aria-hidden="true" role="dialog" aria-labelledby="skillModalTitle">
+        <div class="skill-modal-backdrop" id="skillModalBackdrop"></div>
+        <div class="skill-modal-content">
+          <button type="button" class="skill-modal-close" id="skillModalClose" aria-label="關閉">×</button>
+          <h3 class="skill-modal-title" id="skillModalTitle"></h3>
+          <ul class="skill-modal-stack" id="skillModalStack"></ul>
+          <p class="skill-modal-desc" id="skillModalDesc"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="container tw-px-responsive">
+        <p class="section-eyebrow">03 / projects</p>
+        <h2 class="section-title">專案精選</h2>
+        <p class="section-sub">研究進度與工程成果分別呈現；已完成作品提供可驗證的數據與來源。</p>
+        <div class="project-filter" id="projectFilter" hidden>
+          <span class="pf-label">篩選</span><span class="pf-skill" id="projectFilterName"></span><span class="pf-count" id="projectFilterCount"></span>
+          <button type="button" class="pf-clear" id="projectFilterClear">清除 ✕</button>
+        </div>
+        <div class="cards tw-grid-cards" id="projectCards">
           <article data-project="gpu-lab" class="card card-featured" style="--card-accent: #76b900;">
             <div class="card-body">
               <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span><span class="card-kicker">GPU · CUDA</span><span class="badge badge-open">開源</span></div><h3>RTX 3050 GPU Optimization Lab</h3><p class="card-metric"><strong>79–87%</strong> cuBLAS · MNIST <strong>98.6%</strong> · 先驗證才計時</p>
@@ -247,7 +255,7 @@
     <!-- ML 專區：課程報告圖表互動版（KNN 乳腺癌、Loss/Acc、Feature Importance、PCA）-->
     <section id="ml-showcase" class="ml-showcase" aria-labelledby="ml-showcase-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">03 / machine-learning</p>
+        <p class="section-eyebrow">04 / machine-learning</p>
         <h2 id="ml-showcase-title" class="section-title ml-showcase-title">
           <span class="ml-showcase-badge">大二課程專案</span>
           人工智慧 × 資料科學 — 互動圖表
@@ -314,7 +322,7 @@
     <!-- GPU 專區：CUDA 學習 + RTX 3050 作品集 -->
     <section id="gpu-showcase" class="gpu-showcase" aria-labelledby="gpu-showcase-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">04 / gpu-lab</p>
+        <p class="section-eyebrow">05 / gpu-lab</p>
         <h2 id="gpu-showcase-title" class="section-title gpu-showcase-title">
           <span class="gpu-showcase-badge">自學作品集</span>
           GPU Optimization Lab — RTX 3050 實作
@@ -401,7 +409,7 @@
 
     <section id="credentials" class="credentials" aria-labelledby="credentials-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">05 / credentials</p>
+        <p class="section-eyebrow">06 / credentials</p>
         <h2 id="credentials-title" class="section-title">認證與戰果</h2>
         <p class="credentials-intro">AWS 與業界聯合頒發，驗證生成式 AI 實戰與工作坊完訓。</p>
         <div class="cert-grid">
@@ -437,7 +445,7 @@
       <div class="container tw-px-responsive">
         <div class="contact-card">
           <div>
-            <p class="section-eyebrow">06 / contact</p>
+            <p class="section-eyebrow">07 / contact</p>
             <h2 class="section-title">聯絡我</h2>
             <p class="contact-desc">歡迎透過右下角的小boson提問，或寄信到 <a href="mailto:poboson316@gmail.com">poboson316@gmail.com</a> 與我聯繫。</p>
           </div>

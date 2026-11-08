@@ -228,6 +228,7 @@ body {
 }
 
 /* ---------- Project cards ---------- */
+.flagship-research { padding: 4rem 0; }
 .card.research-card {
   --research-green: #477300;
   grid-column: 1 / -1;

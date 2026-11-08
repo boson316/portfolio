@@ -20,8 +20,9 @@ Single-page portfolio (GitHub Pages) with bilingual UI and interactive sections:
 | Section | Anchor | Highlights |
 |---------|--------|------------|
 | Hero | `#hero` | Intro + **Chat with AI** CTA |
+| Flagship research | `#research` | First content section after Hero: multimodal AI research, conceptual architecture, and expandable details |
 | Skills | `#skills` | Six skill categories · Canvas visualizations (skill × project graph, CUDA grid, tag sphere, neural net) that filter the project cards |
-| Projects | `#projects` | Eight project cards: flagship research followed by the existing engineering projects |
+| Projects | `#projects` | Seven existing engineering projects, starting with GPU Optimization Lab |
 | ML showcase | `#ml-showcase` | Wisconsin breast cancer · KNN ~**94.7%** · five Chart.js charts |
 | GPU showcase | `#gpu-showcase` | RTX 3050 benchmarks — WMMA GEMM **79–87 % of cuBLAS**, MNIST **98.6 %** |
 | Credentials | `#credentials` | AWS AIWave + AI Workshop (lightbox) |

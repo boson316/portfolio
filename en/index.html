@@ -36,6 +36,7 @@
       <a href="#" class="logo" aria-label="Boson portfolio home"><span class="logo-mark" aria-hidden="true">b/</span><span class="logo-text">Boson</span><span class="logo-sub">/ portfolio</span></a>
       <ul class="nav-links">
         <li><a href="#hero">Home</a></li>
+        <li><a href="#research">Research</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#ml-showcase">ML</a></li>
@@ -87,49 +88,10 @@
       </div>
     </section>
 
-    <section id="skills" class="skills">
+    <section id="research" class="flagship-research" aria-labelledby="flagship-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">01 / skills</p>
-        <h2 class="section-title">Skills &amp; tools</h2>
-        <p class="section-sub">Switch between four visualizations to see where each skill is used; click a skill on the right for details.</p>
-        <div class="skills-wrap tw-grid-skills">
-          <div class="skills-canvas-wrap skills-viz">
-            <div class="viz-tabs" role="tablist" aria-label="Visualization mode"><button type="button" role="tab" data-viz="graph">Graph</button><button type="button" role="tab" data-viz="cuda">CUDA grid</button><button type="button" role="tab" data-viz="sphere">Tag sphere</button><button type="button" role="tab" data-viz="nn">Neural net</button></div>
-            <canvas id="skillsViz" role="img" aria-label="Skills and projects visualization"></canvas>
-            <p class="viz-caption" id="vizCaption"></p>
-            <a class="viz-hint" id="vizHint" href="#projects" hidden><span></span> ↓</a>
-          </div>
-          <ul class="skills-list" id="skillsList" role="list">
-            <li data-skill="ai" tabindex="0"><span class="skill-name">AI / RAG / LLM</span><span class="skill-meta">Gemini · Groq · Chroma</span></li>
-            <li data-skill="gpu" tabindex="0"><span class="skill-name">GPU / CUDA / Triton</span><span class="skill-meta">WMMA · FlashAttention · Nsight</span></li>
-            <li data-skill="web" tabindex="0"><span class="skill-name">Frontend / RWD</span><span class="skill-meta">HTML · CSS · JS · PWA</span></li>
-            <li data-skill="python" tabindex="0"><span class="skill-name">Python / Flask</span><span class="skill-meta">Flask · Streamlit · pytest</span></li>
-            <li data-skill="data" tabindex="0"><span class="skill-name">Data / Scraping</span><span class="skill-meta">RSS · GitHub Actions · APIs</span></li>
-            <li data-skill="tools" tabindex="0"><span class="skill-name">Tooling</span><span class="skill-meta">Chart.js · Canvas · SVG</span></li>
-          </ul>
-        </div>
-      </div>
-      <div class="skill-modal" id="skillModal" aria-hidden="true" role="dialog" aria-labelledby="skillModalTitle">
-        <div class="skill-modal-backdrop" id="skillModalBackdrop"></div>
-        <div class="skill-modal-content">
-          <button type="button" class="skill-modal-close" id="skillModalClose" aria-label="Close">×</button>
-          <h3 class="skill-modal-title" id="skillModalTitle"></h3>
-          <ul class="skill-modal-stack" id="skillModalStack"></ul>
-          <p class="skill-modal-desc" id="skillModalDesc"></p>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="projects">
-      <div class="container tw-px-responsive">
-        <p class="section-eyebrow">02 / projects</p>
-        <h2 class="section-title">Selected projects</h2>
-        <p class="section-sub">Research progress and engineering results are stated separately, with verifiable numbers and sources for completed work.</p>
-        <div class="project-filter" id="projectFilter" hidden>
-          <span class="pf-label">Filtered by</span><span class="pf-skill" id="projectFilterName"></span><span class="pf-count" id="projectFilterCount"></span>
-          <button type="button" class="pf-clear" id="projectFilterClear">Clear ✕</button>
-        </div>
-        <div class="cards tw-grid-cards" id="projectCards">
+        <p class="section-eyebrow">01 / research</p>
+        <h2 id="flagship-title" class="section-title">Flagship Research</h2>
           <article id="multimodal-research" data-project="multimodal" class="card research-card" aria-labelledby="research-title">
             <div class="card-body">
               <div class="research-header">
@@ -177,6 +139,52 @@
               </details>
             </div>
           </article>
+      </div>
+    </section>
+
+    <section id="skills" class="skills">
+      <div class="container tw-px-responsive">
+        <p class="section-eyebrow">02 / skills</p>
+        <h2 class="section-title">Skills &amp; tools</h2>
+        <p class="section-sub">Switch between four visualizations to see where each skill is used; click a skill on the right for details.</p>
+        <div class="skills-wrap tw-grid-skills">
+          <div class="skills-canvas-wrap skills-viz">
+            <div class="viz-tabs" role="tablist" aria-label="Visualization mode"><button type="button" role="tab" data-viz="graph">Graph</button><button type="button" role="tab" data-viz="cuda">CUDA grid</button><button type="button" role="tab" data-viz="sphere">Tag sphere</button><button type="button" role="tab" data-viz="nn">Neural net</button></div>
+            <canvas id="skillsViz" role="img" aria-label="Skills and projects visualization"></canvas>
+            <p class="viz-caption" id="vizCaption"></p>
+            <a class="viz-hint" id="vizHint" href="#projects" hidden><span></span> <span data-filter-direction aria-hidden="true">↓</span></a>
+          </div>
+          <ul class="skills-list" id="skillsList" role="list">
+            <li data-skill="ai" tabindex="0"><span class="skill-name">AI / RAG / LLM</span><span class="skill-meta">Gemini · Groq · Chroma</span></li>
+            <li data-skill="gpu" tabindex="0"><span class="skill-name">GPU / CUDA / Triton</span><span class="skill-meta">WMMA · FlashAttention · Nsight</span></li>
+            <li data-skill="web" tabindex="0"><span class="skill-name">Frontend / RWD</span><span class="skill-meta">HTML · CSS · JS · PWA</span></li>
+            <li data-skill="python" tabindex="0"><span class="skill-name">Python / Flask</span><span class="skill-meta">Flask · Streamlit · pytest</span></li>
+            <li data-skill="data" tabindex="0"><span class="skill-name">Data / Scraping</span><span class="skill-meta">RSS · GitHub Actions · APIs</span></li>
+            <li data-skill="tools" tabindex="0"><span class="skill-name">Tooling</span><span class="skill-meta">Chart.js · Canvas · SVG</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="skill-modal" id="skillModal" aria-hidden="true" role="dialog" aria-labelledby="skillModalTitle">
+        <div class="skill-modal-backdrop" id="skillModalBackdrop"></div>
+        <div class="skill-modal-content">
+          <button type="button" class="skill-modal-close" id="skillModalClose" aria-label="Close">×</button>
+          <h3 class="skill-modal-title" id="skillModalTitle"></h3>
+          <ul class="skill-modal-stack" id="skillModalStack"></ul>
+          <p class="skill-modal-desc" id="skillModalDesc"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="container tw-px-responsive">
+        <p class="section-eyebrow">03 / projects</p>
+        <h2 class="section-title">Selected projects</h2>
+        <p class="section-sub">Research progress and engineering results are stated separately, with verifiable numbers and sources for completed work.</p>
+        <div class="project-filter" id="projectFilter" hidden>
+          <span class="pf-label">Filtered by</span><span class="pf-skill" id="projectFilterName"></span><span class="pf-count" id="projectFilterCount"></span>
+          <button type="button" class="pf-clear" id="projectFilterClear">Clear ✕</button>
+        </div>
+        <div class="cards tw-grid-cards" id="projectCards">
           <article data-project="gpu-lab" class="card card-featured" style="--card-accent: #76b900;">
             <div class="card-body">
               <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span><span class="card-kicker">GPU · CUDA</span><span class="badge badge-open">Open source</span></div><h3>RTX 3050 GPU Optimization Lab</h3><p class="card-metric"><strong>79–87%</strong> of cuBLAS · MNIST <strong>98.6%</strong> · verified before timed</p>
@@ -246,7 +254,7 @@
 
     <section id="ml-showcase" class="ml-showcase" aria-labelledby="ml-showcase-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">03 / machine-learning</p>
+        <p class="section-eyebrow">04 / machine-learning</p>
         <h2 id="ml-showcase-title" class="section-title ml-showcase-title">
           <span class="ml-showcase-badge">Course project</span>
           AI × Data Science — Interactive charts
@@ -300,7 +308,7 @@
 
     <section id="gpu-showcase" class="gpu-showcase" aria-labelledby="gpu-showcase-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">04 / gpu-lab</p>
+        <p class="section-eyebrow">05 / gpu-lab</p>
         <h2 id="gpu-showcase-title" class="section-title gpu-showcase-title">
           <span class="gpu-showcase-badge">Self-study</span>
           GPU Optimization Lab — RTX 3050
@@ -383,7 +391,7 @@
 
     <section id="credentials" class="credentials" aria-labelledby="credentials-title">
       <div class="container tw-px-responsive">
-        <p class="section-eyebrow">05 / credentials</p>
+        <p class="section-eyebrow">06 / credentials</p>
         <h2 id="credentials-title" class="section-title">Achievements &amp; Credentials</h2>
         <p class="credentials-intro">Industry-validated generative AI hackathon and workshop completion.</p>
         <div class="cert-grid">
@@ -419,7 +427,7 @@
       <div class="container tw-px-responsive">
         <div class="contact-card">
           <div>
-            <p class="section-eyebrow">06 / contact</p>
+            <p class="section-eyebrow">07 / contact</p>
             <h2 class="section-title">Contact</h2>
             <p class="contact-desc">Ask 小boson (bottom-right) anything, or email <a href="mailto:poboson316@gmail.com">poboson316@gmail.com</a>.</p>
           </div>
