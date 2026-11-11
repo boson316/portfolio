@@ -54,8 +54,10 @@ app.config["MAX_CONTENT_LENGTH"] = MAX_BODY_BYTES + 100_000
 MAX_MESSAGE_CHARS = 1000
 MAX_HISTORY_ITEM_CHARS = 1000
 
-# Render 在前面有反向代理；信任最後 N 層代理附加的 X-Forwarded-For 來取得訪客 IP。
-_TRUSTED_PROXY_HOPS = int(os.getenv("TRUSTED_PROXY_HOPS", "1"))
+# Render 的 X-Forwarded-For 是「（訪客自帶，可偽造）…, 訪客 IP, Render 代理 IP」：
+# 最右邊是 Render 自己附加的代理位址（每次不同），訪客 IP 在右邊數來第 2 個。
+# /api/health 的 forwarding 欄位可用來核對這個假設。
+_TRUSTED_PROXY_HOPS = int(os.getenv("TRUSTED_PROXY_HOPS", "2"))
 if _TRUSTED_PROXY_HOPS > 0:
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for=_TRUSTED_PROXY_HOPS)
 
@@ -251,7 +253,24 @@ def health():
         "perxona": bool(PERXONA_API_KEY),
     }
     payload["perxonaProxy"] = bool(PERXONA_API_KEY)
+    payload["forwarding"] = forwarding_diagnostics()
     return jsonify(payload)
+
+
+def forwarding_diagnostics() -> dict[str, object]:
+    """只回報代理鏈的結構（不含任何 IP），用來核對 TRUSTED_PROXY_HOPS 是否設對。"""
+    xff = [part.strip() for part in (request.headers.get("X-Forwarded-For") or "").split(",") if part.strip()]
+    cf_ip = (request.headers.get("CF-Connecting-IP") or "").strip()
+    cf_position = None
+    if cf_ip and cf_ip in xff:
+        cf_position = len(xff) - max(i for i, part in enumerate(xff) if part == cf_ip)
+    return {
+        "xffEntries": len(xff),
+        "trustedHops": _TRUSTED_PROXY_HOPS,
+        "cfConnectingIp": bool(cf_ip),
+        # CF-Connecting-IP 在 X-Forwarded-For 中從右邊數來的位置；應等於 trustedHops。
+        "cfPositionFromRight": cf_position,
+    }
 
 
 @app.route("/api/perxona-token", methods=["GET"])

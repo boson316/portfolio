@@ -26,7 +26,7 @@ python app.py
 
 ## API
 
-- `GET /api/health` — `{ ok, groq, model, perxona, perxonaProxy }`（不回傳任何金鑰片段）
+- `GET /api/health` — `{ ok, groq, model, perxona, perxonaProxy, forwarding }`（不回傳任何金鑰片段）
 - `GET /api/perxona-token` — 簽 JWT；需白名單 Origin
 - `POST /api/chat` — `{ message, history? }` → `{ reply }`（`message` 上限 1000 字；每則 `history` 截斷到 1000 字）
 
@@ -35,4 +35,4 @@ python app.py
 - CORS 與 Perxona 端點只接受 `PERXONA_ALLOWED_ORIGINS` 內的來源：scheme 與 hostname 須完全相同；白名單沒寫 port 時允許任意 port。
 - 每個 IP 每分鐘上限（超過回 `429`；設 `0` 停用）：`CHAT_RATE_LIMIT_PER_MINUTE`（預設 15）、`TOKEN_RATE_LIMIT_PER_MINUTE`（預設 10）、`PROXY_RATE_LIMIT_PER_MINUTE`（預設 120）。計數存在記憶體，多個 gunicorn worker 各自計數。
 - `GROQ_TIMEOUT_SECONDS`（預設 12）：單次 Groq 請求逾時，且不重試；逾時就回本地 fallback，避免慢請求佔住 worker。
-- `TRUSTED_PROXY_HOPS`（預設 1）：信任幾層反向代理附加的 `X-Forwarded-For` 來判斷訪客 IP。
+- `TRUSTED_PROXY_HOPS`（預設 2）：訪客 IP 取 `X-Forwarded-For` 從右邊數來第幾個。Render 會在最右邊附加自己的代理 IP，所以是 2。`GET /api/health` 的 `forwarding` 欄位只回報代理鏈結構（不含 IP），`cfPositionFromRight` 應等於 `trustedHops`。

@@ -98,9 +98,38 @@ def test_chat_rate_limit_returns_429_per_ip():
     assert limited.headers["Retry-After"] == "60"
     # 快捷回覆不走 LLM，不計入限制。
     assert client.post("/api/chat", json={"message": "介紹專案"}).status_code == 200
-    # 另一個 IP（由受信任代理附加的 X-Forwarded-For）不受影響。
-    other = client.post("/api/chat", json={"message": "hi"}, headers={"X-Forwarded-For": "203.0.113.9"})
-    assert other.status_code == 200
+
+
+def test_rate_limit_key_is_second_from_right_in_forwarded_chain():
+    """意圖：Render 會在尾端附加每次不同的代理 IP；訪客自帶的開頭項目不可信。"""
+    module = load_app(CHAT_RATE_LIMIT_PER_MINUTE="2")
+    module.get_groq_client = lambda: None
+    client = module.app.test_client()
+
+    def chat(xff):
+        return client.post("/api/chat", json={"message": "hi"}, headers={"X-Forwarded-For": xff}).status_code
+
+    # 同一訪客、每次不同的代理 IP 與不同的偽造開頭 → 仍算同一個 key。
+    assert chat("198.51.100.7, 10.0.0.1") == 200
+    assert chat("1.1.1.1, 198.51.100.7, 10.0.0.2") == 200
+    assert chat("2.2.2.2, 198.51.100.7, 10.0.0.3") == 429
+    # 另一位訪客不受影響。
+    assert chat("203.0.113.9, 10.0.0.4") == 200
+
+
+def test_health_forwarding_reports_structure_without_ips():
+    client = load_app().app.test_client()
+    body = client.get(
+        "/api/health",
+        headers={"X-Forwarded-For": "198.51.100.7, 10.0.0.1", "CF-Connecting-IP": "198.51.100.7"},
+    ).get_json()
+    assert body["forwarding"] == {
+        "xffEntries": 2,
+        "trustedHops": 2,
+        "cfConnectingIp": True,
+        "cfPositionFromRight": 2,
+    }
+    assert "198.51.100.7" not in str(body) and "10.0.0.1" not in str(body)
 
 
 def test_token_rate_limit():
