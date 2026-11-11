@@ -34,6 +34,8 @@ MODEL_CANDIDATES = [
         "meta-llama/llama-4-scout-17b-16e-instruct",
     ]) if m
 ]
+# 單次 Groq 請求的逾時秒數（前端 15 秒就會改用本地回覆）。
+GROQ_TIMEOUT_SECONDS = float(os.getenv("GROQ_TIMEOUT_SECONDS", "12"))
 NON_CHAT_MODEL_HINTS = ("whisper", "tts", "guard", "playai", "orpheus", "distil", "compound")
 _active_model = None
 PERXONA_API_KEY = (os.getenv("PERXONA_API_KEY") or "").strip().strip('"').strip("'")
@@ -230,9 +232,12 @@ def create_completion(client, messages, **kwargs):
 
 
 def get_groq_client():
+    """逾時要短於前端的 15 秒中止；不重試，避免慢請求長時間佔住 worker。"""
     try:
         from groq import Groq
-        return Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
+        if not GROQ_API_KEY:
+            return None
+        return Groq(api_key=GROQ_API_KEY, timeout=GROQ_TIMEOUT_SECONDS, max_retries=0)
     except Exception:
         return None
 

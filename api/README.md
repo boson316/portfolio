@@ -19,7 +19,7 @@ python app.py
 
 - Repo：`boson316/portfolio`
 - **Root Directory：** `api`
-- Start：`gunicorn --bind 0.0.0.0:$PORT app:app`
+- Start：`gunicorn --bind 0.0.0.0:$PORT app:app`（會自動載入 `api/gunicorn.conf.py`：單一 process、8 個執行緒、逾時 60 秒；可用 `GUNICORN_THREADS`、`GUNICORN_TIMEOUT` 調整）
 - Environment：`PERXONA_API_KEY`、`PERXONA_ALLOWED_ORIGINS=https://boson316.github.io,...`
 - 選填 `GROQ_MODEL`：指定聊天模型。不設或該模型被 Groq 下架時，會依序改用 `llama-3.3-70b-versatile`、`openai/gpt-oss-20b` 等候選，再不行就向 Groq 查詢可用模型（`GET /api/health` 的 `model` 顯示目前使用的模型）。
 - 前端 `perxona-config.js` 的 `PRODUCTION_API_URL` 設為 `https://perxona.onrender.com`
@@ -34,4 +34,5 @@ python app.py
 
 - CORS 與 Perxona 端點只接受 `PERXONA_ALLOWED_ORIGINS` 內的來源：scheme 與 hostname 須完全相同；白名單沒寫 port 時允許任意 port。
 - 每個 IP 每分鐘上限（超過回 `429`；設 `0` 停用）：`CHAT_RATE_LIMIT_PER_MINUTE`（預設 15）、`TOKEN_RATE_LIMIT_PER_MINUTE`（預設 10）、`PROXY_RATE_LIMIT_PER_MINUTE`（預設 120）。計數存在記憶體，多個 gunicorn worker 各自計數。
+- `GROQ_TIMEOUT_SECONDS`（預設 12）：單次 Groq 請求逾時，且不重試；逾時就回本地 fallback，避免慢請求佔住 worker。
 - `TRUSTED_PROXY_HOPS`（預設 1）：信任幾層反向代理附加的 `X-Forwarded-For` 來判斷訪客 IP。

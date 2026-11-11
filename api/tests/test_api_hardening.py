@@ -109,3 +109,28 @@ def test_token_rate_limit():
     headers = {"Origin": "https://boson316.github.io"}
     assert client.get("/api/perxona-token", headers=headers).status_code == 200
     assert client.get("/api/perxona-token", headers=headers).status_code == 429
+
+
+def test_groq_client_has_short_timeout_and_no_retries(monkeypatch):
+    """意圖：慢的 Groq 請求不可長時間佔住 worker（前端 15 秒就放棄）。"""
+    module = load_app()
+    module.GROQ_API_KEY = "test-groq-key"
+    client = module.get_groq_client()
+    assert client is not None
+    assert client.max_retries == 0
+    assert float(client.timeout) == module.GROQ_TIMEOUT_SECONDS
+    assert module.GROQ_TIMEOUT_SECONDS < 15
+
+
+def test_gunicorn_config_uses_threads_and_outlasts_proxy_timeout():
+    """意圖：一個慢請求不會擋住 /api/health；worker 逾時要長於 proxy 上游逾時。"""
+    from perxona_proxy import PROXY_TIMEOUT_SECONDS
+
+    for key in ("WEB_CONCURRENCY", "GUNICORN_THREADS", "GUNICORN_TIMEOUT"):
+        os.environ.pop(key, None)
+    config: dict = {}
+    exec((ROOT / "gunicorn.conf.py").read_text(encoding="utf-8"), config)
+    assert config["worker_class"] == "gthread"
+    assert config["threads"] >= 4
+    assert config["workers"] == 1
+    assert config["timeout"] > PROXY_TIMEOUT_SECONDS
