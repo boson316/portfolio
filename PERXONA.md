@@ -236,7 +236,7 @@ curl.exe https://perxona.onrender.com/api/health
 curl.exe -H "Origin: https://boson316.github.io" https://perxona.onrender.com/api/perxona-token
 ```
 
-health 含 `perxonaKeyHint`（前4…後4）供與 Dashboard apiKey 比對，不洩漏完整 key。
+> 更新：`/api/health` 已不再回傳 `perxonaKeyHint`／`perxonaKeyLen`（公開端點不應洩漏金鑰片段）；下方範例中的這兩個欄位是舊版輸出。
 
 預期 health：
 

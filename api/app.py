@@ -5,6 +5,7 @@ import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from perxona_proxy import (
     MAX_BODY_BYTES,
@@ -13,12 +14,12 @@ from perxona_proxy import (
     forward_perxona,
     resolve_proxy_target,
 )
-from perxona_token import create_session_token, origin_allowed, parse_allowed_origins, perxona_key_hint
+from perxona_token import cors_origin_patterns, create_session_token, origin_allowed, parse_allowed_origins
+from rate_limit import RateLimiter
 
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 # Groq 會不定期下架模型（例如 llama-3.1-8b-instant 已無法使用）。
@@ -43,6 +44,33 @@ PERXONA_ALLOWED_ORIGINS = parse_allowed_origins(
         "https://boson316.github.io,http://localhost,http://127.0.0.1",
     )
 )
+# 只對白名單來源回 CORS 標頭（規則與 origin_allowed 相同）。
+CORS(app, origins=cors_origin_patterns(PERXONA_ALLOWED_ORIGINS))
+
+# 請求大小與聊天長度上限：避免被拿來耗盡 Groq 額度。
+app.config["MAX_CONTENT_LENGTH"] = MAX_BODY_BYTES + 100_000
+MAX_MESSAGE_CHARS = 1000
+MAX_HISTORY_ITEM_CHARS = 1000
+
+# Render 在前面有反向代理；信任最後 N 層代理附加的 X-Forwarded-For 來取得訪客 IP。
+_TRUSTED_PROXY_HOPS = int(os.getenv("TRUSTED_PROXY_HOPS", "1"))
+if _TRUSTED_PROXY_HOPS > 0:
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=_TRUSTED_PROXY_HOPS)
+
+# 每個 IP 每分鐘的請求上限（設 0 停用）。Origin 標頭在瀏覽器以外可偽造，所以另外靠這層擋濫用。
+CHAT_LIMITER = RateLimiter(int(os.getenv("CHAT_RATE_LIMIT_PER_MINUTE", "15")))
+TOKEN_LIMITER = RateLimiter(int(os.getenv("TOKEN_RATE_LIMIT_PER_MINUTE", "10")))
+PROXY_LIMITER = RateLimiter(int(os.getenv("PROXY_RATE_LIMIT_PER_MINUTE", "120")))
+
+
+def rate_limited(limiter: RateLimiter):
+    """超過上限回 429；否則回 None。"""
+    if limiter.allow(request.remote_addr or "unknown"):
+        return None
+    response = jsonify({"error": "請求過於頻繁，請稍後再試"})
+    response.status_code = 429
+    response.headers["Retry-After"] = "60"
+    return response
 
 SYSTEM_PROMPT = """你是「小boson」，Boson（GitHub: boson316）作品集網站上的導覽助手。
 語言：一律繁體中文（台灣）。專有名詞、repo、技術名保留英文。
@@ -217,10 +245,6 @@ def health():
         "model": _active_model or (MODEL_CANDIDATES[0] if MODEL_CANDIDATES else None),
         "perxona": bool(PERXONA_API_KEY),
     }
-    hint = perxona_key_hint(PERXONA_API_KEY)
-    if hint:
-        payload["perxonaKeyHint"] = hint["hint"]
-        payload["perxonaKeyLen"] = hint["len"]
     payload["perxonaProxy"] = bool(PERXONA_API_KEY)
     return jsonify(payload)
 
@@ -234,6 +258,9 @@ def perxona_token():
     referer = request.headers.get("Referer") or ""
     if not origin_allowed(origin, referer, PERXONA_ALLOWED_ORIGINS):
         return jsonify({"error": "來源未授權"}), 403
+    limited = rate_limited(TOKEN_LIMITER)
+    if limited is not None:
+        return limited
 
     session_token, expires_at = create_session_token(PERXONA_API_KEY, PERXONA_TOKEN_TTL_SECONDS)
     return jsonify({
@@ -271,6 +298,9 @@ def perxona_proxy():
         return jsonify({"error": "來源未授權"}), 403
     if request.method == "OPTIONS":
         return apply_proxy_cors_headers(app.response_class("", status=204), origin, referer)
+    limited = rate_limited(PROXY_LIMITER)
+    if limited is not None:
+        return apply_proxy_cors_headers(limited, origin, referer)
 
     target = resolve_proxy_target(request.args.get("target") or "")
     if not target:
@@ -296,14 +326,23 @@ def perxona_proxy():
 
 @app.route("/api/chat", methods=["POST"])
 def chat():
-    data = request.get_json() or {}
-    message = (data.get("message") or "").strip()
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        data = {}
+    message = data.get("message")
+    message = message.strip() if isinstance(message, str) else ""
     if not message:
         return jsonify({"error": "請提供 message"}), 400
+    if len(message) > MAX_MESSAGE_CHARS:
+        return jsonify({"error": f"message 過長（上限 {MAX_MESSAGE_CHARS} 字）"}), 400
 
     quick = get_quick_reply(message)
     if quick:
         return jsonify({"reply": quick})
+
+    limited = rate_limited(CHAT_LIMITER)
+    if limited is not None:
+        return limited
 
     client = get_groq_client()
     if not client:
@@ -312,11 +351,15 @@ def chat():
             "fallback": True
         }), 200
 
-    history = data.get("history") or []
+    history = data.get("history")
+    if not isinstance(history, list):
+        history = []
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
     for h in history[-10:]:
+        if not isinstance(h, dict) or not isinstance(h.get("content"), str):
+            continue
         role = "user" if h.get("role") == "user" else "assistant"
-        content = (h.get("content") or "").strip()
+        content = h["content"].strip()[:MAX_HISTORY_ITEM_CHARS]
         if content:
             messages.append({"role": role, "content": content})
     messages.append({"role": "user", "content": message})

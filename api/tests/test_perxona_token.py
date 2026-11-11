@@ -10,7 +10,7 @@ import jwt
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from perxona_token import create_session_token, origin_allowed, parse_allowed_origins
+from perxona_token import cors_origin_patterns, create_session_token, origin_allowed, parse_allowed_origins
 
 
 def test_create_session_token_has_iat_exp():
@@ -28,12 +28,40 @@ def test_create_session_token_has_iat_exp():
     assert expires_at == now + 3600
 
 
-def test_origin_allowed_matches_prefix():
+def test_origin_allowed_exact_host_any_port_when_unspecified():
     allowed = parse_allowed_origins("https://boson316.github.io,http://localhost")
     assert origin_allowed("https://boson316.github.io", "", allowed)
     assert origin_allowed("", "https://boson316.github.io/portfolio/", allowed)
     assert origin_allowed("http://localhost:3000", "", allowed)
     assert not origin_allowed("https://evil.example", "", allowed)
+
+
+def test_origin_allowed_rejects_lookalike_hosts():
+    allowed = parse_allowed_origins("https://boson316.github.io,http://localhost,http://127.0.0.1")
+    assert not origin_allowed("https://boson316.github.io.evil.example", "", allowed)
+    assert not origin_allowed("http://localhost.evil.example", "", allowed)
+    assert not origin_allowed("http://127.0.0.1.evil.example", "", allowed)
+    assert not origin_allowed("", "https://boson316.github.io.evil.example/portfolio/", allowed)
+    assert not origin_allowed("https://boson316.github.io@evil.example", "", allowed)
+    assert not origin_allowed("http://boson316.github.io", "", allowed)
+    assert not origin_allowed("", "", allowed)
+
+
+def test_origin_takes_precedence_over_referer():
+    allowed = parse_allowed_origins("https://boson316.github.io")
+    assert not origin_allowed("https://evil.example", "https://boson316.github.io/portfolio/", allowed)
+
+
+def test_cors_patterns_follow_same_rule():
+    import re
+
+    patterns = cors_origin_patterns(parse_allowed_origins("https://boson316.github.io,http://localhost"))
+    def ok(origin):
+        return any(re.match(p, origin) for p in patterns)
+    assert ok("https://boson316.github.io")
+    assert ok("http://localhost:5500")
+    assert not ok("https://boson316.github.io.evil.example")
+    assert not ok("http://localhost.evil.example")
 
 
 def test_perxona_token_route_rejects_bad_origin():
