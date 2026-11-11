@@ -35,4 +35,4 @@ python app.py
 - CORS 與 Perxona 端點只接受 `PERXONA_ALLOWED_ORIGINS` 內的來源：scheme 與 hostname 須完全相同；白名單沒寫 port 時允許任意 port。
 - 每個 IP 每分鐘上限（超過回 `429`；設 `0` 停用）：`CHAT_RATE_LIMIT_PER_MINUTE`（預設 15）、`TOKEN_RATE_LIMIT_PER_MINUTE`（預設 10）、`PROXY_RATE_LIMIT_PER_MINUTE`（預設 120）。計數存在記憶體，多個 gunicorn worker 各自計數。
 - `GROQ_TIMEOUT_SECONDS`（預設 12）：單次 Groq 請求逾時，且不重試；逾時就回本地 fallback，避免慢請求佔住 worker。
-- `TRUSTED_PROXY_HOPS`（預設 2）：訪客 IP 取 `X-Forwarded-For` 從右邊數來第幾個。Render 會在最右邊附加自己的代理 IP，所以是 2。`GET /api/health` 的 `forwarding` 欄位只回報代理鏈結構（不含 IP），`cfPositionFromRight` 應等於 `trustedHops`。
+- `TRUSTED_PROXY_HOPS`（預設 3）：訪客 IP 取 `X-Forwarded-For` 從右邊數來第幾個。Render 上實測為「訪客 IP, Cloudflare 節點, Render 代理」，所以是 3。`GET /api/health` 的 `forwarding` 欄位只回報代理鏈結構（不含 IP），`cfPositionFromRight` 應等於 `trustedHops`。

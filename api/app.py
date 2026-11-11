@@ -54,10 +54,10 @@ app.config["MAX_CONTENT_LENGTH"] = MAX_BODY_BYTES + 100_000
 MAX_MESSAGE_CHARS = 1000
 MAX_HISTORY_ITEM_CHARS = 1000
 
-# Render 的 X-Forwarded-For 是「（訪客自帶，可偽造）…, 訪客 IP, Render 代理 IP」：
-# 最右邊是 Render 自己附加的代理位址（每次不同），訪客 IP 在右邊數來第 2 個。
-# /api/health 的 forwarding 欄位可用來核對這個假設。
-_TRUSTED_PROXY_HOPS = int(os.getenv("TRUSTED_PROXY_HOPS", "2"))
+# Render（前面有 Cloudflare）的 X-Forwarded-For 實測是
+# 「（訪客自帶，可偽造）…, 訪客 IP, Cloudflare 節點, Render 代理」：訪客 IP 在右邊數來第 3 個。
+# 2026-11 以 /api/health 的 forwarding 欄位實測確認；平台改動時用同一欄位重新核對。
+_TRUSTED_PROXY_HOPS = int(os.getenv("TRUSTED_PROXY_HOPS", "3"))
 if _TRUSTED_PROXY_HOPS > 0:
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for=_TRUSTED_PROXY_HOPS)
 
