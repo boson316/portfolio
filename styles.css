@@ -519,7 +519,7 @@ html[lang="en"] .project-brief > div {
 .project-brief dt {
   margin: 0;
   font-weight: 600;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--accent);
@@ -831,7 +831,7 @@ html[lang="en"] .project-brief > div {
 }
 .ml-showcase-badge {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;

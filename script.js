@@ -499,13 +499,28 @@
     });
   }
 
+  // 圖表載入失敗（CDN 被擋／離線）時，用文字提示取代空白畫布
+  function showChartFallback(canvases) {
+    canvases.forEach(function (canvas) {
+      if (!canvas || !canvas.parentNode || canvas.parentNode.querySelector('.chart-fallback')) return;
+      var note = document.createElement('p');
+      note.className = 'chart-fallback';
+      note.setAttribute('role', 'status');
+      note.textContent = isEn
+        ? 'Chart could not load. Check your connection and refresh the page.'
+        : '圖表載入失敗，請檢查網路後重新整理頁面。';
+      canvas.hidden = true;
+      canvas.parentNode.appendChild(note);
+    });
+  }
+
   // ========== Chart.js：PyTorch 訓練曲線（延遲載入）==========
   function loadPytorchChart() {
     if (window.__pytorchChartLoaded) return;
     window.__pytorchChartLoaded = true;
     loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js')
       .then(function () { return loadScript(assetUrl('pytorch-chart.js')); })
-      .catch(function () {});
+      .catch(function () { showChartFallback([document.getElementById('pytorchChart')]); });
   }
 
   var chartCard = document.getElementById('pytorchChart');
@@ -530,7 +545,9 @@
     loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js')
       .then(function () { return loadScript('https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.1/dist/chartjs-chart-matrix.min.js'); })
       .then(function () { return loadScript(assetUrl('ml-charts.js')); })
-      .catch(function () {});
+      .catch(function () {
+        showChartFallback(Array.prototype.slice.call(document.querySelectorAll('#ml-showcase canvas')));
+      });
   }
 
   var mlShowcase = document.getElementById('ml-showcase');
@@ -577,6 +594,19 @@
     mlAnimateBlocks.forEach(function (block) { ioVisible.observe(block); });
   }
 
+  // ========== 手機：往下捲時收起浮動按鈕，往上捲或到頁尾再顯示 ==========
+  var fabStack = document.getElementById('fabStack');
+  if (fabStack) {
+    var lastFabY = window.scrollY;
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      var atEnd = window.innerHeight + y >= document.documentElement.scrollHeight - 80;
+      if (Math.abs(y - lastFabY) < 8 && !atEnd) return;
+      fabStack.classList.toggle('is-tucked', y > lastFabY && y > 120 && !atEnd);
+      lastFabY = y;
+    }, { passive: true });
+  }
+
   // ========== 證書大圖 lightbox ==========
   var certLightbox = document.getElementById('certLightbox');
   var certLightboxImg = document.getElementById('certLightboxImg');
@@ -596,7 +626,7 @@
     if (typeof certLightbox.close === 'function') {
       certLightbox.close();
     }
-    if (certLightboxImg) certLightboxImg.src = '';
+    if (certLightboxImg) certLightboxImg.removeAttribute('src');
   }
 
   document.querySelectorAll('[data-cert-open]').forEach(function (btn) {

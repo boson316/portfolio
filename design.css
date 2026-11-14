@@ -151,7 +151,7 @@ body {
 .hero-stats > div { padding: 0.85rem 1rem; border-left: 1px solid var(--border); min-width: 0; }
 .hero-stats > div:first-child { border-left: 0; }
 .hero-stats dd { margin: 0; font-family: var(--font-mono); font-size: clamp(1.1rem, 2vw, 1.35rem); font-weight: 500; color: var(--text); letter-spacing: -0.02em; }
-.hero-stats dt { margin: 0.1rem 0 0; font-size: 0.74rem; color: var(--text-muted); line-height: 1.35; }
+.hero-stats dt { margin: 0.1rem 0 0; font-size: 0.78rem; color: var(--text-muted); line-height: 1.35; }
 .hero-stats > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
 
 /* Terminal */
@@ -164,7 +164,7 @@ body {
 .term-bar i { width: 11px; height: 11px; border-radius: 50%; background: #e0654b; display: block; }
 .term-bar i:nth-child(2) { background: #e3b341; }
 .term-bar i:nth-child(3) { background: #5fb36f; }
-.term-bar span { margin-left: 0.6rem; color: var(--term-muted); font-size: 0.74rem; }
+.term-bar span { margin-left: 0.6rem; color: var(--term-muted); font-size: 0.78rem; }
 .term-body { margin: 0; padding: 1rem 1.15rem 1.2rem; white-space: pre-wrap; word-break: break-word; }
 .term-body .l { display: block; opacity: 0; animation: termIn 0.35s ease forwards; }
 .term-body .p { color: #f0915a; margin-right: 0.5rem; user-select: none; }
@@ -193,7 +193,7 @@ body {
   .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero-stats > div:nth-child(3) { border-left: 0; }
   .hero-stats > div:nth-child(n + 3) { border-top: 1px solid var(--border); }
-  .terminal { font-size: 0.74rem; }
+  .terminal { font-size: 0.78rem; }
   .btn { padding: 0.62rem 1rem; }
 }
 
@@ -216,14 +216,14 @@ body {
 .skills-list li:focus { outline: none; }
 .skills-list li:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .skill-name { font-weight: 600; font-size: 0.97rem; color: var(--text); }
-.skill-meta { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted); }
+.skill-meta { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); }
 .skill-modal-content { border-radius: 16px; }
 .skill-modal-stack { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
 /* ---------- Chips (stack tags) ---------- */
 .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .chips li, .skill-modal-stack li {
-  font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.4; padding: 0.22rem 0.55rem; border-radius: 6px;
+  font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.4; padding: 0.22rem 0.55rem; border-radius: 6px;
   background: var(--bg-subtle); color: var(--text-muted); border: 1px solid var(--border);
 }
 
@@ -251,7 +251,7 @@ body {
 .research-overview > * { min-width: 0; }
 .research-card .research-intro { color: var(--text); line-height: 1.8; }
 .research-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; margin: 0; }
-.research-facts dt { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+.research-facts dt { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.3rem; }
 .research-facts dd { margin: 0; font-size: 0.88rem; line-height: 1.65; color: var(--text); }
 .research-facts dd span { display: block; margin-top: 0.3rem; color: var(--text-muted); }
 .research-architecture { margin: 0; padding: 1rem; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--bg); }
@@ -264,7 +264,7 @@ body {
 .research-output { display: flex; align-items: center; justify-content: center; gap: 0.75rem; font-size: 0.84rem; }
 .research-output > :first-child, .research-output > :last-child { padding: 0.45rem 0.7rem; border: 1px solid var(--border-strong); border-radius: 7px; background: var(--bg-card); }
 .research-card .research-platform { margin: 1rem 0 0.6rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--research-green); }
-.research-platform span { display: block; color: var(--text-muted); font-size: 0.72rem; margin-top: 0.2rem; }
+.research-platform span { display: block; color: var(--text-muted); font-size: 0.78rem; margin-top: 0.2rem; }
 .research-card .research-note { font-size: 0.78rem; line-height: 1.65; color: var(--text-muted); margin: 0; }
 .research-details { margin-top: 1.5rem; border-top: 1px dashed var(--border-strong); }
 .research-metrics { display: grid; gap: 0.8rem; margin-top: 1.5rem; }
@@ -313,10 +313,10 @@ body {
   color: var(--card-accent, var(--accent));
 }
 .card-icon svg { width: 20px; height: 20px; }
-.card-kicker { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.02em; }
+.card-kicker { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.02em; }
 .badge {
   margin-left: auto; display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap;
-  font-size: 0.72rem; font-weight: 600; padding: 0.18rem 0.55rem; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 600; padding: 0.18rem 0.55rem; border-radius: 999px;
   background: var(--bg-subtle); color: var(--text-muted); border: 1px solid var(--border);
 }
 .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
@@ -329,7 +329,7 @@ body {
 .card .chips, .card .feature-split { margin-bottom: 1.1rem; }
 .project-brief > div { grid-template-columns: 2.8rem 1fr; margin-bottom: 0.45rem; }
 html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
-.project-brief dt { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; color: var(--text-faint); text-transform: none; padding-top: 0.12rem; }
+.project-brief dt { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; color: var(--text-faint); text-transform: none; padding-top: 0.12rem; }
 .project-brief dd { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
 /* 挑戰 → 解法 → 成果：用左側細線串起來，成果數字用卡片色 */
 .project-brief > .pb-ch, .project-brief > .pb-fx, .project-brief > .pb-rs { position: relative; }
@@ -355,8 +355,8 @@ html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
   .card-featured .feature-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 1.5rem; align-items: start; }
 }
 .mini-bench { border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem 1rem; background: var(--bg); margin-bottom: 1rem; }
-.mini-bench p { margin: 0 0 0.6rem !important; font-family: var(--font-mono); font-size: 0.72rem !important; color: var(--text-faint) !important; flex: none !important; }
-.mb-row { display: grid; grid-template-columns: 5.5rem 1fr 3.6rem; align-items: center; gap: 0.6rem; font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted); margin-bottom: 0.45rem; }
+.mini-bench p { margin: 0 0 0.6rem !important; font-family: var(--font-mono); font-size: 0.78rem !important; color: var(--text-faint) !important; flex: none !important; }
+.mb-row { display: grid; grid-template-columns: 5.5rem 1fr 3.6rem; align-items: center; gap: 0.6rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.45rem; }
 .mb-row:last-child { margin-bottom: 0; }
 .mb-track { height: 8px; border-radius: 999px; background: var(--bg-subtle); overflow: hidden; }
 .mb-track i { display: block; height: 100%; border-radius: inherit; background: var(--card-accent, var(--accent)); }
@@ -379,7 +379,7 @@ html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
 .ml-showcase { border-top: 1px solid var(--border); }
 .ml-showcase-title, .gpu-showcase-title { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; text-align: left; }
 .ml-showcase-badge, .gpu-showcase-badge {
-  order: 2; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.02em;
+  order: 2; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.02em;
   padding: 0.2rem 0.55rem; border-radius: 6px; animation: none !important;
   background: var(--bg-subtle) !important; color: var(--text-muted) !important; border: 1px solid var(--border);
 }
@@ -390,7 +390,7 @@ html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
 .gpu-stack-item { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); font-size: 0.75rem; }
 .gpu-table-wrap { box-shadow: none; background: var(--bg-card); }
 .gpu-table { font-size: 0.88rem; font-variant-numeric: tabular-nums; }
-.gpu-table th { background: var(--bg-subtle); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.74rem; font-weight: 500; letter-spacing: 0.03em; text-transform: uppercase; }
+.gpu-table th { background: var(--bg-subtle); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.03em; text-transform: uppercase; }
 .gpu-table td:first-child { font-weight: 500; }
 .gpu-table td:last-child strong { font-family: var(--font-mono); font-weight: 600; color: var(--accent); }
 .gpu-table tbody tr:hover { background: var(--accent-soft); }
@@ -448,7 +448,7 @@ html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
 .viz-tabs button.on { background: var(--text); color: var(--bg); border-color: var(--text); }
 .viz-caption {
   position: absolute; left: 12px; right: 12px; bottom: 8px; margin: 0; pointer-events: none;
-  font-size: 0.74rem; color: var(--text-faint); text-align: center;
+  font-size: 0.78rem; color: var(--text-faint); text-align: center;
 }
 .viz-hint {
   position: absolute; right: 10px; bottom: 30px; z-index: 2; font-size: 0.78rem; font-weight: 600;
@@ -466,7 +466,7 @@ html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
   font-size: 0.85rem; color: var(--text-muted);
 }
 .project-filter[hidden] { display: none; }
-.pf-label { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-faint); }
+.pf-label { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-faint); }
 .pf-skill {
   font-weight: 600; color: var(--text); padding: 0.15rem 0.6rem; border-radius: 999px;
   background: color-mix(in srgb, var(--chip, var(--accent)) 16%, transparent);
@@ -511,3 +511,43 @@ html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
 .email-menu a:hover, .email-menu button:hover, .email-menu a:focus-visible, .email-menu button:focus-visible {
   background: var(--accent-soft); color: var(--accent); text-decoration: none;
 }
+
+/* ---------- Review fixes: mobile table, FABs, card grid, chart fallback ---------- */
+.research-title-en { display: block; margin-top: 0.2rem; font-size: 0.6em; font-weight: 500; color: var(--text-muted); letter-spacing: 0.01em; }
+
+.chart-fallback {
+  margin: 0; padding: 1.5rem 1rem; text-align: center; font-size: 0.85rem; line-height: 1.6;
+  color: var(--text-muted); border: 1px dashed var(--border); border-radius: var(--radius); background: var(--bg-subtle);
+}
+
+.card-chart-wrap .chart-fallback { width: 100%; align-self: center; padding: 0.75rem; font-size: 0.8rem; border: none; background: none; }
+
+/* 觸控目標：小按鈕與頁尾連結至少 36px 高 */
+.viz-tabs button, .chat-chip { min-height: 36px; }
+.footer-links a { display: inline-flex; align-items: center; min-height: 36px; }
+
+/* 專案區最後一列：圖表卡佔兩列高，RAG 與「更多」橫向排在右側，避免大片留白 */
+@media (min-width: 1024px) {
+  #projectCards .card-chart { grid-row: span 2; }
+  #projectCards .card-chart ~ .card { grid-column: span 2; }
+}
+
+/* 手機：GPU 表格改成一列一張卡，不用橫向捲動 */
+@media (max-width: 640px) {
+  .gpu-table-wrap { overflow-x: visible; }
+  .gpu-table, .gpu-table tbody, .gpu-table tr, .gpu-table td { display: block; width: auto; }
+  .gpu-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .gpu-table tr { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); }
+  .gpu-table tbody tr:last-child { border-bottom: none; }
+  .gpu-table td { padding: 0; border: none; }
+  .gpu-table td:first-child { font-weight: 700; }
+  .gpu-table td:nth-child(2) { margin-top: 0.1rem; font-size: 0.82rem; color: var(--text-muted); }
+  .gpu-table td:last-child { margin-top: 0.4rem; }
+
+  .fab-stack { right: 0.75rem; bottom: 0.75rem; gap: 0.5rem; transition: opacity 0.2s ease, transform 0.2s ease; }
+  .fab-stack.is-tucked { opacity: 0; transform: translateY(1rem); pointer-events: none; }
+  .chat-fab { width: 44px; height: 44px; font-size: 1.15rem; }
+  .perxona-fab { font-size: 0.78rem; }
+}
+@media (prefers-reduced-motion: reduce) { .fab-stack { transition: none; } }
+canvas[hidden] { display: none !important; }
