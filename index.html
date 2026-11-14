@@ -299,7 +299,7 @@
           GPU Optimization Project — RTX 3050 實作
         </h2>
         <p class="gpu-showcase-desc">
-          大三資工 · 個人依 8 週自學路線，從 vector add、matrix multiply、reduction，一路做到 PyTorch MNIST CNN、CUDA Extension 與 Triton kernel，全在筆電 RTX 3050 6GB 上實作。之後持續擴充<strong>個人 GPU 優化實作</strong>，加入FlashAttention、Transformer kernels、Roofline 分析，每個 kernel 都先驗證正確才計時，並可在 GitHub 一鍵重現。
+          在筆電的 RTX 3050 6GB 上，從零自學寫 GPU kernel。每個 kernel 都先驗證正確才計時。所有結果都能在 GitHub 一鍵重現。
         </p>
 
         <div class="gpu-stack">
@@ -369,6 +369,8 @@
           </table>
           <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86)。每個 kernel 都先通過正確性檢查才計時，延遲為 3 輪中位數。CUDA QKV 仍比 PyTorch 慢 1–10%，完整結果見 GitHub。</p>
         </div>
+
+        <p class="gpu-detail"><strong>學習路線</strong>依 8 週自學路線，從 vector add、matrix multiply、reduction，做到 PyTorch MNIST CNN、CUDA Extension 與 Triton kernel；之後持續擴充，加入 FlashAttention、Transformer kernels 與 Roofline 分析。</p>
 
         <p class="gpu-reproduce-hint">一鍵重現：<code>python tools/performance_dashboard.py</code> 跑完所有 benchmarks 並產出效能報告。</p>
 

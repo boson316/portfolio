@@ -285,7 +285,7 @@
           GPU Optimization Project — RTX 3050
         </h2>
         <p class="gpu-showcase-desc">
-          CS junior · A personal project following an 8-week self-study plan, from vector add, matrix multiply and reduction to a PyTorch MNIST CNN, a CUDA Extension and Triton kernels — all on a 6GB RTX 3050 laptop GPU. I later extended this <strong>GPU optimization project</strong> with FlashAttention, Transformer kernels and roofline analysis, with every kernel verified for correctness before it is timed, reproducible from GitHub.
+          I taught myself to write GPU kernels from scratch on a 6GB RTX 3050 laptop. Every kernel is verified for correctness before it is timed. All results can be reproduced from GitHub with one command.
         </p>
         <div class="gpu-stack">
           <span class="gpu-stack-item">CUDA 12.4</span>
@@ -353,6 +353,8 @@
           </table>
           <p class="gpu-table-caption">Device: NVIDIA GeForce RTX 3050 6GB Laptop GPU (Ampere sm_86). Every kernel passes a correctness check before timing; latencies are medians of 3 runs. CUDA QKV is still 1–10% slower than PyTorch; full results are on GitHub.</p>
         </div>
+        <p class="gpu-detail"><strong>Learning path</strong>An 8-week self-study plan, from vector add, matrix multiply and reduction to a PyTorch MNIST CNN, a CUDA Extension and Triton kernels; later extended with FlashAttention, Transformer kernels and roofline analysis.</p>
+
         <p class="gpu-reproduce-hint">Reproduce: <code>python tools/performance_dashboard.py</code></p>
         <div class="gpu-actions">
           <a href="https://github.com/boson316/RTX3050-GPU-Mastery" class="btn btn-primary" target="_blank" rel="noopener">View code on GitHub</a>

@@ -562,3 +562,7 @@ canvas[hidden] { display: none !important; }
 .brief-toggle::after { content: ""; width: 0.4rem; height: 0.4rem; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform 0.15s ease; }
 .brief-toggle[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
 .brief-toggle:hover { color: var(--card-accent, var(--accent)); }
+
+/* GPU 專區：細節移到表格下方 */
+.gpu-detail { margin: 0 0 1rem; max-width: 46rem; font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); }
+.gpu-detail strong { display: block; margin-bottom: 0.15rem; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; color: var(--text-faint); }
