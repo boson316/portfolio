@@ -594,6 +594,24 @@
     mlAnimateBlocks.forEach(function (block) { ioVisible.observe(block); });
   }
 
+  // ========== 專案卡片：預設只顯示摘要＋成果，挑戰與解法收進「展開細節」 ==========
+  document.querySelectorAll('.project-brief').forEach(function (brief, i) {
+    if (!brief.querySelector('.pb-ch, .pb-fx')) return;
+    if (!brief.id) brief.id = 'projectBrief' + i;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'brief-toggle';
+    btn.setAttribute('aria-controls', brief.id);
+    function sync(open) {
+      brief.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? (isEn ? 'Hide details' : '收合細節') : (isEn ? 'Show details' : '展開細節');
+    }
+    btn.addEventListener('click', function () { sync(!brief.classList.contains('is-open')); });
+    sync(false);
+    brief.parentNode.insertBefore(btn, brief.nextSibling);
+  });
+
   // ========== 手機：往下捲時收起浮動按鈕，往上捲或到頁尾再顯示 ==========
   var fabStack = document.getElementById('fabStack');
   if (fabStack) {

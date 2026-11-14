@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="tailwind.css">
   <link rel="stylesheet" href="design.css">
   <!-- 暗黑模式：localStorage + prefers-color-scheme，避免首屏閃爍 -->
-  <script>
+  <script>document.documentElement.classList.add('js');
     (function() {
       var theme = localStorage.getItem('portfolio-theme');
       var dark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);

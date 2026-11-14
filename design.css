@@ -551,3 +551,14 @@ html[lang="en"] .project-brief > div { grid-template-columns: 4.1rem 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .fab-stack { transition: none; } }
 canvas[hidden] { display: none !important; }
+
+/* 專案卡片：挑戰／解法預設收合（沒有 JS 時全部顯示） */
+.js .project-brief:not(.is-open) > .pb-ch, .js .project-brief:not(.is-open) > .pb-fx { display: none; }
+.js .project-brief { margin-bottom: 0.35rem; }
+.brief-toggle {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 0.35rem; min-height: 36px; margin: 0 0 0.6rem; padding: 0 0.1rem;
+  border: none; background: none; cursor: pointer; font-family: inherit; font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+}
+.brief-toggle::after { content: ""; width: 0.4rem; height: 0.4rem; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform 0.15s ease; }
+.brief-toggle[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
+.brief-toggle:hover { color: var(--card-accent, var(--accent)); }
